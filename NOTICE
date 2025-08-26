@@ -1,0 +1,14 @@
+# CafeAudioManager - Third-Party Notices
+
+This plugin utilizes audio assets created by Kenney.
+
+## Audio Assets
+
+*   **Source:** Kenney (https://www.kenney.nl/)
+*   **License:** Creative Commons Zero (CC0) - Public Domain
+
+The audio files included in `addons/CafeAudioManager/assets/music/` and `addons/CafeAudioManager/assets/sfx/` are from Kenney's various audio packs and are released under the CC0 license, allowing for free use in any project, commercial or non-commercial, without attribution.
+
+While not strictly required by the CC0 license, we acknowledge and appreciate Kenney's contributions to the game development community by providing these high-quality assets.
+
+---

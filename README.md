@@ -53,13 +53,13 @@ O `CafeAudioManager` atua como seu próprio EventBus para áudio, emitindo e ouv
 
 #### Sinais Ouvidos
 
-*   `play_sfx_requested(sfx_key: String, bus: String, manager_node: Node = null)`: Solicita a reprodução de um efeito sonoro.
+*   `play_sfx_requested(sfx_key: String, bus: String)`: Solicita a reprodução de um efeito sonoro.
 	*   `sfx_key`: A chave do SFX a ser reproduzido (definida no `AudioManifest`).
 	*   `bus`: O nome do bus de áudio (ex: "SFX"). Padrão: "SFX".
-	*   `manager_node`: (Opcional, para v2.0) O nó `CafeAudioPlayer2D/3D` que deve gerenciar a reprodução posicional do áudio. Se `null`, o `CafeAudioManager` gerencia.
-*   `play_music_requested(music_key: String, manager_node: Node = null)`: Solicita a reprodução de uma faixa de música ou playlist.
+	
+*   `play_music_requested(music_key: String)`: Solicita a reprodução de uma faixa de música ou playlist.
 	*   `music_key`: A chave da música/playlist a ser reproduzida (definida no `AudioManifest`).
-	*   `manager_node`: (Opcional, para v2.0) O nó `CafeAudioPlayer2D/3D` que deve gerenciar a reprodução posicional do áudio. Se `null`, o `CafeAudioManager` gerencia.
+	
 *   `volume_changed(bus_name: String, linear_volume: float)`: Ouve seu próprio sinal para aplicar as mudanças de volume.
 
 <a name="configuração-pt"></a>
