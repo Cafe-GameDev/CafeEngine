@@ -32,15 +32,16 @@ Estes sinais são escutados pelo `CafeAudioManager`. Você deve emitir esses sin
     *   **Parâmetros:**
         *   `sfx_key`: (String) A chave do SFX a ser reproduzido, conforme definido no seu `AudioManifest`.
         *   `bus`: (String, opcional) O nome do bus de áudio para reproduzir o SFX (ex: "SFX", "UI"). Padrão: "SFX".
-        *   `manager_node`: (Node, opcional, para v2.0) Um nó `CafeAudioPlayer2D/3D` que deve gerenciar a reprodução posicional do áudio. Se `null`, o `CafeAudioManager` lida com a reprodução não posicional.
-    *   **Exemplo:** `CafeAudioManager.play_sfx_requested.emit("sfx_pulo", "SFX")`
+        *   `manager_node`: (Node, opcional) A referência a um nó `CafeAudioPlayer2D` ou `CafeAudioPlayer3D` que deve gerenciar a reprodução posicional do áudio. Se `null` (padrão), o `CafeAudioManager` central lida com a reprodução não posicional.
+    *   **Exemplo:** `CafeAudioManager.play_sfx_requested.emit("sfx_pulo", "SFX", null)` (Reproduzido pelo AudioManager central)
+    *   **Exemplo (futuro v2.0):** `CafeAudioManager.play_sfx_requested.emit("passos", "SFX", $Player/CafeAudioPlayer2D)` (Reproduzido pelo CafeAudioPlayer2D do Player)
 
 *   `play_music_requested(music_key: String, manager_node: Node = null)`
     *   **Descrição:** Solicita ao `CafeAudioManager` que reproduza uma faixa de música específica ou inicie uma playlist.
     *   **Parâmetros:**
         *   `music_key`: (String) A chave da faixa de música ou playlist a ser reproduzida, conforme definido no seu `AudioManifest`.
-        *   `manager_node`: (Node, opcional, para v2.0) Um nó `CafeAudioPlayer2D/3D` que deve gerenciar a reprodução posicional do áudio. Se `null`, o `CafeAudioManager` lida com a reprodução não posicional.
-    *   **Exemplo:** `CafeAudioManager.play_music_requested.emit("tema_nivel_1")`
+        *   `manager_node`: (Node, opcional) A referência a um nó `CafeAudioPlayer2D` ou `CafeAudioPlayer3D` que deve gerenciar a reprodução posicional do áudio. Se `null` (padrão), o `CafeAudioManager` central lida com a reprodução não posicional.
+    *   **Exemplo:** `CafeAudioManager.play_music_requested.emit("tema_nivel_1", null)` (Reproduzido pelo AudioManager central)
 
 *   `volume_changed(bus_name: String, linear_volume: float)`
     *   **Descrição:** O `CafeAudioManager` escuta seu próprio sinal `volume_changed` para aplicar ajustes de volume ao bus de áudio especificado. Isso permite uma maneira consistente de alterar o volume de qualquer parte da sua aplicação.

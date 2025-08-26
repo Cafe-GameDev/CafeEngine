@@ -4,9 +4,9 @@ Bem-vindo à documentação do plugin `CafeAudioManager` para Godot Engine. Este
 
 ## Índice
 
-*   [Visão Geral](overview.md)
-*   [Instalação](installation.md)
-*   [Configuração](configuration.md)
-*   [Uso](usage.md)
-*   [Biblioteca de Áudio Nativa](native_audio_library.md)
-*   [Limitações](limitations.md)
+*   [Visão Geral](visao_geral.md)
+*   [Instalação](instalacao.md)
+*   [Configuração](configuracao.md)
+*   [Uso](uso.md)
+*   [Biblioteca de Áudio Nativa](biblioteca_audio_nativa.md)
+*   [Limitações](limitacoes.md)

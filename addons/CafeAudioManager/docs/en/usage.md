@@ -32,15 +32,16 @@ These signals are listened to by the `CafeAudioManager`. You should emit these s
     *   **Parameters:**
         *   `sfx_key`: (String) The key of the SFX to be played, as defined in your `AudioManifest`.
         *   `bus`: (String, optional) The name of the audio bus to play the SFX on (e.g., "SFX", "UI"). Defaults to "SFX".
-        *   `manager_node`: (Node, optional, for v2.0) A `CafeAudioPlayer2D/3D` node that should manage the positional playback of the audio. If `null`, the `CafeAudioManager` handles non-positional playback.
-    *   **Example:** `CafeAudioManager.play_sfx_requested.emit("jump_sfx", "SFX")`
+        *   `manager_node`: (Node, optional) A reference to a `CafeAudioPlayer2D` or `CafeAudioPlayer3D` node that should manage the positional playback of the audio. If `null` (default), the central `CafeAudioManager` handles non-positional playback.
+    *   **Example:** `CafeAudioManager.play_sfx_requested.emit("jump_sfx", "SFX", null)` (Played by the central AudioManager)
+    *   **Example (future v2.0):** `CafeAudioManager.play_sfx_requested.emit("footsteps", "SFX", $Player/CafeAudioPlayer2D)` (Played by the Player's CafeAudioPlayer2D)
 
 *   `play_music_requested(music_key: String, manager_node: Node = null)`
     *   **Description:** Requests the `CafeAudioManager` to play a specific music track or start a playlist.
     *   **Parameters:**
         *   `music_key`: (String) The key of the music track or playlist to be played, as defined in your `AudioManifest`.
-        *   `manager_node`: (Node, optional, for v2.0) A `CafeAudioPlayer2D/3D` node that should manage the positional playback of the audio. If `null`, the `CafeAudioManager` handles non-positional playback.
-    *   **Example:** `CafeAudioManager.play_music_requested.emit("background_music_level_1")`
+        *   `manager_node`: (Node, optional) A reference to a `CafeAudioPlayer2D` or `CafeAudioPlayer3D` node that should manage the positional playback of the audio. If `null` (default), the central `CafeAudioManager` handles non-positional playback.
+    *   **Example:** `CafeAudioManager.play_music_requested.emit("level_1_theme", null)` (Played by the central AudioManager)
 
 *   `volume_changed(bus_name: String, linear_volume: float)`
     *   **Description:** The `CafeAudioManager` listens to its own `volume_changed` signal to apply volume adjustments to the specified audio bus. This allows for a consistent way to change volume from any part of your application.

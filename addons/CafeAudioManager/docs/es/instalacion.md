@@ -30,7 +30,7 @@ Copie la carpeta completa `CafeAudioManager` en el directorio `addons/` de su pr
 
 Este es un paso crucial tanto para el desarrollo como para las compilaciones exportadas.
 
-*   Siga las instrucciones detalladas en la sección [Generación del AudioManifest](../configuration.md#generacion-del-audiomanifest) en la documentación de Configuración.
+*   Siga las instrucciones detalladas en la sección [Generación del AudioManifest](../configuracion.md#generacion-del-audiomanifest) en la documentación de Configuración.
 
 ## 5. Refactorizar Llamadas de Audio (Migración)
 

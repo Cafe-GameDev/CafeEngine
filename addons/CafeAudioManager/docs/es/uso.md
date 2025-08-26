@@ -32,15 +32,16 @@ Estas señales son escuchadas por el `CafeAudioManager`. Debe emitir estas seña
     *   **Parámetros:**
         *   `sfx_key`: (String) La clave del SFX a reproducir, tal como se define en su `AudioManifest`.
         *   `bus`: (String, opcional) El nombre del bus de audio para reproducir el SFX (por ejemplo, "SFX", "UI"). Predeterminado: "SFX".
-        *   `manager_node`: (Node, opcional, para v2.0) Un nodo `CafeAudioPlayer2D/3D` que debe gestionar la reproducción posicional del audio. Si es `null`, el `CafeAudioManager` gestiona la reproducción no posicional.
-    *   **Ejemplo:** `CafeAudioManager.play_sfx_requested.emit("sfx_salto", "SFX")`
+        *   `manager_node`: (Node, opcional) Una referencia a un nodo `CafeAudioPlayer2D` o `CafeAudioPlayer3D` que debe gestionar la reproducción posicional del audio. Si es `null` (predeterminado), el `CafeAudioManager` central gestiona la reproducción no posicional.
+    *   **Ejemplo:** `CafeAudioManager.play_sfx_requested.emit("sfx_salto", "SFX", null)` (Reproducido por el AudioManager central)
+    *   **Ejemplo (futuro v2.0):** `CafeAudioManager.play_sfx_requested.emit("pasos", "SFX", $Player/CafeAudioPlayer2D)` (Reproducido por el CafeAudioPlayer2D del Jugador)
 
 *   `play_music_requested(music_key: String, manager_node: Node = null)`
     *   **Descripción:** Solicita al `CafeAudioManager` que reproduzca una pista de música específica o inicie una lista de reproducción.
     *   **Parámetros:**
         *   `music_key`: (String) La clave de la pista de música o lista de reproducción a reproducir, tal como se define en su `AudioManifest`.
-        *   `manager_node`: (Node, opcional, para v2.0) Un nodo `CafeAudioPlayer2D/3D` que debe gestionar la reproducción posicional del audio. Si es `null`, el `CafeAudioManager` gestiona la reproducción no posicional.
-    *   **Ejemplo:** `CafeAudioManager.play_music_requested.emit("tema_nivel_1")`
+        *   `manager_node`: (Node, opcional) Una referencia a un nodo `CafeAudioPlayer2D` o `CafeAudioPlayer3D` que debe gestionar la reproducción posicional del audio. Si es `null` (predeterminado), el `CafeAudioManager` central gestiona la reproducción no posicional.
+    *   **Ejemplo:** `CafeAudioManager.play_music_requested.emit("tema_nivel_1", null)` (Reproducido por el AudioManager central)
 
 *   `volume_changed(bus_name: String, linear_volume: float)`
     *   **Descripción:** El `CafeAudioManager` escucha su propia señal `volume_changed` para aplicar ajustes de volumen al bus de audio especificado. Esto permite una forma consistente de cambiar el volumen desde cualquier parte de su aplicación.

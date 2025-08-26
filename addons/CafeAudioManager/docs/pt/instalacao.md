@@ -30,7 +30,7 @@ Copie a pasta completa `CafeAudioManager` para o diretório `addons/` do seu pro
 
 Este é um passo crucial tanto para o desenvolvimento quanto para builds exportadas.
 
-*   Siga as instruções detalhadas na seção [Geração do AudioManifest](../configuration.md#geracao-do-audiomanifest) na documentação de Configuração.
+*   Siga as instruções detalhadas na seção [Geração do AudioManifest](../configuracao.md#geracao-do-audiomanifest) na documentação de Configuração.
 
 ## 5. Refatorar Chamadas de Áudio (Migração)
 
