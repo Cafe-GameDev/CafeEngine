@@ -1,3 +1,4 @@
-addons/CafeAudioManager.zip
-.env
-GEMINI.md
+# Godot 4+ specific ignores
+.godot/
+/android/
+*.exe
