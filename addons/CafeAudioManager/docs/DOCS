@@ -1,0 +1,223 @@
+# CafeAudioManager Plugin Documentation
+
+This document provides comprehensive instructions and details for using the `CafeAudioManager` plugin in your Godot Engine projects.
+
+## Table of Contents
+
+*   [1. Overview](#1-overview)
+*   [2. Installation](#2-installation)
+*   [3. Configuration](#3-configuration)
+    *   [3.1. AudioManifest Generation](#31-audiomanifest-generation)
+    *   [3.2. Audio Root Paths](#32-audio-root-paths)
+*   [4. Usage](#4-usage)
+    *   [4.1. Signals (Audio EventBus)](#41-signals-audio-eventbus)
+        *   [4.1.1. Emitted Signals](#411-emitted-signals)
+        *   [4.1.2. Listened Signals](#412-listened-signals)
+    *   [4.2. Playing Sound Effects (SFX)](#42-playing-sound-effects-sfx)
+    *   [4.3. Playing Music](#43-playing-music)
+    *   [4.4. Volume Control](#44-volume-control)
+*   [5. Native Audio Library](#5-native-audio-library)
+*   [6. Limitations](#6-limitations)
+
+---
+
+<a name="1-overview"></a>
+## 1. Overview
+
+The `CafeAudioManager` plugin is designed to be a robust and decoupled audio management system for Godot Engine projects, replacing the default audio system often found in templates like "Café Essentials - Godot Brew Kit". It functions as a dedicated EventBus for all audio-related communications, centralizing audio logic and making it easier to manage throughout your game.
+
+Key features include:
+
+*   **Dynamic Audio Loading:** Automatically scans and loads audio files from specified directories, categorizing them into SFX and music libraries. This eliminates the need for manual preloading of every audio asset.
+*   **SFX Player Pooling:** Utilizes a configurable pool of `AudioStreamPlayer` instances to handle sound effects. This prevents audio cutting when multiple SFX are played simultaneously and optimizes performance by reusing players.
+*   **Music Playlist Management:** Provides comprehensive management for music, including the ability to define playlists, play tracks randomly within a category, and handle automatic or manual transitions between songs.
+*   **Decoupled Volume Control:** Offers a clean way to control the volume of different audio buses (e.g., Master, Music, SFX) without direct dependencies, promoting a modular architecture.
+*   **Export Compatibility:** Ensures that your audio setup works seamlessly in exported builds by using an `AudioManifest` to reference audio resources via their unique IDs (UIDs).
+
+<a name="2-installation"></a>
+## 2. Installation
+
+To integrate `CafeAudioManager` into your Godot project, follow these steps:
+
+1.  **Add the Plugin Folder:** Copy the entire `CafeAudioManager` folder into the `addons/` directory of your Godot project. If the `addons/` folder does not exist, create it in your project's root directory.
+    *   Your project structure should look like: `your_project_root/addons/CafeAudioManager/...`
+
+2.  **Activate the Plugin:**
+    *   Open your Godot project in the editor.
+    *   Go to `Project` -> `Project Settings...`.
+    *   Navigate to the `Plugins` tab.
+    *   Locate `CafeAudioManager` in the list and ensure its status is set to `Active`.
+
+3.  **Configure as Autoload (Singleton):**
+    *   In `Project Settings...`, go to the `Autoload` tab.
+    *   Click the `Add` button (folder icon) to browse for a path.
+    *   Navigate to `res://addons/CafeAudioManager/scenes/cafe_audio_manager.tscn` and select it.
+    *   In the `Node Name` field, enter `CafeAudioManager` (or your preferred singleton name).
+    *   Ensure `Enable` is checked.
+    *   Click `Add`. This makes the `CafeAudioManager` accessible globally from any script.
+
+4.  **Generate AudioManifest:** This is a crucial step for both development and exported builds.
+    *   Follow the detailed instructions in the [AudioManifest Generation](#31-audiomanifest-generation) section below.
+
+5.  **Refactor Audio Calls:** If you are migrating from an existing audio system, you will need to update your code:
+    *   Replace any direct calls to an old `AudioManager` or audio signals from a `GlobalEvents` singleton with the appropriate `CafeAudioManager` signal emissions.
+    *   For example, instead of `GlobalEvents.emit_signal("play_sfx", "jump")`, you would use `CafeAudioManager.play_sfx_requested.emit("jump", "SFX")`.
+
+<a name="3-configuration"></a>
+## 3. Configuration
+
+The `CafeAudioManager` relies on a few key configurations to function correctly.
+
+<a name="31-audiomanifest-generation"></a>
+### 3.1. AudioManifest Generation
+
+The `AudioManifest` is a `.tres` resource that acts as a lookup table for your audio files. It maps user-friendly audio keys (e.g., "jump_sfx", "background_music_1") to the unique resource IDs (UIDs) that Godot assigns to imported audio files. This is vital for ensuring that audio plays correctly in exported game builds, where direct file paths might not be reliable.
+
+**How to Generate/Update the `AudioManifest`:**
+
+1.  **Select the Node:** In your main scene (or any scene where `CafeAudioManager` is present), select the `CafeAudioManager` node in the Scene tree.
+2.  **Locate the Script:** In the Godot editor's "File System" panel, navigate to `res://addons/CafeAudioManager/scripts/generate_audio_manifest.gd`.
+3.  **Open in Script Editor:** Right-click on `generate_audio_manifest.gd` and select "Open in Script Editor".
+4.  **Run the Script:** With the script open, go to `File` -> `Run Script` (or press `F6`).
+5.  **Verification:** The `AudioManifest.tres` file will be generated or updated and saved to `res://addons/CafeAudioManager/resources/audio_manifest.tres`. You should see output in the Godot console indicating the manifest generation process.
+    *   **Important:** You should re-run this script whenever you add, remove, or rename audio files in your `sfx_root_path` or `music_root_path` directories to ensure the manifest is up-to-date.
+
+<a name="32-audio-root-paths"></a>
+### 3.2. Audio Root Paths
+
+The `CafeAudioManager` automatically discovers audio files within specified root directories. These paths can be configured in the Inspector panel when the `CafeAudioManager` node is selected:
+
+*   **`sfx_root_path`**: This property defines the absolute path to the folder containing all your sound effects.
+    *   **Default:** `res://addons/CafeAudioManager/assets/sfx/`
+    *   **Example:** If you store your SFX in `res://assets/audio/sfx/`, you would set this property to that path.
+*   **`music_root_path`**: This property defines the absolute path to the folder containing all your music tracks.
+    *   **Default:** `res://addons/CafeAudioManager/assets/music/`
+    *   **Example:** If you store your music in `res://assets/audio/music/`, you would set this property to that path.
+
+**Structure within Root Paths:**
+The plugin expects audio files to be directly within these root paths or in subdirectories. For example:
+```
+res://addons/CafeAudioManager/assets/sfx/
+├───interface/
+│   ├───button_click.ogg
+│   └───menu_open.ogg
+├───player/
+│   ├───jump.ogg
+│   └───hit.ogg
+```
+In this structure, `button_click`, `menu_open`, `jump`, and `hit` would be recognized as SFX keys.
+
+<a name="4-usage"></a>
+## 4. Usage
+
+The `CafeAudioManager` operates primarily through signals, acting as an EventBus. This means you emit signals to request audio playback or volume changes, and the manager handles the actual audio operations.
+
+<a name="41-signals-audio-eventbus"></a>
+### 4.1. Signals (Audio EventBus)
+
+The `CafeAudioManager` emits and listens to specific signals to manage audio events.
+
+<a name="411-emitted-signals"></a>
+#### 4.1.1. Emitted Signals
+
+These signals are emitted by the `CafeAudioManager` to notify other parts of your game about audio events. You can connect to these signals from any script that needs to react to audio changes.
+
+*   `music_track_changed(music_key: String)`
+    *   **Description:** Emitted when a new music track begins playing.
+    *   **Parameters:**
+        *   `music_key`: The string key of the music track that just started.
+    *   **Example Use Case:** Updating a UI element to show the current song title.
+
+*   `volume_changed(bus_name: String, linear_volume: float)`
+    *   **Description:** Emitted whenever the volume of an audio bus is altered.
+    *   **Parameters:**
+        *   `bus_name`: The name of the audio bus whose volume changed (e.g., "Master", "Music", "SFX").
+        *   `linear_volume`: The new linear volume value (0.0 to 1.0).
+    *   **Example Use Case:** Updating a volume slider in your options menu.
+
+<a name="412-listened-signals"></a>
+#### 4.1.2. Listened Signals
+
+These signals are listened to by the `CafeAudioManager`. You should emit these signals from your game logic to request audio playback or volume adjustments.
+
+*   `play_sfx_requested(sfx_key: String, bus: String = "SFX", manager_node: Node = null)`
+    *   **Description:** Requests the `CafeAudioManager` to play a specific sound effect.
+    *   **Parameters:**
+        *   `sfx_key`: (String) The key of the SFX to be played, as defined in your `AudioManifest`.
+        *   `bus`: (String, optional) The name of the audio bus to play the SFX on (e.g., "SFX", "UI"). Defaults to "SFX".
+        *   `manager_node`: (Node, optional, for v2.0) A `CafeAudioPlayer2D/3D` node that should manage the positional playback of the audio. If `null`, the `CafeAudioManager` handles non-positional playback.
+    *   **Example:** `CafeAudioManager.play_sfx_requested.emit("jump_sfx", "SFX")`
+
+*   `play_music_requested(music_key: String, manager_node: Node = null)`
+    *   **Description:** Requests the `CafeAudioManager` to play a specific music track or start a playlist.
+    *   **Parameters:**
+        *   `music_key`: (String) The key of the music track or playlist to be played, as defined in your `AudioManifest`.
+        *   `manager_node`: (Node, optional, for v2.0) A `CafeAudioPlayer2D/3D` node that should manage the positional playback of the audio. If `null`, the `CafeAudioManager` handles non-positional playback.
+    *   **Example:** `CafeAudioManager.play_music_requested.emit("background_music_level_1")`
+
+*   `volume_changed(bus_name: String, linear_volume: float)`
+    *   **Description:** The `CafeAudioManager` listens to its own `volume_changed` signal to apply volume adjustments to the specified audio bus. This allows for a consistent way to change volume from any part of your application.
+    *   **Parameters:** Same as the emitted `volume_changed` signal.
+    *   **Example:** `CafeAudioManager.volume_changed.emit("Music", 0.75)`
+
+<a name="42-playing-sound-effects-sfx"></a>
+### 4.2. Playing Sound Effects (SFX)
+
+To play an SFX, simply emit the `play_sfx_requested` signal with the appropriate `sfx_key` and optionally the `bus` name.
+
+```gdscript
+# Example: Play a jump sound effect on the "SFX" bus
+CafeAudioManager.play_sfx_requested.emit("jump_sfx", "SFX")
+
+# Example: Play a UI click sound effect on the "UI" bus (if you have one configured)
+CafeAudioManager.play_sfx_requested.emit("button_click", "UI")
+```
+
+<a name="43-playing-music"></a>
+### 4.3. Playing Music
+
+To play a music track or start a playlist, emit the `play_music_requested` signal with the corresponding `music_key`.
+
+```gdscript
+# Example: Play a specific background music track
+CafeAudioManager.play_music_requested.emit("level_1_theme")
+
+# Example: Start a music playlist (if configured in your AudioManifest)
+CafeAudioManager.play_music_requested.emit("main_menu_playlist")
+```
+
+<a name="44-volume-control"></a>
+### 4.4. Volume Control
+
+To change the volume of an audio bus, emit the `volume_changed` signal.
+
+```gdscript
+# Example: Set the Master volume to 50%
+CafeAudioManager.volume_changed.emit("Master", 0.5)
+
+# Example: Set the Music volume to 75%
+CafeAudioManager.volume_changed.emit("Music", 0.75)
+
+# Example: Mute SFX (set volume to 0%)
+CafeAudioManager.volume_changed.emit("SFX", 0.0)
+```
+
+<a name="5-native-audio-library"></a>
+## 5. Native Audio Library
+
+The `CafeAudioManager` plugin includes a basic set of SFX and music assets for demonstration, testing, and quick prototyping. These assets are located in:
+
+*   `res://addons/CafeAudioManager/assets/sfx/`
+*   `res://addons/CafeAudioManager/assets/music/`
+
+You are encouraged to replace these placeholder assets with your own or add new ones. When doing so, ensure that:
+
+1.  Your custom audio files are placed within the `sfx_root_path` and `music_root_path` directories (or their subdirectories) that you have configured for the `CafeAudioManager` node.
+2.  You **regenerate the `AudioManifest`** after adding, removing, or renaming any audio files to ensure the plugin can correctly reference them.
+
+<a name="6-limitations"></a>
+## 6. Limitations
+
+Please be aware of the following limitation of the `CafeAudioManager`:
+
+*   **Mono Audio Only:** This AudioManager is exclusively designed for mono audio. It does not currently support 2D or 3D positional audio effects. If your project requires spatial audio, you may need to integrate additional `AudioStreamPlayer2D` or `AudioStreamPlayer3D` nodes and manage their playback separately, or consider extending this plugin's functionality.
