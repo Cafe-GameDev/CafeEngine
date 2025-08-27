@@ -1,3 +1,5 @@
-addons/CafeAudioManager.zip
+*.zip
 .env
 GEMINI.md
+/.godot
+*.exe
