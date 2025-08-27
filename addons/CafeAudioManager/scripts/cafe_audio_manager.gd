@@ -91,7 +91,7 @@ func _ready():
 	play_music_requested.connect(_on_play_music_requested)
 	
 	# Connect to the request_audio_start signal to initialize audio when triggered.
-	CafeAudioManager.request_audio_start.connect(_on_request_audio_start)
+	request_audio_start.connect(_on_request_audio_start)
 
 # Initializes the audio manager by setting up buses, loading the manifest,
 # and starting initial music playback. This function is called when the

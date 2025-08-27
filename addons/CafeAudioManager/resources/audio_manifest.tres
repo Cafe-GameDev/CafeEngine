@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioManifest" load_steps=2 format=3 uid="uid://cu3qpqijs7apd"]
+[gd_resource type="Resource" script_class="AudioManifest" load_steps=2 format=3 uid="uid://wocxtf02cjnu"]
 
 [ext_resource type="Script" uid="uid://bxh0q6iqol7xw" path="res://addons/CafeAudioManager/scripts/audio_manifest.gd" id="1_yd0cl"]
 

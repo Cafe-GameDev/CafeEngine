@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="CafeEspecials"
+run/main_scene="uid://bcyc2k7p66myt"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+CafeAudioManager="*res://addons/CafeAudioManager/scenes/cafe_audio_manager.tscn"
 
 [editor_plugins]
 
