@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcyc2k7p66myt"]
+
+[ext_resource type="Script" uid="uid://cvsa84on8a8cs" path="res://scripts/scene_control.gd" id="1_p2c1w"]
+
+[node name="SceneControl" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_p2c1w")

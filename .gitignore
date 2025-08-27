@@ -2,4 +2,6 @@
 .env
 GEMINI.md
 /.godot
+.godot/
+/android/
 *.exe
