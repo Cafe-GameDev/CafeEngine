@@ -92,6 +92,9 @@ func _ready():
 	
 	# Connect to the request_audio_start signal to initialize audio when triggered.
 	request_audio_start.connect(_on_request_audio_start)
+	
+	_setup_audio_buses()
+	_load_audio_from_manifest()
 
 # Initializes the audio manager by setting up buses, loading the manifest,
 # and starting initial music playback. This function is called when the

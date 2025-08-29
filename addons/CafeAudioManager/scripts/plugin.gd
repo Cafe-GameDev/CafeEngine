@@ -42,7 +42,7 @@ func _exit_tree():
 	generate_manifest_button.queue_free()
 
 	if generate_manifest_script_instance:
-		generate_manifest_script_instance.free()
+		# generate_manifest_script_instance.free() # EditorScript is RefCounted and should not be freed manually
 		generate_manifest_script_instance = null
 
 	print("CafeAudioManager plugin unloaded.")
