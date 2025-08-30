@@ -1,4 +1,5 @@
 @tool
+class_name SFXMenuButton
 extends MenuButton
 
 @export_group("SFX Settings")

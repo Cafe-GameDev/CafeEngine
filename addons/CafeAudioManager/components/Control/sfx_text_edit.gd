@@ -1,4 +1,5 @@
 @tool
+class_name SFXTextEdit
 extends TextEdit
 
 @export_group("SFX Settings")

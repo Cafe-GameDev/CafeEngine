@@ -1,18 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://donfvnx8mojr4"]
+[gd_scene load_steps=3 format=3 uid="uid://donfvnx8mojr4"]
 
 [ext_resource type="Script" uid="uid://gferjbue33qu" path="res://addons/CafeAudioManager/scripts/cafe_panel.gd" id="1_lxtw0"]
 
-[node name="CafePanel" type="VBoxContainer"]
-custom_minimum_size = Vector2(200, 0)
-offset_right = 200.0
-offset_bottom = 23.0
+[sub_resource type="LabelSettings" id="LabelSettings_lxtw0"]
+font_size = 18
+
+[node name="Cafe" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_lxtw0")
 
 [node name="Label" type="Label" parent="."]
-custom_minimum_size = Vector2(200, 34)
+custom_minimum_size = Vector2(0, 38)
 layout_direction = 2
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
 text = "CafeEspecials"
-horizontal_alignment = 1
+label_settings = SubResource("LabelSettings_lxtw0")
 vertical_alignment = 1

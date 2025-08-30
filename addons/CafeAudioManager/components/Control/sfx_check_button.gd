@@ -1,4 +1,5 @@
 @tool
+class_name SFXCheckButton
 extends CheckButton
 
 @export_group("SFX Settings")

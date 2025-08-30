@@ -1,4 +1,5 @@
 @tool
+class_name SFXTree
 extends Tree
 
 @export_group("SFX Settings")

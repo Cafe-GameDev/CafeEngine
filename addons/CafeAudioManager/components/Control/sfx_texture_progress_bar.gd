@@ -1,4 +1,5 @@
 @tool
+class_name SFXTextureProgressBar
 extends TextureProgressBar
 
 @export_group("SFX Settings")

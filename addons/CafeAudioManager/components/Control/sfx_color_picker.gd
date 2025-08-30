@@ -1,4 +1,5 @@
 @tool
+class_name SFXColorPicker
 extends ColorPicker
 
 @export_group("SFX Settings")

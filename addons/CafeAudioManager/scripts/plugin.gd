@@ -5,59 +5,81 @@ const AUTOLOAD_NAME = "CafeAudioManager"
 const AUTOLOAD_PATH = "res://addons/CafeAudioManager/scenes/cafe_audio_manager.tscn"
 const PANEL_SCENE_PATH = "res://addons/CafeAudioManager/scenes/cafe_panel.tscn"
 
-var generate_manifest_button: Button
 var generate_manifest_script_instance: EditorScript
 var plugin_panel: VBoxContainer
 
 func _enter_tree():
-	add_autoload_singleton(AUTOLOAD_NAME, AUTOLOAD_PATH)
-	print("CafeAudioManager Plugin: Autoload '%s' added." % AUTOLOAD_NAME)
+	# Adiciona autoload
+	if not ProjectSettings.has_setting("autoload/" + AUTOLOAD_NAME):
+		add_autoload_singleton(AUTOLOAD_NAME, AUTOLOAD_PATH)
+		print("CafeAudioManager Plugin: Autoload '%s' added." % AUTOLOAD_NAME)
 
-	var generate_manifest_script_res = load("res://addons/CafeAudioManager/scripts/generate_audio_manifest.gd")
-	if generate_manifest_script_res:
-		generate_manifest_script_instance = generate_manifest_script_res.new()
+	# Carrega script do manifest
+	var manifest_script_res = load("res://addons/CafeAudioManager/scripts/generate_audio_manifest.gd")
+	if manifest_script_res:
+		generate_manifest_script_instance = manifest_script_res.new()
 	else:
-		push_error("generate_audio_manifest.gd script not found or could not be loaded!")
+		push_error("generate_audio_manifest.gd script not found!")
 		return
 
-	# Create plugin panel
-	plugin_panel = VBoxContainer.new()
-	plugin_panel.name = "Café" # Give it a unique name
+	# Cria painel, evitando duplicatas
+	_create_plugin_panel()
 
-	generate_manifest_button = Button.new()
-	generate_manifest_button.text = "Generate Audio Manifest"
-	generate_manifest_button.icon = get_editor_interface().get_base_control().get_theme_icon("Reload", "EditorIcons")
-	generate_manifest_button.tooltip_text = "Generates the AudioManifest.tres file."
-	generate_manifest_button.pressed.connect(_on_generate_manifest_button_pressed)
-	plugin_panel.add_child(generate_manifest_button) # Add button to the panel
+	# Registra tipos customizados
+	_register_custom_types()
 
-	add_control_to_dock(DOCK_SLOT_RIGHT_UL, plugin_panel) # Add panel to a dock
-
+	# Configura grupos globais
 	ProjectSettings.set_setting("global_groups/audio_positions", true)
 	ProjectSettings.set_setting("global_groups/audio_regions", true)
 	ProjectSettings.set_setting("global_groups/audio_occluders", true)
 	ProjectSettings.save()
 
-	_register_custom_types()
-	
+
 func _exit_tree():
-	remove_autoload_singleton(AUTOLOAD_NAME)
-	print("CafeAudioManager Plugin: Autoload '%s' removed." % AUTOLOAD_NAME)
+	# Remove painel
+	if plugin_panel:
+		remove_control_from_docks(plugin_panel)
+		plugin_panel.queue_free()
 
-	remove_control_from_docks(plugin_panel)
-	plugin_panel.queue_free()
+	# Remove autoload
+	if ProjectSettings.has_setting("autoload/" + AUTOLOAD_NAME):
+		remove_autoload_singleton(AUTOLOAD_NAME)
 
-	if generate_manifest_script_instance:
-		generate_manifest_script_instance = null
+	# Desregistra tipos
+	_unregister_custom_types()
 
+	# Remove grupos globais
 	ProjectSettings.set_setting("global_groups/audio_positions", false)
 	ProjectSettings.set_setting("global_groups/audio_regions", false)
 	ProjectSettings.set_setting("global_groups/audio_occluders", false)
 	ProjectSettings.save()
-	print("CafeAudioManager plugin unloaded.")
 
-	_unregister_custom_types()
-	
+
+func _create_plugin_panel():
+	# Verifica se já existe um painel com esse nome
+	for dock in get_editor_interface().get_base_control().get_children():
+		if dock.name == "CafePanel":
+			plugin_panel = dock
+			return
+
+	# Instancia a cena do painel
+	var panel_scene = load(PANEL_SCENE_PATH)
+	if panel_scene:
+		plugin_panel = panel_scene.instantiate()
+	else:
+		plugin_panel = VBoxContainer.new()
+		plugin_panel.name = "CafePanel"
+
+	# Adiciona botão de gerar manifest
+	var btn = Button.new()
+	btn.text = "Generate Audio Manifest"
+	btn.icon = get_editor_interface().get_base_control().get_theme_icon("Reload", "EditorIcons")
+	btn.tooltip_text = "Generates the AudioManifest.tres file."
+	btn.pressed.connect(_on_generate_manifest_button_pressed)
+	plugin_panel.add_child(btn)
+
+	add_control_to_dock(DOCK_SLOT_RIGHT_UL, plugin_panel)
+
 
 func _on_generate_manifest_button_pressed():
 	if generate_manifest_script_instance:
@@ -65,10 +87,13 @@ func _on_generate_manifest_button_pressed():
 	else:
 		push_error("generate_audio_manifest.gd script instance not available!")
 
+
+# -------------------------------
+# Custom types
+# -------------------------------
 func _register_custom_types():
-	# Register custom Control components
-	add_custom_type("AudioCafe", "Node", AudioCafe, null)
-	add_custom_type("SFXAcceptDialog", "AudioCafe", SFXAcceptDialog, null)
+	add_custom_type("AudioCafe", "Node", preload("res://addons/CafeAudioManager/scripts/audiocafe.gd"), null)
+	add_custom_type("SFXAcceptDialog", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_accept_dialog.gd"), null)
 	add_custom_type("SFXButton", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_button.gd"), null)
 	add_custom_type("SFXCheckButton", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_check_button.gd"), null)
 	add_custom_type("SFXColorPickerButton", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_color_picker_button.gd"), null)
@@ -91,10 +116,9 @@ func _register_custom_types():
 	add_custom_type("SFXTree", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_tree.gd"), null)
 	add_custom_type("SFXVolumeSlider", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_volume_slider.gd"), null)
 	add_custom_type("SFXWindow", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_window.gd"), null)
-	
+
 
 func _unregister_custom_types():
-	# Unregister custom Control components
 	remove_custom_type("AudioCafe")
 	remove_custom_type("SFXAcceptDialog")
 	remove_custom_type("SFXButton")

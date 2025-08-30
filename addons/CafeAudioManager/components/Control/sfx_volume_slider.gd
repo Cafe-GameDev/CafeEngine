@@ -1,4 +1,5 @@
 @tool
+class_name SFXVolumeSlider
 extends Slider
 
 @export_group("SFX Settings")

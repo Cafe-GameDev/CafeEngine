@@ -1,4 +1,5 @@
 @tool
+class_name SFXTabContainer
 extends TabContainer
 
 @export_group("SFX Settings")

@@ -1,4 +1,5 @@
 @tool
+class_name SFXSpinBox
 extends SpinBox
 
 @export_group("SFX Settings")

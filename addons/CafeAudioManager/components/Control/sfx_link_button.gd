@@ -1,4 +1,5 @@
 @tool
+class_name SFXLinkButton
 extends LinkButton
 
 @export_group("SFX Settings")

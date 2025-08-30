@@ -1,4 +1,5 @@
 @tool
+class_name SFXConfirmationDialog
 extends ConfirmationDialog
 
 @export_group("SFX Settings")

@@ -1,4 +1,5 @@
 @tool
+class_name SFXOptionButton
 extends OptionButton
 
 @export_group("SFX Settings")

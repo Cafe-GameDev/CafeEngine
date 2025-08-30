@@ -19,19 +19,15 @@ config/icon="res://icon.svg"
 
 buses/default_bus_layout="uid://ds7iaq80ptcxo"
 
-[autoload]
-
-CafeAudioManager="*res://addons/CafeAudioManager/scenes/cafe_audio_manager.tscn"
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/CafeAudioManager/plugin.cfg")
 
 [global_groups]
 
-audio_positions=true
-audio_regions=true
-audio_occluders=true
+audio_positions=false
+audio_regions=false
+audio_occluders=false
 
 [rendering]
 

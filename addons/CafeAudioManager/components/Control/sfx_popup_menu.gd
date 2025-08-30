@@ -1,4 +1,5 @@
 @tool
+class_name SFXPopupMenu
 extends PopupMenu
 
 @export_group("SFX Settings")

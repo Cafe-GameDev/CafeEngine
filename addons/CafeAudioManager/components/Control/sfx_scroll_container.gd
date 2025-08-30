@@ -1,4 +1,5 @@
 @tool
+class_name SFXScrollContainer
 extends ScrollContainer
 
 @export_group("SFX Settings")

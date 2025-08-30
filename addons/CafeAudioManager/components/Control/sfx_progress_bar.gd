@@ -1,4 +1,5 @@
 @tool
+class_name SFXProgressBar
 extends ProgressBar
 
 @export_group("SFX Settings")

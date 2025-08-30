@@ -1,4 +1,5 @@
 @tool
+class_name SFXAcceptDialog
 extends AcceptDialog
 
 @export_group("SFX Settings")

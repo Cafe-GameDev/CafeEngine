@@ -1,4 +1,5 @@
 @tool
+class_name SFXSlider
 extends Slider
 
 @export_group("SFX Settings")

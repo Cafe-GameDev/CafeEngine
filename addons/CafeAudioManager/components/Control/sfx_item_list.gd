@@ -1,4 +1,5 @@
 @tool
+class_name SFXItemList
 extends ItemList
 
 @export_group("SFX Settings")

@@ -1,4 +1,5 @@
 @tool
+class_name SFXWindow
 extends Window
 
 @export_group("SFX Settings")
