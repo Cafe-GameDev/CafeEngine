@@ -6,3 +6,7 @@ GEMINI.md
 /android/
 *.exe
 .env
+/addons/docs
+/addons/CafeAudioManager/docs
+.env
+.env

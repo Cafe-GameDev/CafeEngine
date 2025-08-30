@@ -13,6 +13,4 @@ func _export_begin(features, is_debug, path, flags):
 		push_error("generate_audio_manifest.gd not found for export hook!")
 
 func _export_file(path, type, features):
-	# This method is called for each file being exported.
-	# We don't need to do anything here for the manifest generation.
 	pass

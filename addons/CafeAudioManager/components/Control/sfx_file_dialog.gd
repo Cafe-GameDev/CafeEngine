@@ -1,18 +1,17 @@
 @tool
-class_name SFXFileDialog extends FileDialog
+extends FileDialog
 
 @export_group("SFX Settings")
-@export var library_name: String = "plugin_sfx" # Biblioteca padrão para SFX
-@export var dir_selected_sfx_key: String = "ui_select" # Chave para o SFX de diretório selecionado
-@export var file_selected_sfx_key: String = "ui_select" # Chave para o SFX de arquivo selecionado
-@export var confirmed_sfx_key: String = "ui_confirm" # Chave para o SFX de confirmação
-@export var hover_sfx_key: String = "ui_rollover" # Chave para o SFX de hover
+@export var library_name: String = "plugin_sfx"
+@export var dir_selected_sfx_key: String = "ui_select"
+@export var file_selected_sfx_key: String = "ui_select"
+@export var confirmed_sfx_key: String = "ui_confirm"
+@export var hover_sfx_key: String = "ui_rollover"
 
 func _ready():
 	if Engine.is_editor_hint():
 		return
 
-	# Conecta os sinais para feedback sonoro
 	dir_selected.connect(_on_dir_selected)
 	file_selected.connect(_on_file_selected)
 	confirmed.connect(_on_confirmed)
@@ -36,5 +35,4 @@ func _on_mouse_entered():
 		CafeAudioManager.play_sfx_requested.emit(hover_sfx_key, "SFX", self)
 
 func _on_mouse_exited():
-	# Opcional: Adicionar lógica para quando o mouse sai, se necessário.
 	pass

@@ -27,6 +27,12 @@ CafeAudioManager="*res://addons/CafeAudioManager/scenes/cafe_audio_manager.tscn"
 
 enabled=PackedStringArray("res://addons/CafeAudioManager/plugin.cfg")
 
+[global_groups]
+
+audio_positions=true
+audio_regions=true
+audio_occluders=true
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
