@@ -6,9 +6,6 @@ extends Button
 @export var click_sfx_key: String = "ui_click"
 @export var hover_sfx_key: String = "ui_rollover"
 
-func _get_configuration_warning() -> String:
-	return "Este é um botão SFX, use para cliques de áudio específicos."
-
 func _ready():
 	if Engine.is_editor_hint():
 		return
