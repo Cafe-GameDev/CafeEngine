@@ -19,7 +19,7 @@ signal request_audio_start()
 const SFX_BUS_NAME = "SFX"
 const MUSIC_BUS_NAME = "Music"
 
-@export var audio_manifest: AudioManifest
+@export var audio_manifest: AudioManifest = preload("res://addons/CafeAudioManager/resources/audio_manifest.tres")
 
 var _sfx_library: Dictionary = {}
 var _music_library: Dictionary = {}

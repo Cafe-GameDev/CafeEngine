@@ -3,6 +3,7 @@ extends EditorPlugin
 
 const AUTOLOAD_NAME = "CafeAudioManager"
 const AUTOLOAD_PATH = "res://addons/CafeAudioManager/scenes/cafe_audio_manager.tscn"
+const PANEL_SCENE_PATH = "res://addons/CafeAudioManager/scenes/cafe_panel.tscn"
 
 var generate_manifest_button: Button
 var generate_manifest_script_instance: EditorScript
