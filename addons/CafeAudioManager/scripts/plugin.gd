@@ -6,6 +6,7 @@ const AUTOLOAD_PATH = "res://addons/CafeAudioManager/scenes/cafe_audio_manager.t
 
 var generate_manifest_button: Button
 var generate_manifest_script_instance: EditorScript
+var plugin_panel: VBoxContainer
 
 func _enter_tree():
 	add_autoload_singleton(AUTOLOAD_NAME, AUTOLOAD_PATH)
@@ -18,13 +19,18 @@ func _enter_tree():
 		push_error("generate_audio_manifest.gd script not found or could not be loaded!")
 		return
 
+	# Create plugin panel
+	plugin_panel = VBoxContainer.new()
+	plugin_panel.name = "Cafe" # Give it a unique name
+
 	generate_manifest_button = Button.new()
 	generate_manifest_button.text = "Generate Audio Manifest"
 	generate_manifest_button.icon = get_editor_interface().get_base_control().get_theme_icon("Reload", "EditorIcons")
 	generate_manifest_button.tooltip_text = "Generates the AudioManifest.tres file."
 	generate_manifest_button.pressed.connect(_on_generate_manifest_button_pressed)
+	plugin_panel.add_child(generate_manifest_button) # Add button to the panel
 
-	add_control_to_container(CONTAINER_TOOLBAR, generate_manifest_button)
+	add_control_to_dock(DOCK_SLOT_RIGHT_UL, plugin_panel) # Add panel to a dock
 
 	ProjectSettings.set_setting("global_groups/audio_positions", true)
 	ProjectSettings.set_setting("global_groups/audio_regions", true)
@@ -58,14 +64,14 @@ func _enter_tree():
 	add_custom_type("SFXVolumeSlider", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_volume_slider.gd"), null)
 	add_custom_type("SFXWindow", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_window.gd"), null)
 
-	print("CafeAudioManager plugin loaded. 'Generate Audio Manifest' button added to toolbar.")
+	print("CafeAudioManager plugin loaded. 'CafeAudioManagerPanel' added to dock.")
 	
 func _exit_tree():
 	remove_autoload_singleton(AUTOLOAD_NAME)
 	print("CafeAudioManager Plugin: Autoload '%s' removed." % AUTOLOAD_NAME)
 
-	remove_control_from_container(CONTAINER_TOOLBAR, generate_manifest_button)
-	generate_manifest_button.queue_free()
+	remove_control_from_docks(plugin_panel)
+	plugin_panel.queue_free()
 
 	if generate_manifest_script_instance:
 		generate_manifest_script_instance = null
