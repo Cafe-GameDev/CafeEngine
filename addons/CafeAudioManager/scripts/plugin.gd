@@ -37,6 +37,8 @@ func _enter_tree():
 	ProjectSettings.set_setting("global_groups/audio_regions", true)
 	ProjectSettings.set_setting("global_groups/audio_occluders", true)
 	ProjectSettings.save()
+
+	_register_custom_types()
 	
 func _exit_tree():
 	remove_autoload_singleton(AUTOLOAD_NAME)
@@ -54,6 +56,9 @@ func _exit_tree():
 	ProjectSettings.save()
 	print("CafeAudioManager plugin unloaded.")
 
+	_unregister_custom_types()
+	
+
 func _on_generate_manifest_button_pressed():
 	if generate_manifest_script_instance:
 		generate_manifest_script_instance._run()
@@ -62,9 +67,8 @@ func _on_generate_manifest_button_pressed():
 
 func _register_custom_types():
 	# Register custom Control components
-	add_custom_type("AudioCafe", "Node", preload("res://addons/CafeAudioManager/scripts/audiocafe.gd"), null)
-	
-	add_custom_type("SFXAcceptDialog", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_accept_dialog.gd"), null)
+	add_custom_type("AudioCafe", "Node", AudioCafe, null)
+	add_custom_type("SFXAcceptDialog", "AudioCafe", SFXAcceptDialog, null)
 	add_custom_type("SFXButton", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_button.gd"), null)
 	add_custom_type("SFXCheckButton", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_check_button.gd"), null)
 	add_custom_type("SFXColorPickerButton", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_color_picker_button.gd"), null)
@@ -87,8 +91,6 @@ func _register_custom_types():
 	add_custom_type("SFXTree", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_tree.gd"), null)
 	add_custom_type("SFXVolumeSlider", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_volume_slider.gd"), null)
 	add_custom_type("SFXWindow", "AudioCafe", preload("res://addons/CafeAudioManager/components/Control/sfx_window.gd"), null)
-
-	print("CafeAudioManager plugin loaded. 'CafeAudioManagerPanel' added to dock.")
 	
 
 func _unregister_custom_types():
