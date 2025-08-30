@@ -21,7 +21,7 @@ func _enter_tree():
 
 	# Create plugin panel
 	plugin_panel = VBoxContainer.new()
-	plugin_panel.name = "Cafe" # Give it a unique name
+	plugin_panel.name = "Café" # Give it a unique name
 
 	generate_manifest_button = Button.new()
 	generate_manifest_button.text = "Generate Audio Manifest"
