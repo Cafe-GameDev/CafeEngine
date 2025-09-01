@@ -5,12 +5,9 @@
 [sub_resource type="LabelSettings" id="LabelSettings_72lws"]
 font_size = 18
 
-[node name="PanelGroup" type="VBoxContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="CafeAudioManager" type="VBoxContainer"]
+offset_right = 201.0
+offset_bottom = 73.0
 script = ExtResource("1_72lws")
 
 [node name="Label" type="Label" parent="."]
@@ -21,3 +18,12 @@ size_flags_horizontal = 0
 text = "AudioCafe"
 label_settings = SubResource("LabelSettings_72lws")
 vertical_alignment = 1
+
+[node name="AudioManifest" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+tooltip_text = "Generates the AudioManifest.tres file."
+text = "Generate Audio Manifest"
+
+[connection signal="pressed" from="AudioManifest" to="." method="_on_audio_manifest_pressed"]

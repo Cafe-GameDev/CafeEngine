@@ -36,9 +36,9 @@ func _exit_tree():
 		var group : VBoxContainer = plugin_panel.get_node_or_null(AUTOLOAD_NAME)
 		if group:
 			group.queue_free()
-
+	
 		# Verifica se o painel ainda tem outros grupos
-		var has_other_groups := false
+		var has_other_groups : bool = false
 		for child in plugin_panel.get_children():
 			if child is VBoxContainer:
 				has_other_groups = true
