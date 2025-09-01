@@ -2,9 +2,453 @@
 extends VBoxContainer
 @onready var audio_manifest: Button = $AudioManifest
 
-var generate_manifest_script_instance: EditorScript = "res://addons/AudioCafe/scripts/generate_audio_manifest.gd"
+@onready var sfx_paths_vbox_container = %SFXPathsVBoxContainer
+@onready var add_sfx_path_button = %AddSFXPathButton
+@onready var sfx_folder_dialog = %SFXFolderDialog
+
+@onready var music_paths_vbox_container = %MusicPathsVBoxContainer
+@onready var add_music_path_button = %AddMusicPathButton
+@onready var music_folder_dialog = %MusicFolderDialog
+@onready var default_click_key_line_edit = %DefaultClickKeyLineEdit
+@onready var default_hover_key_line_edit = %DefaultHoverKeyLineEdit
+@onready var default_slider_key_line_edit = %DefaultSliderKeyLineEdit
+@onready var save_feedback_label = %SaveFeedbackLabel
+@onready var save_feedback_timer = %SaveFeedbackTimer
+
+@onready var master_volume_slider = %MasterVolumeSlider
+@onready var master_volume_value_label = %MasterVolumeValueLabel
+@onready var sfx_volume_slider = %SFXVolumeSlider
+@onready var sfx_volume_value_label = %SFXVolumeValueLabel
+@onready var music_volume_slider = %MusicVolumeSlider
+@onready var music_volume_value_label = %MusicVolumeValueLabel
+
+@onready var music_keys_item_list = %MusicKeysItemList
+@onready var sfx_keys_item_list = %SFXKeysItemList
+
+@onready var manifest_progress_bar = %ManifestProgressBar
+@onready var manifest_status_label = %ManifestStatusLabel
+
+@onready var playlists_item_list = %PlaylistsItemList
+@onready var add_playlist_button = %AddPlaylistButton
+@onready var remove_playlist_button = %RemovePlaylistButton
+@onready var playlist_name_line_edit = %PlaylistNameLineEdit
+@onready var playback_mode_option_button = %PlaybackModeOptionButton
+@onready var playlist_tracks_item_list = %PlaylistTracksItemList
+@onready var add_track_button = %AddTrackButton
+@onready var remove_track_button = %RemoveTrackButton
+@onready var music_track_file_dialog = %MusicTrackFileDialog
+@onready var playlist_details_section = %PlaylistDetailsSection
+
+@export var audio_config: AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
+
+var generate_manifest_script_instance: EditorScript
+var editor_interface: EditorInterface
+
+const VALID_COLOR = Color(0.1, 0.1, 0.1, 1.0) # Cor de borda padrão
+const INVALID_COLOR = Color(1.0, 0.2, 0.2, 1.0) # Cor de borda para erro
+
+func set_editor_interface(interface: EditorInterface):
+	editor_interface = interface
+
+func set_audio_config(config: AudioConfig):
+	if audio_config:
+		audio_config.disconnect("config_changed", Callable(self, "_show_save_feedback"))
+	audio_config = config
+	if audio_config:
+		audio_config.connect("config_changed", Callable(self, "_show_save_feedback"))
+	_load_config_to_ui() # Recarrega a UI com a nova configuração
+
+func _show_save_feedback():
+	save_feedback_label.visible = true
+	save_feedback_timer.start()
+
+func _ready():
+	# Conecta ao sinal de atualização do AudioConfig do CafeAudioManager
+	if CafeAudioManager: # Verifica se o autoload está disponível
+		CafeAudioManager.audio_config_updated.connect(Callable(self, "_on_audio_config_updated"))
+
+	var manifest_script_res = load("res://addons/AudioCafe/scripts/generate_audio_manifest.gd")
+	if manifest_script_res:
+		generate_manifest_script_instance = manifest_script_res.new()
+	else:
+		push_error("generate_audio_manifest.gd script not found!")
+		return
+	
+	if Engine.is_editor_hint() and editor_interface:
+		audio_manifest.icon = editor_interface.get_base_control().get_theme_icon("Reload", "EditorIcons")
+	
+	if Engine.is_editor_hint():
+		_load_config_to_ui()
+		_connect_ui_signals()
+		add_sfx_path_button.pressed.connect(Callable(self, "_on_add_sfx_path_button_pressed"))
+		add_music_path_button.pressed.connect(Callable(self, "_on_add_music_path_button_pressed"))
+		sfx_folder_dialog.dir_selected.connect(Callable(self, "_on_sfx_folder_dialog_dir_selected"))
+		music_folder_dialog.dir_selected.connect(Callable(self, "_on_music_folder_dialog_dir_selected"))
+
+		playlists_item_list.item_selected.connect(Callable(self, "_on_playlists_item_list_selected"))
+		add_playlist_button.pressed.connect(Callable(self, "_on_add_playlist_button_pressed"))
+		remove_playlist_button.pressed.connect(Callable(self, "_on_remove_playlist_button_pressed"))
+		playlist_name_line_edit.text_changed.connect(Callable(self, "_on_playlist_name_line_edit_text_changed"))
+		playback_mode_option_button.item_selected.connect(Callable(self, "_on_playback_mode_option_button_item_selected"))
+		add_track_button.pressed.connect(Callable(self, "_on_add_track_button_pressed"))
+		remove_track_button.pressed.connect(Callable(self, "_on_remove_track_button_pressed"))
+		music_track_file_dialog.file_selected.connect(Callable(self, "_on_music_track_file_dialog_file_selected"))
+
+func _load_config_to_ui():
+	if audio_config:
+		# Limpa as entradas de caminho existentes
+		for child in sfx_paths_vbox_container.get_children():
+			child.queue_free()
+		for child in music_paths_vbox_container.get_children():
+			child.queue_free()
+
+		# Preenche os caminhos SFX
+		for path in audio_config.sfx_paths:
+			_create_path_entry(path, true)
+		if audio_config.sfx_paths.is_empty(): # Adiciona um vazio se não houver nenhum
+			_create_path_entry("", true)
+
+		# Preenche os caminhos de Música
+		for path in audio_config.music_paths:
+			_create_path_entry(path, false)
+		if audio_config.music_paths.is_empty(): # Adiciona um vazio se não houver nenhum
+			_create_path_entry("", false)
+
+		default_click_key_line_edit.text = audio_config.default_click_key
+		default_hover_key_line_edit.text = audio_config.default_hover_key
+		default_slider_key_line_edit.text = audio_config.default_slider_key
+
+		master_volume_slider.value = audio_config.master_volume
+		_update_volume_label(master_volume_value_label, audio_config.master_volume)
+		sfx_volume_slider.value = audio_config.sfx_volume
+		_update_volume_label(sfx_volume_value_label, audio_config.sfx_volume)
+		music_volume_slider.value = audio_config.music_volume
+		_update_volume_label(music_volume_value_label, audio_config.music_volume)
+
+		# Preenche os ItemList com as chaves de música e SFX
+		music_keys_item_list.clear()
+		for key in audio_config.music_data.keys():
+			music_keys_item_list.add_item(key)
+
+		sfx_keys_item_list.clear()
+		for key in audio_config.sfx_data.keys():
+			sfx_keys_item_list.add_item(key)
+
+		# Preenche o ItemList de playlists
+		playlists_item_list.clear()
+		for key in audio_config.music_playlists.keys():
+			playlists_item_list.add_item(key)
+
+		# Esconde a seção de detalhes da playlist por padrão
+		playlist_details_section.visible = false
+
+func _connect_ui_signals():
+	default_click_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_click_key"))
+	default_hover_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_hover_key"))
+	default_slider_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_slider_key"))
+
+	master_volume_slider.value_changed.connect(func(new_value): _on_volume_slider_value_changed(new_value, "Master", master_volume_value_label, "master_volume"))
+	sfx_volume_slider.value_changed.connect(func(new_value): _on_volume_slider_value_changed(new_value, "SFX", sfx_volume_value_label, "sfx_volume"))
+	music_volume_slider.value_changed.connect(func(new_value): _on_volume_slider_value_changed(new_value, "Music", music_volume_value_label, "music_volume"))
+
+func _on_config_text_changed(new_text: String, config_property: String):
+	if audio_config:
+		var line_edit: LineEdit = get_node_or_null("%" + config_property.capitalize() + "LineEdit") # Obtém a referência ao LineEdit
+		var is_valid = true
+		var error_message = ""
+
+		if new_text.is_empty():
+			is_valid = false
+			error_message = "A chave não pode ser vazia."
+
+		if is_valid:
+			if line_edit:
+				line_edit.add_theme_color_override("font_color", VALID_COLOR)
+				line_edit.tooltip_text = ""
+		audio_config.set(config_property, new_text)
+		print("Configuração atualizada: %s = %s" % [config_property, new_text])
+		else:
+			if line_edit:
+				line_edit.add_theme_color_override("font_color", INVALID_COLOR)
+				line_edit.tooltip_text = error_message
+
+func _on_volume_slider_value_changed(new_value: float, bus_name: String, value_label: Label, config_property: String):
+	if audio_config:
+		audio_config.set(config_property, new_value)
+		_update_volume_label(value_label, new_value)
+		CafeAudioManager.apply_volume_to_bus(bus_name, new_value)
+		print("Volume atualizado para %s: %s" % [bus_name, new_value])
+
+func _update_volume_label(label: Label, volume_value: float):
+	label.text = str(int(volume_value * 100)) + "%"
+
+func _create_path_entry(path_value: String, is_sfx: bool):
+	var path_entry = HBoxContainer.new()
+	path_entry.size_flags_horizontal = SIZE_EXPAND_FILL
+
+	var line_edit = LineEdit.new()
+	line_edit.size_flags_horizontal = SIZE_EXPAND_FILL
+	line_edit.text = path_value
+	line_edit.placeholder_text = "res://caminho/para/pasta"
+	line_edit.text_changed.connect(Callable(self, "_on_path_line_edit_text_changed").bind(line_edit, is_sfx))
+	path_entry.add_child(line_edit)
+
+	# Define a cor da borda inicial e valida
+	_validate_path_line_edit(line_edit)
+
+	var browse_button = Button.new()
+	browse_button.text = "..."
+	browse_button.pressed.connect(Callable(self, "_on_browse_button_pressed").bind(line_edit, is_sfx))
+	path_entry.add_child(browse_button)
+
+	var remove_button = Button.new()
+	remove_button.text = "X"
+	remove_button.pressed.connect(Callable(self, "_on_remove_path_button_pressed").bind(path_entry, is_sfx))
+	path_entry.add_child(remove_button)
+
+	if is_sfx:
+		sfx_paths_vbox_container.add_child(path_entry)
+	else:
+		music_paths_vbox_container.add_child(path_entry)
+
+func _on_add_sfx_path_button_pressed():
+	_create_path_entry("", true)
+	_update_audio_config_paths()
+
+func _on_add_music_path_button_pressed():
+	_create_path_entry("", false)
+	_update_audio_config_paths()
+
+func _on_browse_button_pressed(line_edit: LineEdit, is_sfx: bool):
+	if is_sfx:
+		sfx_folder_dialog.current_dir = line_edit.text if not line_edit.text.is_empty() else "res://"
+		sfx_folder_dialog.popup_centered()
+		sfx_folder_dialog.set_meta("target_line_edit", line_edit)
+	else:
+		music_folder_dialog.current_dir = line_edit.text if not line_edit.text.is_empty() else "res://"
+		music_folder_dialog.popup_centered()
+		music_folder_dialog.set_meta("target_line_edit", line_edit)
+
+func _on_sfx_folder_dialog_dir_selected(dir: String):
+	var target_line_edit: LineEdit = sfx_folder_dialog.get_meta("target_line_edit")
+	if target_line_edit:
+		target_line_edit.text = dir
+		_update_audio_config_paths()
+
+func _on_music_folder_dialog_dir_selected(dir: String):
+	var target_line_edit: LineEdit = music_folder_dialog.get_meta("target_line_edit")
+	if target_line_edit:
+		target_line_edit.text = dir
+		_update_audio_config_paths()
+
+func _on_path_line_edit_text_changed(new_text: String, line_edit: LineEdit, is_sfx: bool):
+	_validate_path_line_edit(line_edit)
+	_update_audio_config_paths()
+
+func _validate_path_line_edit(line_edit: LineEdit):
+	var is_valid = true
+	var error_message = ""
+
+	if line_edit.text.is_empty():
+		is_valid = false
+		error_message = "O caminho não pode ser vazio."
+	elif not line_edit.text.begins_with("res://"):
+		is_valid = false
+		error_message = "O caminho deve começar com 'res://'."
+
+	if is_valid:
+		line_edit.add_theme_color_override("font_color", VALID_COLOR)
+		line_edit.tooltip_text = ""
+	else:
+		line_edit.add_theme_color_override("font_color", INVALID_COLOR)
+		line_edit.tooltip_text = error_message
+
+func _on_remove_path_button_pressed(path_entry: HBoxContainer, is_sfx: bool):
+	path_entry.queue_free()
+	_update_audio_config_paths()
+
+func _update_audio_config_paths():
+	if not audio_config:
+		return
+
+	var new_sfx_paths: Array[String] = []
+	for child in sfx_paths_vbox_container.get_children():
+		if child is HBoxContainer:
+			var line_edit: LineEdit = child.get_child(0)
+			if line_edit and not line_edit.text.is_empty() and line_edit.text.begins_with("res://"):
+				new_sfx_paths.append(line_edit.text)
+	audio_config.sfx_paths = new_sfx_paths
+
+	var new_music_paths: Array[String] = []
+	for child in music_paths_vbox_container.get_children():
+		if child is HBoxContainer:
+			var line_edit: LineEdit = child.get_child(0)
+			if line_edit and not line_edit.text.is_empty() and line_edit.text.begins_with("res://"):
+				new_music_paths.append(line_edit.text)
+	audio_config.music_paths = new_music_paths
+
 func _on_audio_manifest_pressed() -> void:
 	if generate_manifest_script_instance:
-		generate_manifest_script_instance._run()
+		manifest_progress_bar.value = 0
+		manifest_progress_bar.visible = true
+		manifest_status_label.text = "Gerando Manifesto..."
+		manifest_status_label.visible = true
+		audio_manifest.disabled = true # Desabilita o botão durante a geração
+
+		# Conecta os sinais do script de geração do manifesto
+		generate_manifest_script_instance.connect("progress_updated", Callable(self, "_on_manifest_progress_updated"))
+		generate_manifest_script_instance.connect("generation_finished", Callable(self, "_on_manifest_generation_finished"))
+
+		generate_manifest_script_instance._run(audio_config.sfx_paths, audio_config.music_paths) # Passa os caminhos do AudioConfig
 	else:
 		push_error("generate_audio_manifest.gd script instance not available!")
+
+func _on_manifest_progress_updated(current: int, total: int):
+	manifest_progress_bar.max_value = total
+	manifest_progress_bar.value = current
+	manifest_status_label.text = "Gerando Manifesto... (%d/%d)" % [current, total]
+
+func _on_manifest_generation_finished(success: bool, message: String):
+	manifest_progress_bar.visible = false
+	audio_manifest.disabled = false # Reabilita o botão
+
+	if success:
+		manifest_status_label.text = "Manifesto Gerado com Sucesso!"
+		# Força a atualização da UI para mostrar as novas chaves
+		_on_audio_config_updated(audio_config)
+	else:
+		manifest_status_label.text = "Erro na Geração do Manifesto: %s" % message
+
+	# Desconecta os sinais para evitar múltiplas conexões
+	if generate_manifest_script_instance.is_connected("progress_updated", Callable(self, "_on_manifest_progress_updated")):
+		generate_manifest_script_instance.disconnect("progress_updated", Callable(self, "_on_manifest_progress_updated"))
+	if generate_manifest_script_instance.is_connected("generation_finished", Callable(self, "_on_manifest_generation_finished")):
+		generate_manifest_script_instance.disconnect("generation_finished", Callable(self, "_on_manifest_generation_finished"))
+
+func _on_audio_config_updated(config: AudioConfig):
+	# Atualiza a UI do painel quando o AudioConfig é alterado
+	audio_config = config
+	_load_config_to_ui()
+
+	# Atualiza os sliders de volume e labels
+	master_volume_slider.value = audio_config.master_volume
+	_update_volume_label(master_volume_value_label, audio_config.master_volume)
+	sfx_volume_slider.value = audio_config.sfx_volume
+	_update_volume_label(sfx_volume_value_label, audio_config.sfx_volume)
+	music_volume_slider.value = audio_config.music_volume
+	_update_volume_label(music_volume_value_label, audio_config.music_volume)
+
+	# Refresca os ItemList com as chaves de música e SFX
+	music_keys_item_list.clear()
+	for key in audio_config.music_data.keys():
+		music_keys_item_list.add_item(key)
+
+	sfx_keys_item_list.clear()
+	for key in audio_config.sfx_data.keys():
+		sfx_keys_item_list.add_item(key)
+
+func _on_save_feedback_timer_timeout():
+	save_feedback_label.visible = false
+
+func _on_playlists_item_list_selected(index: int):
+	var playlist_key = playlists_item_list.get_item_text(index)
+	_update_playlist_details_ui(playlist_key)
+
+func _on_add_playlist_button_pressed():
+	var new_playlist_key = "Nova Playlist %d" % (audio_config.music_playlists.size() + 1)
+	while audio_config.music_playlists.has(new_playlist_key):
+		new_playlist_key = "Nova Playlist %d" % (audio_config.music_playlists.size() + 1)
+
+	audio_config.music_playlists[new_playlist_key] = {
+		"tracks": [],
+		"mode": AudioConfig.PlaybackMode.SEQUENTIAL
+	}
+	_update_audio_config_playlists()
+	_load_config_to_ui() # Recarrega a UI para mostrar a nova playlist
+	playlists_item_list.select(playlists_item_list.get_item_count() - 1) # Seleciona a nova playlist
+	_on_playlists_item_list_selected(playlists_item_list.get_item_count() - 1)
+
+func _on_remove_playlist_button_pressed():
+	var selected_items = playlists_item_list.get_selected_items()
+	if not selected_items.is_empty():
+		var index = selected_items[0]
+		var playlist_key = playlists_item_list.get_item_text(index)
+		audio_config.music_playlists.erase(playlist_key)
+		_update_audio_config_playlists()
+		_load_config_to_ui() # Recarrega a UI
+		playlist_details_section.visible = false # Esconde os detalhes
+
+func _on_playlist_name_line_edit_text_changed(new_name: String):
+	var selected_items = playlists_item_list.get_selected_items()
+	if not selected_items.is_empty():
+		var old_key = playlists_item_list.get_item_text(selected_items[0])
+		if old_key != new_name and not new_name.is_empty() and not audio_config.music_playlists.has(new_name):
+			var playlist_data = audio_config.music_playlists[old_key]
+			audio_config.music_playlists.erase(old_key)
+			audio_config.music_playlists[new_name] = playlist_data
+			_update_audio_config_playlists()
+			_load_config_to_ui() # Recarrega a UI para atualizar o nome na lista
+			# Re-seleciona a playlist com o novo nome
+			for i in range(playlists_item_list.get_item_count()):
+				if playlists_item_list.get_item_text(i) == new_name:
+					playlists_item_list.select(i)
+					break
+
+func _on_playback_mode_option_button_item_selected(index: int):
+	var selected_items = playlists_item_list.get_selected_items()
+	if not selected_items.is_empty():
+		var playlist_key = playlists_item_list.get_item_text(selected_items[0])
+		if audio_config.music_playlists.has(playlist_key):
+			audio_config.music_playlists[playlist_key]["mode"] = index
+			_update_audio_config_playlists()
+
+func _on_add_track_button_pressed():
+	var selected_items = playlists_item_list.get_selected_items()
+	if not selected_items.is_empty():
+		var playlist_key = playlists_item_list.get_item_text(selected_items[0])
+		music_track_file_dialog.popup_centered()
+		music_track_file_dialog.set_meta("target_playlist_key", playlist_key)
+
+func _on_remove_track_button_pressed():
+	var selected_playlist_items = playlists_item_list.get_selected_items()
+	var selected_track_items = playlist_tracks_item_list.get_selected_items()
+
+	if not selected_playlist_items.is_empty() and not selected_track_items.is_empty():
+		var playlist_key = playlists_item_list.get_item_text(selected_playlist_items[0])
+		var track_index = selected_track_items[0]
+
+		if audio_config.music_playlists.has(playlist_key):
+			audio_config.music_playlists[playlist_key]["tracks"].remove_at(track_index)
+			_update_audio_config_playlists()
+			_update_playlist_details_ui(playlist_key) # Atualiza a UI de detalhes
+
+func _on_music_track_file_dialog_file_selected(path: String):
+	var playlist_key = music_track_file_dialog.get_meta("target_playlist_key")
+	if playlist_key and audio_config.music_playlists.has(playlist_key):
+		audio_config.music_playlists[playlist_key]["tracks"].append(path)
+		_update_audio_config_playlists()
+		_update_playlist_details_ui(playlist_key) # Atualiza a UI de detalhes
+
+func _update_playlist_details_ui(playlist_key: String):
+	playlist_details_section.visible = true
+
+	if audio_config.music_playlists.has(playlist_key):
+		var playlist_data = audio_config.music_playlists[playlist_key]
+		playlist_name_line_edit.text = playlist_key
+		playback_mode_option_button.select(playlist_data["mode"])
+
+		playlist_tracks_item_list.clear()
+		for track_path in playlist_data["tracks"]:
+			playlist_tracks_item_list.add_item(track_path.get_file().get_basename())
+			playlist_tracks_item_list.set_item_metadata(playlist_tracks_item_list.get_item_count() - 1, track_path)
+	else:
+		playlist_name_line_edit.text = ""
+		playback_mode_option_button.select(AudioConfig.PlaybackMode.SEQUENTIAL)
+		playlist_tracks_item_list.clear()
+
+func _update_audio_config_playlists():
+	if audio_config:
+		audio_config.music_playlists = audio_config.music_playlists.duplicate(true) # Força a detecção de mudança
+
+func _on_save_feedback_timer_timeout():
+	save_feedback_label.visible = false

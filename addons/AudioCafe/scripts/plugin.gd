@@ -79,13 +79,7 @@ func _create_plugin_panel():
 	
 	var group : VBoxContainer =_ensure_group("AudioCafe")
 	
-	# Adiciona botão de gerar manifest
-	var btn = Button.new()
-	btn.text = "Generate Audio Manifest"
-	btn.icon = get_editor_interface().get_base_control().get_theme_icon("Reload", "EditorIcons")
-	btn.tooltip_text = "Generates the AudioManifest.tres file."
-	btn.pressed.connect(_on_generate_manifest_button_pressed)
-	group.add_child(btn)
+	
 
 # Busca painel "Cafe" em todos os docks
 func _find_cafe_panel() -> VBoxContainer:
@@ -109,6 +103,9 @@ func _ensure_group(group_name: String) -> VBoxContainer:
 	# Se já existe, retorna
 	for child in plugin_panel.get_children():
 		if child is VBoxContainer and child.name == group_name:
+			# Se o grupo já existe, e ele tem a propriedade 'editor_interface', define-a
+			if child.has_method("set_editor_interface"):
+				child.set_editor_interface(get_editor_interface())
 			return child
 
 	# Tenta carregar o grupo de uma cena
@@ -120,6 +117,17 @@ func _ensure_group(group_name: String) -> VBoxContainer:
 		group = VBoxContainer.new()  # fallback caso a cena não exista
 
 	group.name = group_name
+	
+	# Passa a referência do EditorInterface para o grupo
+	if group.has_method("set_editor_interface"):
+		group.set_editor_interface(get_editor_interface())
+
+	# Carrega o AudioConfig.tres e passa para o grupo
+	var audio_config_res = load("res://addons/AudioCafe/resources/audio_config.tres")
+	if audio_config_res and group.has_method("set_audio_config"):
+		group.set_audio_config(audio_config_res)
+	else:
+		push_error("AudioConfig.tres não encontrado ou set_audio_config não disponível no grupo!")
 
 	# Atualiza o Label interno, caso exista
 	var label = group.get_node_or_null("Label")
@@ -128,13 +136,6 @@ func _ensure_group(group_name: String) -> VBoxContainer:
 
 	plugin_panel.add_child(group)
 	return group
-
-
-func _on_generate_manifest_button_pressed():
-	if generate_manifest_script_instance:
-		generate_manifest_script_instance._run()
-	else:
-		push_error("generate_audio_manifest.gd script instance not available!")
 
 
 func _register_custom_types():

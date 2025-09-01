@@ -4,13 +4,19 @@ extends Tree
 
 @export_group("SFX Settings")
 @export var library_name: String = "plugin_sfx"
-@export var item_selected_sfx_key: String = "ui_click"
-@export var item_toggle_sfx_key: String = "ui_toggle"
-@export var hover_sfx_key: String = "ui_rollover"
+@export var item_selected_sfx_key: String
+@export var item_toggle_sfx_key: String
+@export var hover_sfx_key: String
 
 func _ready():
 	if Engine.is_editor_hint():
 		return
+
+	# Conecta ao sinal de atualização do AudioConfig do CafeAudioManager
+	if CafeAudioManager:
+		CafeAudioManager.audio_config_updated.connect(Callable(self, "_on_audio_config_updated"))
+		# Aplica as configurações iniciais
+		_on_audio_config_updated(CafeAudioManager.audio_config)
 
 	item_selected.connect(_on_item_selected)
 	item_collapsed.connect(_on_item_toggle)
@@ -31,3 +37,13 @@ func _on_mouse_entered():
 
 func _on_mouse_exited():
 	pass
+
+func _on_audio_config_updated(config: AudioConfig):
+	# Atualiza as chaves de SFX com base na configuração atualizada
+	# Apenas se a chave exportada estiver vazia, usa a padrão do AudioConfig
+	if item_selected_sfx_key.is_empty():
+		item_selected_sfx_key = config.default_click_key # Usando default_click_key para seleção de item
+	if item_toggle_sfx_key.is_empty():
+		item_toggle_sfx_key = config.default_click_key # Usando default_click_key para toggle de item
+	if hover_sfx_key.is_empty():
+		hover_sfx_key = config.default_hover_key
