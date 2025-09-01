@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://cgeq1b7lq4jo7"
-path="res://.godot/imported/bong_001.ogg-4d6bf7b23fc927adea4b6b425ea6b9cc.oggvorbisstr"
+path="res://.godot/imported/bong_001.ogg-0c67445f4dbc3158ec73f2932749d340.oggvorbisstr"
 
 [deps]
 
 source_file="res://addons/AudioCafe/assets/sfx/interface/bong/bong_001.ogg"
-dest_files=["res://.godot/imported/bong_001.ogg-4d6bf7b23fc927adea4b6b425ea6b9cc.oggvorbisstr"]
+dest_files=["res://.godot/imported/bong_001.ogg-0c67445f4dbc3158ec73f2932749d340.oggvorbisstr"]
 
 [params]
 

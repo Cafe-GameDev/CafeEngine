@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq305aeeob718"]
+
+[ext_resource type="Script" uid="uid://bvkymppc4tvew" path="res://addons/StateCafe/scripts/cafe_panel.gd" id="1_lhc8r"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lhc8r"]
+font_size = 18
+
+[node name="PanelGroup" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lhc8r")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(0, 38)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 0
+text = "StateCafe"
+label_settings = SubResource("LabelSettings_lhc8r")
+vertical_alignment = 1

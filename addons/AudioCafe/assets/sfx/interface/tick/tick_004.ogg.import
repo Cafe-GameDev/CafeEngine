@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://dhtonnwrpfrbp"
-path="res://.godot/imported/tick_004.ogg-96afa1c463c1d86869194adff68238e8.oggvorbisstr"
+path="res://.godot/imported/tick_004.ogg-4f6ab943fc6a5685053a39058b646c84.oggvorbisstr"
 
 [deps]
 
 source_file="res://addons/AudioCafe/assets/sfx/interface/tick/tick_004.ogg"
-dest_files=["res://.godot/imported/tick_004.ogg-96afa1c463c1d86869194adff68238e8.oggvorbisstr"]
+dest_files=["res://.godot/imported/tick_004.ogg-4f6ab943fc6a5685053a39058b646c84.oggvorbisstr"]
 
 [params]
 

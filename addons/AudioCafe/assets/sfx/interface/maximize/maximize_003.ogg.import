@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://ddeb4m6v6k6vy"
-path="res://.godot/imported/maximize_003.ogg-5c7e4ab37f75830a9013b94304b7caa8.oggvorbisstr"
+path="res://.godot/imported/maximize_003.ogg-074629a6f45b4695324bd606d3de6353.oggvorbisstr"
 
 [deps]
 
 source_file="res://addons/AudioCafe/assets/sfx/interface/maximize/maximize_003.ogg"
-dest_files=["res://.godot/imported/maximize_003.ogg-5c7e4ab37f75830a9013b94304b7caa8.oggvorbisstr"]
+dest_files=["res://.godot/imported/maximize_003.ogg-074629a6f45b4695324bd606d3de6353.oggvorbisstr"]
 
 [params]
 

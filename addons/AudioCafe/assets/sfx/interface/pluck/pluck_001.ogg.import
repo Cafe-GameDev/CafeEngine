@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://b5jxthu1meahw"
-path="res://.godot/imported/pluck_001.ogg-596341cb81f26d2058ff700442bc3125.oggvorbisstr"
+path="res://.godot/imported/pluck_001.ogg-c83bb96f33d1b2d679b5e813baa117cd.oggvorbisstr"
 
 [deps]
 
 source_file="res://addons/AudioCafe/assets/sfx/interface/pluck/pluck_001.ogg"
-dest_files=["res://.godot/imported/pluck_001.ogg-596341cb81f26d2058ff700442bc3125.oggvorbisstr"]
+dest_files=["res://.godot/imported/pluck_001.ogg-c83bb96f33d1b2d679b5e813baa117cd.oggvorbisstr"]
 
 [params]
 

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bcyc2k7p66myt"]
 
 [ext_resource type="Script" uid="uid://cvsa84on8a8cs" path="res://scripts/scene_control.gd" id="1_p2c1w"]
-[ext_resource type="Script" uid="uid://j45ycnrailx7" path="res://addons/CafeAudioManager/components/Control/sfx_button.gd" id="2_7nmm1"]
-[ext_resource type="Script" uid="uid://kvru0y4m331b" path="res://addons/CafeAudioManager/components/Control/sfx_check_button.gd" id="3_4h7k3"]
-[ext_resource type="Script" uid="uid://brlf1fsb658if" path="res://addons/CafeAudioManager/components/Control/sfx_option_button.gd" id="4_7c4sg"]
+[ext_resource type="Script" uid="uid://j45ycnrailx7" path="res://addons/AudioCafe/components/Control/sfx_button.gd" id="2_7nmm1"]
+[ext_resource type="Script" uid="uid://kvru0y4m331b" path="res://addons/AudioCafe/components/Control/sfx_check_button.gd" id="3_4h7k3"]
+[ext_resource type="Script" uid="uid://brlf1fsb658if" path="res://addons/AudioCafe/components/Control/sfx_option_button.gd" id="4_7c4sg"]
 
 [node name="SceneControl" type="Control"]
 layout_mode = 3

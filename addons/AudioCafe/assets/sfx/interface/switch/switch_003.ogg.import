@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://djif0wkrx13jr"
-path="res://.godot/imported/switch_003.ogg-c65eb237bc3e32fe840c135444439f30.oggvorbisstr"
+path="res://.godot/imported/switch_003.ogg-18eb28cf526efa3ac2c634bafc57e5a6.oggvorbisstr"
 
 [deps]
 
 source_file="res://addons/AudioCafe/assets/sfx/interface/switch/switch_003.ogg"
-dest_files=["res://.godot/imported/switch_003.ogg-c65eb237bc3e32fe840c135444439f30.oggvorbisstr"]
+dest_files=["res://.godot/imported/switch_003.ogg-18eb28cf526efa3ac2c634bafc57e5a6.oggvorbisstr"]
 
 [params]
 

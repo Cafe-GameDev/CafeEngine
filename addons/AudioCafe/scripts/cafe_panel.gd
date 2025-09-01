@@ -1,5 +1,4 @@
 @tool
-class_name CafePanel
 extends VBoxContainer
 
 @export_group("Audio Settings")
