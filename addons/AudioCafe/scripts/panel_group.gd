@@ -2,42 +2,44 @@
 extends VBoxContainer
 @onready var audio_manifest: Button = $AudioManifest
 
-@onready var sfx_paths_vbox_container = %SFXPathsVBoxContainer
-@onready var add_sfx_path_button = %AddSFXPathButton
-@onready var sfx_folder_dialog = %SFXFolderDialog
+@onready var sfx_paths_vbox_container: VBoxContainer = %"TabContainer/Paths/SFXPathsSection"
+@onready var add_sfx_path_button: Button = %"TabContainer/Paths/SFXPathsSection/AddSFXPathButton"
+@onready var sfx_folder_dialog: FileDialog = $SFXFolderDialog
 
-@onready var music_paths_vbox_container = %MusicPathsVBoxContainer
-@onready var add_music_path_button = %AddMusicPathButton
-@onready var music_folder_dialog = %MusicFolderDialog
-@onready var default_click_key_line_edit = %DefaultClickKeyLineEdit
-@onready var default_hover_key_line_edit = %DefaultHoverKeyLineEdit
-@onready var default_slider_key_line_edit = %DefaultSliderKeyLineEdit
-@onready var save_feedback_label = %SaveFeedbackLabel
-@onready var save_feedback_timer = %SaveFeedbackTimer
+@onready var music_paths_vbox_container: VBoxContainer = %"TabContainer/Paths/MusicPathsSection"
+@onready var add_music_path_button: Button = %"TabContainer/Paths/MusicPathsSection/AddMusicPathButton"
+@onready var music_folder_dialog: FileDialog = $MusicFolderDialog
 
-@onready var master_volume_slider = %MasterVolumeSlider
-@onready var master_volume_value_label = %MasterVolumeValueLabel
-@onready var sfx_volume_slider = %SFXVolumeSlider
-@onready var sfx_volume_value_label = %SFXVolumeValueLabel
-@onready var music_volume_slider = %MusicVolumeSlider
-@onready var music_volume_value_label = %MusicVolumeValueLabel
+@onready var default_click_key_line_edit: LineEdit = %"TabContainer/DefaultKeys/DefaultClickKeyContainer/DefaultClickKeyLineEdit"
+@onready var default_hover_key_line_edit: LineEdit = %"TabContainer/DefaultKeys/DefaultHoverKeyContainer/DefaultHoverKeyLineEdit"
+@onready var default_slider_key_line_edit: LineEdit = %"TabContainer/DefaultKeys/DefaultSliderKeyContainer/DefaultSliderKeyLineEdit"
 
-@onready var music_keys_item_list = %MusicKeysItemList
-@onready var sfx_keys_item_list = %SFXKeysItemList
+@onready var save_feedback_label: Label = $SaveFeedbackLabel
+@onready var save_feedback_timer: Timer = $SaveFeedbackTimer
 
-@onready var manifest_progress_bar = %ManifestProgressBar
-@onready var manifest_status_label = %ManifestStatusLabel
+@onready var master_volume_slider: HSlider = %"TabContainer/DefaultKeys/MasterVolumeContainer/MasterVolumeSlider"
+@onready var master_volume_value_label: Label = %"TabContainer/DefaultKeys/MasterVolumeContainer/MasterVolumeValueLabel"
+@onready var sfx_volume_slider: HSlider = %"TabContainer/DefaultKeys/SFXVolumeContainer/SFXVolumeSlider"
+@onready var sfx_volume_value_label: Label = %"TabContainer/DefaultKeys/SFXVolumeContainer/SFXVolumeValueLabel"
+@onready var music_volume_slider: HSlider = %"TabContainer/DefaultKeys/MusicVolumeContainer/MusicVolumeSlider"
+@onready var music_volume_value_label: Label = %"TabContainer/DefaultKeys/MusicVolumeContainer/MusicVolumeValueLabel"
 
-@onready var playlists_item_list = %PlaylistsItemList
-@onready var add_playlist_button = %AddPlaylistButton
-@onready var remove_playlist_button = %RemovePlaylistButton
-@onready var playlist_name_line_edit = %PlaylistNameLineEdit
-@onready var playback_mode_option_button = %PlaybackModeOptionButton
-@onready var playlist_tracks_item_list = %PlaylistTracksItemList
-@onready var add_track_button = %AddTrackButton
-@onready var remove_track_button = %RemoveTrackButton
-@onready var music_track_file_dialog = %MusicTrackFileDialog
-@onready var playlist_details_section = %PlaylistDetailsSection
+@onready var music_keys_item_list: ItemList = %"TabContainer/AvailableMusic/MusicKeysItemList"
+@onready var sfx_keys_item_list: ItemList = %"TabContainer/AvailableSFX/SFXKeysItemList"
+
+@onready var manifest_progress_bar: ProgressBar = $ManifestProgressBar
+@onready var manifest_status_label: Label = $ManifestStatusLabel
+
+@onready var playlists_item_list: ItemList = %"TabContainer/Playlists/PlaylistsItemList"
+@onready var add_playlist_button: Button = %"TabContainer/Playlists/AddPlaylistButton"
+@onready var remove_playlist_button: Button = %"TabContainer/Playlists/RemovePlaylistButton"
+@onready var playlist_name_line_edit: LineEdit = %"TabContainer/Playlists/PlaylistDetailsSection/PlaylistNameContainer/PlaylistNameLineEdit"
+@onready var playback_mode_option_button: OptionButton = %"TabContainer/Playlists/PlaylistDetailsSection/PlaybackModeContainer/PlaybackModeOptionButton"
+@onready var playlist_tracks_item_list: ItemList = %"TabContainer/Playlists/PlaylistDetailsSection/PlaylistTracksItemList"
+@onready var add_track_button: Button = %"TabContainer/Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer/AddTrackButton"
+@onready var remove_track_button: Button = %"TabContainer/Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer/RemoveTrackButton"
+@onready var music_track_file_dialog: FileDialog = $MusicTrackFileDialog
+@onready var playlist_details_section: VBoxContainer = %"TabContainer/Playlists/PlaylistDetailsSection"
 
 @export var audio_config: AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
 
@@ -159,14 +161,14 @@ func _on_config_text_changed(new_text: String, config_property: String):
 
 		if new_text.is_empty():
 			is_valid = false
-			error_message = "A chave não pode ser vazia."
+			error_message = "Key cannot be empty."
 
 		if is_valid:
 			if line_edit:
 				line_edit.add_theme_color_override("font_color", VALID_COLOR)
 				line_edit.tooltip_text = ""
-		audio_config.set(config_property, new_text)
-		print("Configuração atualizada: %s = %s" % [config_property, new_text])
+			audio_config.set(config_property, new_text)
+			print("Configuration updated: %s = %s" % [config_property, new_text])
 		else:
 			if line_edit:
 				line_edit.add_theme_color_override("font_color", INVALID_COLOR)
@@ -189,7 +191,7 @@ func _create_path_entry(path_value: String, is_sfx: bool):
 	var line_edit = LineEdit.new()
 	line_edit.size_flags_horizontal = SIZE_EXPAND_FILL
 	line_edit.text = path_value
-	line_edit.placeholder_text = "res://caminho/para/pasta"
+	line_edit.placeholder_text = "res://path/to/folder"
 	line_edit.text_changed.connect(Callable(self, "_on_path_line_edit_text_changed").bind(line_edit, is_sfx))
 	path_entry.add_child(line_edit)
 
@@ -251,10 +253,10 @@ func _validate_path_line_edit(line_edit: LineEdit):
 
 	if line_edit.text.is_empty():
 		is_valid = false
-		error_message = "O caminho não pode ser vazio."
+		error_message = "Path cannot be empty."
 	elif not line_edit.text.begins_with("res://"):
 		is_valid = false
-		error_message = "O caminho deve começar com 'res://'."
+		error_message = "Path must start with 'res://'."
 
 	if is_valid:
 		line_edit.add_theme_color_override("font_color", VALID_COLOR)
@@ -291,7 +293,7 @@ func _on_audio_manifest_pressed() -> void:
 	if generate_manifest_script_instance:
 		manifest_progress_bar.value = 0
 		manifest_progress_bar.visible = true
-		manifest_status_label.text = "Gerando Manifesto..."
+		manifest_status_label.text = "Generating Manifest..."
 		manifest_status_label.visible = true
 		audio_manifest.disabled = true # Desabilita o botão durante a geração
 
@@ -299,25 +301,25 @@ func _on_audio_manifest_pressed() -> void:
 		generate_manifest_script_instance.connect("progress_updated", Callable(self, "_on_manifest_progress_updated"))
 		generate_manifest_script_instance.connect("generation_finished", Callable(self, "_on_manifest_generation_finished"))
 
-		generate_manifest_script_instance._run(audio_config.sfx_paths, audio_config.music_paths) # Passa os caminhos do AudioConfig
+		generate_manifest_script_instance._run()
 	else:
 		push_error("generate_audio_manifest.gd script instance not available!")
 
 func _on_manifest_progress_updated(current: int, total: int):
 	manifest_progress_bar.max_value = total
 	manifest_progress_bar.value = current
-	manifest_status_label.text = "Gerando Manifesto... (%d/%d)" % [current, total]
+	manifest_status_label.text = "Generating Manifest... (%d/%d)" % [current, total]
 
 func _on_manifest_generation_finished(success: bool, message: String):
 	manifest_progress_bar.visible = false
 	audio_manifest.disabled = false # Reabilita o botão
 
 	if success:
-		manifest_status_label.text = "Manifesto Gerado com Sucesso!"
+		manifest_status_label.text = "Manifest Generated Successfully!"
 		# Força a atualização da UI para mostrar as novas chaves
 		_on_audio_config_updated(audio_config)
 	else:
-		manifest_status_label.text = "Erro na Geração do Manifesto: %s" % message
+		manifest_status_label.text = "Manifest Generation Error: %s" % message
 
 	# Desconecta os sinais para evitar múltiplas conexões
 	if generate_manifest_script_instance.is_connected("progress_updated", Callable(self, "_on_manifest_progress_updated")):
@@ -355,9 +357,9 @@ func _on_playlists_item_list_selected(index: int):
 	_update_playlist_details_ui(playlist_key)
 
 func _on_add_playlist_button_pressed():
-	var new_playlist_key = "Nova Playlist %d" % (audio_config.music_playlists.size() + 1)
+	var new_playlist_key = "New Playlist %d" % (audio_config.music_playlists.size() + 1)
 	while audio_config.music_playlists.has(new_playlist_key):
-		new_playlist_key = "Nova Playlist %d" % (audio_config.music_playlists.size() + 1)
+		new_playlist_key = "New Playlist %d" % (audio_config.music_playlists.size() + 1)
 
 	audio_config.music_playlists[new_playlist_key] = {
 		"tracks": [],
@@ -449,6 +451,3 @@ func _update_playlist_details_ui(playlist_key: String):
 func _update_audio_config_playlists():
 	if audio_config:
 		audio_config.music_playlists = audio_config.music_playlists.duplicate(true) # Força a detecção de mudança
-
-func _on_save_feedback_timer_timeout():
-	save_feedback_label.visible = false

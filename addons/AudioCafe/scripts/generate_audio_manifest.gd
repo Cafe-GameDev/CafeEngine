@@ -8,14 +8,16 @@ const MANIFEST_SAVE_PATH = "res://addons/AudioCafe/resources/audio_manifest.tres
 var _total_files_to_scan = 0
 var _files_scanned = 0
 
-func _run(sfx_paths: Array[String], music_paths: Array[String]):
+@export var audio_config: AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
+
+func _run():
 	_total_files_to_scan = 0
 	_files_scanned = 0
 
 	# Primeiro, conta o total de arquivos para o progresso
-	for path in sfx_paths:
+	for path in audio_config.sfx_paths:
 		_count_files_in_directory(path)
-	for path in music_paths:
+	for path in audio_config.music_paths:
 		_count_files_in_directory(path)
 
 	print("Generating AudioManifest...")
@@ -24,7 +26,7 @@ func _run(sfx_paths: Array[String], music_paths: Array[String]):
 	var success = true
 	var message = ""
 
-	for path in sfx_paths:
+	for path in audio_config.sfx_paths:
 		if not _scan_and_populate_library(path, audio_manifest.sfx_data, "sfx"):
 			success = false
 			message = "Falha ao escanear caminhos SFX."
@@ -32,7 +34,7 @@ func _run(sfx_paths: Array[String], music_paths: Array[String]):
 		if not success:
 			break
 
-	for path in music_paths:
+	for path in audio_config.music_paths:
 		if not _scan_and_populate_library(path, audio_manifest.music_data, "music"):
 			success = false
 			message = "Falha ao escanear caminhos de Música."

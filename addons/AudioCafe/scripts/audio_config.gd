@@ -28,13 +28,13 @@ signal config_changed
 @export var default_hover_key: String = "ui_hover":
 	set(value):
 		if default_hover_key != value:
-			hover_key = value
+			default_hover_key = value
 			_save_and_emit_changed()
 
 @export var default_slider_key: String = "ui_slider_changed":
 	set(value):
 		if default_slider_key != value:
-			slider_key = value
+			default_slider_key = value
 			_save_and_emit_changed()
 
 @export_group("Volume Settings")

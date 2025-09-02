@@ -16,12 +16,9 @@ func _enter_tree():
 		print("CafeAudioManager Plugin: Autoload '%s' added." % AUTOLOAD_NAME)
 
 	# Carrega script do manifest
-	var manifest_script_res = load("res://addons/AudioCafe/scripts/generate_audio_manifest.gd")
-	if manifest_script_res:
-		generate_manifest_script_instance = manifest_script_res.new()
-	else:
-		push_error("generate_audio_manifest.gd script not found!")
-		return
+	generate_manifest_script_instance = EditorScript.new()
+	generate_manifest_script_instance.set_script(load("res://addons/AudioCafe/scripts/generate_audio_manifest.gd"))
+	
 
 	# Cria painel, evitando duplicatas
 	_create_plugin_panel()

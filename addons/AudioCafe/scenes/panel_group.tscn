@@ -28,221 +28,174 @@ tooltip_text = "Generates the AudioManifest.tres file."
 text = "Generate Audio Manifest"
 
 [node name="ManifestProgressBar" type="ProgressBar" parent="."]
-layout_mode = 2
 visible = false
+layout_mode = 2
 
 [node name="ManifestStatusLabel" type="Label" parent="."]
-layout_mode = 2
-text = ""
-horizontal_alignment = 1
 visible = false
+layout_mode = 2
+horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="."]
 layout_mode = 2
 
-[node name="SFXPathsSection" type="VBoxContainer" parent="."]
-layout_mode = 2
-
-[node name="SFXPathsLabel" type="Label" parent="SFXPathsSection"]
-layout_mode = 2
-text = "Caminhos SFX:"
-
-[node name="SFXPathsVBoxContainer" type="VBoxContainer" parent="SFXPathsSection"]
-layout_layout_mode = 2
-
-[node name="AddSFXPathButton" type="Button" parent="SFXPathsSection"]
-layout_mode = 2
-text = "Adicionar Caminho SFX"
-
-[node name="MusicPathsSection" type="VBoxContainer" parent="."]
-layout_mode = 2
-
-[node name="MusicPathsLabel" type="Label" parent="MusicPathsSection"]
-layout_mode = 2
-text = "Caminhos Música:"
-
-[node name="MusicPathsVBoxContainer" type="VBoxContainer" parent="MusicPathsSection"]
-layout_mode = 2
-
-[node name="AddMusicPathButton" type="Button" parent="MusicPathsSection"]
-layout_mode = 2
-text = "Adicionar Caminho Música"
-
 [node name="SFXFolderDialog" type="FileDialog" parent="."]
-access = 2
+title = "Open a Directory"
+ok_button_text = "Select Current Folder"
 file_mode = 2
-title = "Selecionar Pasta de SFX"
+access = 2
 
 [node name="MusicFolderDialog" type="FileDialog" parent="."]
-access = 2
+title = "Open a Directory"
+ok_button_text = "Select Current Folder"
 file_mode = 2
-title = "Selecionar Pasta de Música"
-
-[node name="DefaultClickKeyContainer" type="HBoxContainer" parent="."]
-layout_mode = 2
+access = 2
 
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
+current_tab = 0
+deselect_enabled = true
 
-[node name="Caminhos" type="VBoxContainer" parent="TabContainer"]
+[node name="Paths" type="VBoxContainer" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="SFXPathsSection" type="VBoxContainer" parent="TabContainer/Paths"]
 layout_mode = 2
 
-[node name="SFXPathsSection" type="VBoxContainer" parent="TabContainer/Caminhos"]
+[node name="SFXPathsLabel" type="Label" parent="TabContainer/Paths/SFXPathsSection"]
+layout_mode = 2
+text = "SFX Paths:"
+
+[node name="SFXPathsVBoxContainer" type="VBoxContainer" parent="TabContainer/Paths/SFXPathsSection"]
 layout_mode = 2
 
-[node name="SFXPathsLabel" type="Label" parent="TabContainer/Caminhos/SFXPathsSection"]
+[node name="AddSFXPathButton" type="Button" parent="TabContainer/Paths/SFXPathsSection"]
 layout_mode = 2
-text = "Caminhos SFX:"
+text = "Add SFX Path"
 
-[node name="SFXPathsVBoxContainer" type="VBoxContainer" parent="TabContainer/Caminhos/SFXPathsSection"]
-layout_layout_mode = 2
 
-[node name="AddSFXPathButton" type="Button" parent="TabContainer/Caminhos/SFXPathsSection"]
-layout_mode = 2
-text = "Adicionar Caminho SFX"
-
-[node name="MusicPathsSection" type="VBoxContainer" parent="TabContainer/Caminhos"]
+[node name="MusicPathsSection" type="VBoxContainer" parent="TabContainer/Paths"]
 layout_mode = 2
 
-[node name="MusicPathsLabel" type="Label" parent="TabContainer/Caminhos/MusicPathsSection"]
+[node name="MusicPathsLabel" type="Label" parent="TabContainer/Paths/MusicPathsSection"]
 layout_mode = 2
-text = "Caminhos Música:"
+text = "Music Paths:"
 
-[node name="MusicPathsVBoxContainer" type="VBoxContainer" parent="TabContainer/Caminhos/MusicPathsSection"]
-layout_mode = 2
-
-[node name="AddMusicPathButton" type="Button" parent="TabContainer/Caminhos/MusicPathsSection"]
-layout_mode = 2
-text = "Adicionar Caminho Música"
-
-[node name="Chaves Padrão" type="VBoxContainer" parent="TabContainer"]
+[node name="MusicPathsVBoxContainer" type="VBoxContainer" parent="TabContainer/Paths/MusicPathsSection"]
 layout_mode = 2
 
-[node name="DefaultClickKeyContainer" type="HBoxContainer" parent="TabContainer/Chaves Padrão"]
+[node name="AddMusicPathButton" type="Button" parent="TabContainer/Paths/MusicPathsSection"]
+layout_mode = 2
+text = "Add Music Path"
+
+
+[node name="DefaultKeys" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="DefaultClickKeyContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
 layout_mode = 2
 
-[node name="DefaultClickKeyLabel" type="Label" parent="TabContainer/Chaves Padrão/DefaultClickKeyContainer"]
-layout_mode = 2
-text = "Chave Click Padrão:
-
-[node name="DefaultClickKeyLineEdit" type="LineEdit" parent="TabContainer/Chaves Padrão/DefaultClickKeyContainer"]
+[node name="DefaultClickKeyLabel" type="Label" parent="TabContainer/DefaultKeys/DefaultClickKeyContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "The default SFX key for UI click events."
 text = "ui_click"
-placeholder_text = "ui_click"
-tooltip_text = "A chave SFX padrão para eventos de clique na UI."
 
-[node name="DefaultHoverKeyContainer" type="HBoxContainer" parent="TabContainer/Chaves Padrão"]
+[node name="DefaultHoverKeyContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
 layout_mode = 2
 
-[node name="DefaultHoverKeyLabel" type="Label" parent="TabContainer/Chaves Padrão/DefaultHoverKeyContainer"]
+[node name="DefaultHoverKeyLabel" type="Label" parent="TabContainer/DefaultKeys/DefaultHoverKeyContainer"]
 layout_mode = 2
-text = "Chave Hover Padrão:"
+text = "Default Hover Key:"
 
-[node name="DefaultHoverKeyLineEdit" type="LineEdit" parent="TabContainer/Chaves Padrão/DefaultHoverKeyContainer"]
+[node name="DefaultHoverKeyLineEdit" type="LineEdit" parent="TabContainer/DefaultKeys/DefaultHoverKeyContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "The default SFX key for UI hover events."
 text = "ui_hover"
 placeholder_text = "ui_hover"
-tooltip_text = "A chave SFX padrão para eventos de hover (passar o mouse) na UI."
 
-[node name="DefaultSliderKeyContainer" type="HBoxContainer" parent="TabContainer/Chaves Padrão"]
+[node name="DefaultSliderKeyContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
 layout_mode = 2
 
-[node name="DefaultSliderKeyLabel" type="Label" parent="TabContainer/Chaves Padrão/DefaultSliderKeyContainer"]
+[node name="DefaultSliderKeyLabel" type="Label" parent="TabContainer/DefaultKeys/DefaultSliderKeyContainer"]
 layout_mode = 2
-text = "Chave Slider Padrão:"
+text = "Default Slider Key:"
 
-[node name="DefaultSliderKeyLineEdit" type="LineEdit" parent="TabContainer/Chaves Padrão/DefaultSliderKeyContainer"]
+[node name="DefaultSliderKeyLineEdit" type="LineEdit" parent="TabContainer/DefaultKeys/DefaultSliderKeyContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "The default SFX key for value change events in sliders and similar UI elements."
 text = "ui_slider_changed"
 placeholder_text = "ui_slider_changed"
-tooltip_text = "A chave SFX padrão para eventos de mudança de valor em sliders e elementos similares da UI."
 
-[node name="HSeparator2" type="HSeparator" parent="TabContainer/Chaves Padrão"]
+[node name="HSeparator2" type="HSeparator" parent="TabContainer/DefaultKeys"]
 layout_mode = 2
 
-[node name="MasterVolumeContainer" type="HBoxContainer" parent="TabContainer/Chaves Padrão"]
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
+layout_direction = 2
 layout_mode = 2
+alignment = 1
 
-[node name="MasterVolumeLabel" type="Label" parent="TabContainer/Chaves Padrão/MasterVolumeContainer"]
+[node name="MasterVolumeLabel" type="Label" parent="TabContainer/DefaultKeys/MasterVolumeContainer"]
+custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
-text = "Volume Mestre:"
+text = "Master Volume:"
 
-[node name="MasterVolumeSlider" type="HSlider" parent="TabContainer/Chaves Padrão/MasterVolumeContainer"]
+[node name="MasterVolumeSlider" type="HSlider" parent="TabContainer/DefaultKeys/MasterVolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 max_value = 1.0
 step = 0.01
+value = 1.0
 
-[node name="MasterVolumeValueLabel" type="Label" parent="TabContainer/Chaves Padrão/MasterVolumeContainer"]
+[node name="MasterVolumeValueLabel" type="Label" parent="TabContainer/DefaultKeys/MasterVolumeContainer"]
 layout_mode = 2
 text = "100%"
 
-[node name="SFXVolumeContainer" type="HBoxContainer" parent="TabContainer/Chaves Padrão"]
+[node name="SFXVolumeContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
 layout_mode = 2
 
-[node name="SFXVolumeLabel" type="Label" parent="TabContainer/Chaves Padrão/SFXVolumeContainer"]
+[node name="SFXVolumeLabel" type="Label" parent="TabContainer/DefaultKeys/SFXVolumeContainer"]
+custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
-text = "Volume SFX:"
+text = "SFX Volume:"
 
-[node name="SFXVolumeSlider" type="HSlider" parent="TabContainer/Chaves Padrão/SFXVolumeContainer"]
+[node name="SFXVolumeSlider" type="HSlider" parent="TabContainer/DefaultKeys/SFXVolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 max_value = 1.0
 step = 0.01
+value = 1.0
 
-[node name="SFXVolumeValueLabel" type="Label" parent="TabContainer/Chaves Padrão/SFXVolumeContainer"]
+[node name="SFXVolumeValueLabel" type="Label" parent="TabContainer/DefaultKeys/SFXVolumeContainer"]
 layout_mode = 2
 text = "100%"
 
-[node name="MusicVolumeContainer" type="HBoxContainer" parent="TabContainer/Chaves Padrão"]
+[node name="AvailableMusic" type="VBoxContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
-[node name="MusicVolumeLabel" type="Label" parent="TabContainer/Chaves Padrão/MusicVolumeContainer"]
+[node name="AvailableSFX" type="VBoxContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
-text = "Volume Música:"
-
-[node name="MusicVolumeSlider" type="HSlider" parent="TabContainer/Chaves Padrão/MusicVolumeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-max_value = 1.0
-step = 0.01
-
-[node name="MusicVolumeValueLabel" type="Label" parent="TabContainer/Chaves Padrão/MusicVolumeContainer"]
-layout_mode = 2
-text = "100%"
-
-[node name="Músicas Disponíveis" type="VBoxContainer" parent="TabContainer"]
-layout_mode = 2
-
-[node name="MusicKeysLabel" type="Label" parent="TabContainer/Músicas Disponíveis"]
-layout_mode = 2
-text = "Chaves de Música Disponíveis:"
-
-[node name="MusicKeysItemList" type="ItemList" parent="TabContainer/Músicas Disponíveis"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="SFX Disponíveis" type="VBoxContainer" parent="TabContainer"]
-layout_mode = 2
-
-[node name="SFXKeysLabel" type="Label" parent="TabContainer/SFX Disponíveis"]
-layout_mode = 2
-text = "Chaves SFX Disponíveis:"
-
-[node name="SFXKeysItemList" type="ItemList" parent="TabContainer/SFX Disponíveis"]
-layout_mode = 2
-size_flags_vertical = 3
+metadata/_tab_index = 3
 
 [node name="Playlists" type="VBoxContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
+metadata/_tab_index = 4
 
 [node name="PlaylistsLabel" type="Label" parent="TabContainer/Playlists"]
 layout_mode = 2
-text = "Playlists de Música:"
+text = "Music Playlists:"
 
 [node name="PlaylistsItemList" type="ItemList" parent="TabContainer/Playlists"]
 layout_mode = 2
@@ -250,11 +203,11 @@ size_flags_vertical = 3
 
 [node name="AddPlaylistButton" type="Button" parent="TabContainer/Playlists"]
 layout_mode = 2
-text = "Adicionar Playlist"
+text = "Add Playlist"
 
 [node name="RemovePlaylistButton" type="Button" parent="TabContainer/Playlists"]
 layout_mode = 2
-text = "Remover Playlist Selecionada"
+text = "Remove Selected Playlist"
 
 [node name="PlaylistDetailsSection" type="VBoxContainer" parent="TabContainer/Playlists"]
 layout_mode = 2
@@ -264,7 +217,7 @@ layout_mode = 2
 
 [node name="PlaylistNameLabel" type="Label" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaylistNameContainer"]
 layout_mode = 2
-text = "Nome da Playlist:"
+text = "Playlist Name:"
 
 [node name="PlaylistNameLineEdit" type="LineEdit" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaylistNameContainer"]
 layout_mode = 2
@@ -275,23 +228,23 @@ layout_mode = 2
 
 [node name="PlaybackModeLabel" type="Label" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaybackModeContainer"]
 layout_mode = 2
-text = "Modo de Reprodução:"
+text = "Playback Mode:"
 
 [node name="PlaybackModeOptionButton" type="OptionButton" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaybackModeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 3
 selected = 0
-popup/item_0/text = "Sequencial"
+item_count = 3
+popup/item_0/text = "Sequential"
 popup/item_0/id = 0
-popup/item_1/text = "Aleatório"
+popup/item_1/text = "Random"
 popup/item_1/id = 1
-popup/item_2/text = "Repetir Um"
+popup/item_2/text = "Repeat One"
 popup/item_2/id = 2
 
 [node name="PlaylistTracksLabel" type="Label" parent="TabContainer/Playlists/PlaylistDetailsSection"]
 layout_mode = 2
-text = "Faixas da Playlist:"
+text = "Playlist Tracks:"
 
 [node name="PlaylistTracksItemList" type="ItemList" parent="TabContainer/Playlists/PlaylistDetailsSection"]
 layout_mode = 2
@@ -303,24 +256,80 @@ layout_mode = 2
 [node name="AddTrackButton" type="Button" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Adicionar Faixa"
+text = "Add Track"
 
 [node name="RemoveTrackButton" type="Button" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Remover Faixa"
+text = "Remove Track"
+
+[node name="TabContainer_Caminhos_SFXPathsSection#SFXPathsLabel" type="Label" parent="."]
+layout_mode = 2
+text = "SFX Paths:"
+
+[node name="TabContainer_Caminhos_SFXPathsSection#SFXPathsVBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TabContainer_Caminhos_SFXPathsSection#AddSFXPathButton" type="Button" parent="."]
+layout_mode = 2
+text = "Add SFX Path"
+
+[node name="TabContainer_Caminhos_MusicPathsSection#MusicPathsLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Music Paths:"
+
+[node name="TabContainer_Caminhos_MusicPathsSection#MusicPathsVBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TabContainer_Caminhos_MusicPathsSection#AddMusicPathButton" type="Button" parent="."]
+layout_mode = 2
+text = "Add Music Path"
+
+[node name="TabContainer_Chaves Padrão#MusicVolumeContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TabContainer_Chaves Padrão_MusicVolumeContainer#MusicVolumeLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Music Volume:"
+
+[node name="TabContainer_Chaves Padrão_MusicVolumeContainer#MusicVolumeSlider" type="HSlider" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="TabContainer_Chaves Padrão_MusicVolumeContainer#MusicVolumeValueLabel" type="Label" parent="."]
+layout_mode = 2
+text = "100%"
+
+[node name="TabContainer_Músicas Disponíveis#MusicKeysLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Available Music Keys:"
+
+[node name="TabContainer_Músicas Disponíveis#MusicKeysItemList" type="ItemList" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TabContainer_SFX Disponíveis#SFXKeysLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Available SFX Keys:"
+
+[node name="TabContainer_SFX Disponíveis#SFXKeysItemList" type="ItemList" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="MusicTrackFileDialog" type="FileDialog" parent="."]
-access = 2
+title = "Open a File"
+ok_button_text = "Open"
 file_mode = 0
-title = "Selecionar Faixa de Música"
+access = 2
 filters = PackedStringArray("*.ogg,*.wav")
 
 [node name="SaveFeedbackLabel" type="Label" parent="."]
 layout_mode = 2
-text = "Salvo!"
+text = "Saved!"
 horizontal_alignment = 1
-visible = false
 
 [node name="SaveFeedbackTimer" type="Timer" parent="."]
 wait_time = 1.5
