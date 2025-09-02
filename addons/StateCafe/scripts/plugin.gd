@@ -4,7 +4,7 @@ extends EditorPlugin
 const AUTOLOAD_NAME = "StateCafe"
 const AUTOLOAD_PATH = "res://addons/StateCafe/scripts/state_cafe.gd"
 const PANEL_SCENE_PATH = "res://addons/StateCafe/scenes/cafe_panel.tscn"
-const GROUP_SCENE_PATH = "res://addons/StateCafe/scenes/panel_group.tscn"
+const GROUP_SCENE_PATH = "res://addons/StateCafe/scenes/state_panel.tscn"
 var plugin_panel: VBoxContainer
 
 func _enter_tree():
