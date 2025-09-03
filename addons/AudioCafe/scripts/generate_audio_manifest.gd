@@ -101,14 +101,14 @@ func _scan_and_populate_library(current_path: String, library: Dictionary, audio
 				var final_key = ""
 
 				if not relative_dir_path.is_empty():
-					final_key = relative_dir_path.replace("/", "_").to_lower() + "_" + file_or_dir_name.get_basename().to_lower()
+					final_key = relative_dir_path.replace("/", "_").to_lower()
 				else:
-					final_key = file_or_dir_name.get_basename().to_lower()
+					final_key = file_or_dir_name.get_basename().to_lower() # Fallback if no meaningful directory structure
 
 				if not library.has(final_key):
 					library[final_key] = []
 				library[final_key].append("uid://%s" % str(uid))
-				print("  - Added %s audio '%s' with UID: uid://%s" % [audio_type, final_key, str(uid)])
+				print("  - Added %s audio to playlist '%s' with UID: uid://%s" % [audio_type, final_key, str(uid)])
 		file_or_dir_name = dir.get_next()
 	return true
 

@@ -48,7 +48,7 @@ extends VBoxContainer
 var generate_manifest_script_instance: EditorScript
 var editor_interface: EditorInterface
 
-const VALID_COLOR = Color(0.1, 0.1, 0.1, 1.0) # Cor de borda padrão
+const VALID_COLOR = Color(1.0, 1.0, 1.0, 1.0) # Cor de borda padrão (Branco)
 const INVALID_COLOR = Color(1.0, 0.2, 0.2, 1.0) # Cor de borda para erro
 
 func set_editor_interface(interface: EditorInterface):
@@ -107,9 +107,13 @@ func _load_config_to_ui():
 		if sfx_paths_vbox_container:
 			for child in sfx_paths_vbox_container.get_children():
 				child.queue_free()
+			for path in audio_config.sfx_paths:
+				_create_path_entry(path, true)
 		if music_paths_vbox_container:
 			for child in music_paths_vbox_container.get_children():
 				child.queue_free()
+			for path in audio_config.music_paths:
+				_create_path_entry(path, false)
 
 		print("[_load_config_to_ui] default_click_key_line_edit: ", default_click_key_line_edit)
 		print("[_load_config_to_ui] default_hover_key_line_edit: ", default_hover_key_line_edit)
@@ -128,11 +132,13 @@ func _load_config_to_ui():
 
 		# Preenche os ItemList com as chaves de música e SFX
 		if music_keys_item_list: music_keys_item_list.clear()
+		print("DEBUG: _load_config_to_ui - music_data keys: ", audio_config.music_data.keys())
 		if music_keys_item_list:
 			for key in audio_config.music_data.keys():
 				music_keys_item_list.add_item(key)
 
 		if sfx_keys_item_list: sfx_keys_item_list.clear()
+		print("DEBUG: _load_config_to_ui - sfx_data keys: ", audio_config.sfx_data.keys())
 		if sfx_keys_item_list:
 			for key in audio_config.sfx_data.keys():
 				sfx_keys_item_list.add_item(key)
@@ -257,6 +263,9 @@ func _on_path_line_edit_text_changed(new_text: String, line_edit: LineEdit, is_s
 func _validate_path_line_edit(line_edit: LineEdit):
 	var is_valid = true
 	var error_message = ""
+
+	print("DEBUG: Validating path: ", line_edit.text)
+	print("DEBUG: Begins with res://? ", line_edit.text.begins_with("res://"))
 
 	if line_edit.text.is_empty():
 		is_valid = false
