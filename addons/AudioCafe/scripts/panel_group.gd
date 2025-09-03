@@ -2,44 +2,46 @@
 extends VBoxContainer
 @onready var audio_manifest: Button = $AudioManifest
 
-@onready var sfx_paths_vbox_container: VBoxContainer = %"TabContainer/Paths/SFXPathsSection"
-@onready var add_sfx_path_button: Button = %"TabContainer/Paths/SFXPathsSection/AddSFXPathButton"
+@onready var tab_container: TabContainer = $TabContainer
+
+@onready var sfx_paths_vbox_container: VBoxContainer = tab_container.get_node("Paths/SFXPathsSection/SFXPathsVBoxContainer")
+@onready var add_sfx_path_button: Button = tab_container.get_node("Paths/SFXPathsSection/AddSFXPathButton")
 @onready var sfx_folder_dialog: FileDialog = $SFXFolderDialog
 
-@onready var music_paths_vbox_container: VBoxContainer = %"TabContainer/Paths/MusicPathsSection"
-@onready var add_music_path_button: Button = %"TabContainer/Paths/MusicPathsSection/AddMusicPathButton"
+@onready var music_paths_vbox_container: VBoxContainer = tab_container.get_node("Paths/MusicPathsSection/MusicPathsVBoxContainer")
+@onready var add_music_path_button: Button = tab_container.get_node("Paths/MusicPathsSection/AddMusicPathButton")
 @onready var music_folder_dialog: FileDialog = $MusicFolderDialog
 
-@onready var default_click_key_line_edit: LineEdit = %"TabContainer/DefaultKeys/DefaultClickKeyContainer/DefaultClickKeyLineEdit"
-@onready var default_hover_key_line_edit: LineEdit = %"TabContainer/DefaultKeys/DefaultHoverKeyContainer/DefaultHoverKeyLineEdit"
-@onready var default_slider_key_line_edit: LineEdit = %"TabContainer/DefaultKeys/DefaultSliderKeyContainer/DefaultSliderKeyLineEdit"
+@onready var default_click_key_line_edit: LineEdit = tab_container.get_node("DefaultKeys/DefaultClickKeyContainer/DefaultClickKeyLineEdit")
+@onready var default_hover_key_line_edit: LineEdit = tab_container.get_node("DefaultKeys/DefaultHoverKeyContainer/DefaultHoverKeyLineEdit")
+@onready var default_slider_key_line_edit: LineEdit = tab_container.get_node("DefaultKeys/DefaultSliderKeyContainer/DefaultSliderKeyLineEdit")
 
 @onready var save_feedback_label: Label = $SaveFeedbackLabel
 @onready var save_feedback_timer: Timer = $SaveFeedbackTimer
 
-@onready var master_volume_slider: HSlider = %"TabContainer/DefaultKeys/MasterVolumeContainer/MasterVolumeSlider"
-@onready var master_volume_value_label: Label = %"TabContainer/DefaultKeys/MasterVolumeContainer/MasterVolumeValueLabel"
-@onready var sfx_volume_slider: HSlider = %"TabContainer/DefaultKeys/SFXVolumeContainer/SFXVolumeSlider"
-@onready var sfx_volume_value_label: Label = %"TabContainer/DefaultKeys/SFXVolumeContainer/SFXVolumeValueLabel"
-@onready var music_volume_slider: HSlider = %"TabContainer/DefaultKeys/MusicVolumeContainer/MusicVolumeSlider"
-@onready var music_volume_value_label: Label = %"TabContainer/DefaultKeys/MusicVolumeContainer/MusicVolumeValueLabel"
+@onready var master_volume_slider: HSlider = tab_container.get_node("DefaultKeys/MasterVolumeContainer/MasterVolumeSlider")
+@onready var master_volume_value_label: Label = tab_container.get_node("DefaultKeys/MasterVolumeContainer/MasterVolumeValueLabel")
+@onready var sfx_volume_slider: HSlider = tab_container.get_node("DefaultKeys/SFXVolumeContainer/SFXVolumeSlider")
+@onready var sfx_volume_value_label: Label = tab_container.get_node("DefaultKeys/SFXVolumeContainer/SFXVolumeValueLabel")
+@onready var music_volume_slider: HSlider = tab_container.get_node("DefaultKeys/MusicVolumeContainer/MusicVolumeSlider")
+@onready var music_volume_value_label: Label = tab_container.get_node("DefaultKeys/MusicVolumeContainer/MusicVolumeValueLabel")
 
-@onready var music_keys_item_list: ItemList = %"TabContainer/AvailableMusic/MusicKeysItemList"
-@onready var sfx_keys_item_list: ItemList = %"TabContainer/AvailableSFX/SFXKeysItemList"
+@onready var music_keys_item_list: ItemList = tab_container.get_node("AvailableMusic/MusicKeysItemList")
+@onready var sfx_keys_item_list: ItemList = tab_container.get_node("AvailableSFX/SFXKeysItemList")
 
 @onready var manifest_progress_bar: ProgressBar = $ManifestProgressBar
 @onready var manifest_status_label: Label = $ManifestStatusLabel
 
-@onready var playlists_item_list: ItemList = %"TabContainer/Playlists/PlaylistsItemList"
-@onready var add_playlist_button: Button = %"TabContainer/Playlists/AddPlaylistButton"
-@onready var remove_playlist_button: Button = %"TabContainer/Playlists/RemovePlaylistButton"
-@onready var playlist_name_line_edit: LineEdit = %"TabContainer/Playlists/PlaylistDetailsSection/PlaylistNameContainer/PlaylistNameLineEdit"
-@onready var playback_mode_option_button: OptionButton = %"TabContainer/Playlists/PlaylistDetailsSection/PlaybackModeContainer/PlaybackModeOptionButton"
-@onready var playlist_tracks_item_list: ItemList = %"TabContainer/Playlists/PlaylistDetailsSection/PlaylistTracksItemList"
-@onready var add_track_button: Button = %"TabContainer/Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer/AddTrackButton"
-@onready var remove_track_button: Button = %"TabContainer/Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer/RemoveTrackButton"
+@onready var playlists_item_list: ItemList = tab_container.get_node("Playlists/PlaylistsItemList")
+@onready var add_playlist_button: Button = tab_container.get_node("Playlists/AddPlaylistButton")
+@onready var remove_playlist_button: Button = tab_container.get_node("Playlists/RemovePlaylistButton")
+@onready var playlist_name_line_edit: LineEdit = tab_container.get_node("Playlists/PlaylistDetailsSection/PlaylistNameContainer/PlaylistNameLineEdit")
+@onready var playback_mode_option_button: OptionButton = tab_container.get_node("Playlists/PlaylistDetailsSection/PlaybackModeContainer/PlaybackModeOptionButton")
+@onready var playlist_tracks_item_list: ItemList = tab_container.get_node("Playlists/PlaylistDetailsSection/PlaylistTracksItemList")
+@onready var add_track_button: Button = tab_container.get_node("Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer/AddTrackButton")
+@onready var remove_track_button: Button = tab_container.get_node("Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer/RemoveTrackButton")
 @onready var music_track_file_dialog: FileDialog = $MusicTrackFileDialog
-@onready var playlist_details_section: VBoxContainer = %"TabContainer/Playlists/PlaylistDetailsSection"
+@onready var playlist_details_section: VBoxContainer = tab_container.get_node("Playlists/PlaylistDetailsSection")
 
 @export var audio_config: AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
 
@@ -53,7 +55,7 @@ func set_editor_interface(interface: EditorInterface):
 	editor_interface = interface
 
 func set_audio_config(config: AudioConfig):
-	if audio_config:
+	if audio_config and audio_config.is_connected("config_changed", Callable(self, "_show_save_feedback")):
 		audio_config.disconnect("config_changed", Callable(self, "_show_save_feedback"))
 	audio_config = config
 	if audio_config:
@@ -65,6 +67,7 @@ func _show_save_feedback():
 	save_feedback_timer.start()
 
 func _ready():
+	print("[_ready] tab_container: ", tab_container)
 	# Conecta ao sinal de atualização do AudioConfig do CafeAudioManager
 	if CafeAudioManager: # Verifica se o autoload está disponível
 		CafeAudioManager.audio_config_updated.connect(Callable(self, "_on_audio_config_updated"))
@@ -97,52 +100,51 @@ func _ready():
 		music_track_file_dialog.file_selected.connect(Callable(self, "_on_music_track_file_dialog_file_selected"))
 
 func _load_config_to_ui():
+	print("[_load_config_to_ui] sfx_paths_vbox_container: ", sfx_paths_vbox_container)
+	print("[_load_config_to_ui] music_paths_vbox_container: ", music_paths_vbox_container)
 	if audio_config:
 		# Limpa as entradas de caminho existentes
-		for child in sfx_paths_vbox_container.get_children():
-			child.queue_free()
-		for child in music_paths_vbox_container.get_children():
-			child.queue_free()
+		if sfx_paths_vbox_container:
+			for child in sfx_paths_vbox_container.get_children():
+				child.queue_free()
+		if music_paths_vbox_container:
+			for child in music_paths_vbox_container.get_children():
+				child.queue_free()
 
-		# Preenche os caminhos SFX
-		for path in audio_config.sfx_paths:
-			_create_path_entry(path, true)
-		if audio_config.sfx_paths.is_empty(): # Adiciona um vazio se não houver nenhum
-			_create_path_entry("", true)
+		print("[_load_config_to_ui] default_click_key_line_edit: ", default_click_key_line_edit)
+		print("[_load_config_to_ui] default_hover_key_line_edit: ", default_hover_key_line_edit)
+		print("[_load_config_to_ui] default_slider_key_line_edit: ", default_slider_key_line_edit)
 
-		# Preenche os caminhos de Música
-		for path in audio_config.music_paths:
-			_create_path_entry(path, false)
-		if audio_config.music_paths.is_empty(): # Adiciona um vazio se não houver nenhum
-			_create_path_entry("", false)
+		if default_click_key_line_edit: default_click_key_line_edit.text = audio_config.default_click_key
+		if default_hover_key_line_edit: default_hover_key_line_edit.text = audio_config.default_hover_key
+		if default_slider_key_line_edit: default_slider_key_line_edit.text = audio_config.default_slider_key
 
-		default_click_key_line_edit.text = audio_config.default_click_key
-		default_hover_key_line_edit.text = audio_config.default_hover_key
-		default_slider_key_line_edit.text = audio_config.default_slider_key
-
-		master_volume_slider.value = audio_config.master_volume
-		_update_volume_label(master_volume_value_label, audio_config.master_volume)
-		sfx_volume_slider.value = audio_config.sfx_volume
-		_update_volume_label(sfx_volume_value_label, audio_config.sfx_volume)
-		music_volume_slider.value = audio_config.music_volume
-		_update_volume_label(music_volume_value_label, audio_config.music_volume)
+		if master_volume_slider: master_volume_slider.value = audio_config.master_volume
+		if master_volume_value_label: _update_volume_label(master_volume_value_label, audio_config.master_volume)
+		if sfx_volume_slider: sfx_volume_slider.value = audio_config.sfx_volume
+		if sfx_volume_value_label: _update_volume_label(sfx_volume_value_label, audio_config.sfx_volume)
+		if music_volume_slider: music_volume_slider.value = audio_config.music_volume
+		if music_volume_value_label: _update_volume_label(music_volume_value_label, audio_config.music_volume)
 
 		# Preenche os ItemList com as chaves de música e SFX
-		music_keys_item_list.clear()
-		for key in audio_config.music_data.keys():
-			music_keys_item_list.add_item(key)
+		if music_keys_item_list: music_keys_item_list.clear()
+		if music_keys_item_list:
+			for key in audio_config.music_data.keys():
+				music_keys_item_list.add_item(key)
 
-		sfx_keys_item_list.clear()
-		for key in audio_config.sfx_data.keys():
-			sfx_keys_item_list.add_item(key)
+		if sfx_keys_item_list: sfx_keys_item_list.clear()
+		if sfx_keys_item_list:
+			for key in audio_config.sfx_data.keys():
+				sfx_keys_item_list.add_item(key)
 
 		# Preenche o ItemList de playlists
-		playlists_item_list.clear()
-		for key in audio_config.music_playlists.keys():
-			playlists_item_list.add_item(key)
+		if playlists_item_list: playlists_item_list.clear()
+		if playlists_item_list:
+			for key in audio_config.music_playlists.keys():
+				playlists_item_list.add_item(key)
 
 		# Esconde a seção de detalhes da playlist por padrão
-		playlist_details_section.visible = false
+		if playlist_details_section: playlist_details_section.visible = false
 
 func _connect_ui_signals():
 	default_click_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_click_key"))
@@ -208,10 +210,13 @@ func _create_path_entry(path_value: String, is_sfx: bool):
 	remove_button.pressed.connect(Callable(self, "_on_remove_path_button_pressed").bind(path_entry, is_sfx))
 	path_entry.add_child(remove_button)
 
+	print("[_create_path_entry] sfx_paths_vbox_container: ", sfx_paths_vbox_container)
+	print("[_create_path_entry] music_paths_vbox_container: ", music_paths_vbox_container)
+
 	if is_sfx:
-		sfx_paths_vbox_container.add_child(path_entry)
+		sfx_paths_vbox_container.add_child(path_entry) # Line 219
 	else:
-		music_paths_vbox_container.add_child(path_entry)
+		music_paths_vbox_container.add_child(path_entry) # Line 221
 
 func _on_add_sfx_path_button_pressed():
 	_create_path_entry("", true)
