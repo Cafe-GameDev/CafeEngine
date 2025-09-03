@@ -239,13 +239,15 @@ func _on_browse_button_pressed(line_edit: LineEdit, is_sfx: bool):
 func _on_sfx_folder_dialog_dir_selected(dir: String):
 	var target_line_edit: LineEdit = sfx_folder_dialog.get_meta("target_line_edit")
 	if target_line_edit:
-		target_line_edit.text = dir
+		var localized_path = ProjectSettings.localize_path(dir)
+		target_line_edit.text = localized_path
 		_update_audio_config_paths()
 
 func _on_music_folder_dialog_dir_selected(dir: String):
 	var target_line_edit: LineEdit = music_folder_dialog.get_meta("target_line_edit")
 	if target_line_edit:
-		target_line_edit.text = dir
+		var localized_path = ProjectSettings.localize_path(dir)
+		target_line_edit.text = localized_path
 		_update_audio_config_paths()
 
 func _on_path_line_edit_text_changed(new_text: String, line_edit: LineEdit, is_sfx: bool):
@@ -432,7 +434,8 @@ func _on_remove_track_button_pressed():
 func _on_music_track_file_dialog_file_selected(path: String):
 	var playlist_key = music_track_file_dialog.get_meta("target_playlist_key")
 	if playlist_key and audio_config.music_playlists.has(playlist_key):
-		audio_config.music_playlists[playlist_key]["tracks"].append(path)
+		var localized_path = ProjectSettings.localize_path(path)
+		audio_config.music_playlists[playlist_key]["tracks"].append(localized_path)
 		_update_audio_config_playlists()
 		_update_playlist_details_ui(playlist_key) # Atualiza a UI de detalhes
 
