@@ -68,8 +68,4 @@ enum PlaybackMode { SEQUENTIAL, RANDOM, REPEAT_ONE }
 func _save_and_emit_changed():
 	# Notifica o editor que o recurso foi modificado
 	emit_changed()
-	# Garante que o recurso seja salvo no disco, se tiver um caminho válido
-	if not resource_path.is_empty():
-		if ResourceSaver.save(self, resource_path) != OK:
-			push_error("Falha ao salvar AudioConfig.tres")
 	emit_signal("config_changed")

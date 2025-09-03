@@ -54,10 +54,11 @@ access = 2
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 2
 deselect_enabled = true
 
 [node name="Paths" type="VBoxContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -101,6 +102,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "The default SFX key for UI click events."
+mouse_filter = 1
 text = "Default Click Key:"
 
 [node name="DefaultClickKeyLineEdit" type="LineEdit" parent="TabContainer/DefaultKeys/DefaultClickKeyContainer"]
@@ -157,11 +159,11 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 1.0
 step = 0.01
-value = 1.0
+value = 0.91
 
 [node name="MasterVolumeValueLabel" type="Label" parent="TabContainer/DefaultKeys/MasterVolumeContainer"]
 layout_mode = 2
-text = "100%"
+text = "91%"
 
 [node name="SFXVolumeContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
 layout_mode = 2
@@ -204,7 +206,6 @@ layout_mode = 2
 text = "100%"
 
 [node name="AvailableMusic" type="VBoxContainer" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -215,6 +216,12 @@ text = "Available Music Keys:"
 [node name="MusicKeysItemList" type="ItemList" parent="TabContainer/AvailableMusic"]
 layout_mode = 2
 size_flags_vertical = 3
+item_count = 5
+item_0/text = "8-bit_jingles"
+item_1/text = "hit_jingles"
+item_2/text = "pizzicato_jingles"
+item_3/text = "sax_jingles"
+item_4/text = "steel_jingles"
 
 [node name="AvailableSFX" type="VBoxContainer" parent="TabContainer"]
 visible = false
@@ -228,6 +235,32 @@ text = "Available SFX Keys:"
 [node name="SFXKeysItemList" type="ItemList" parent="TabContainer/AvailableSFX"]
 layout_mode = 2
 size_flags_vertical = 3
+item_count = 25
+item_0/text = "interface_back"
+item_1/text = "interface_bong"
+item_2/text = "interface_click"
+item_3/text = "interface_close"
+item_4/text = "interface_confirmation"
+item_5/text = "interface_drop"
+item_6/text = "interface_error"
+item_7/text = "interface_glass"
+item_8/text = "interface_glitch"
+item_9/text = "interface_maximize"
+item_10/text = "interface_minimize"
+item_11/text = "interface_open"
+item_12/text = "interface_pluck"
+item_13/text = "interface_question"
+item_14/text = "interface_scratch"
+item_15/text = "interface_scroll"
+item_16/text = "interface_select"
+item_17/text = "interface_switch"
+item_18/text = "interface_tick"
+item_19/text = "interface_toggle"
+item_20/text = "ui_click"
+item_21/text = "ui_mouseclick"
+item_22/text = "ui_mouserelease"
+item_23/text = "ui_rollover"
+item_24/text = "ui_switch"
 
 [node name="Playlists" type="VBoxContainer" parent="TabContainer"]
 visible = false
@@ -251,6 +284,7 @@ layout_mode = 2
 text = "Remove Selected Playlist"
 
 [node name="PlaylistDetailsSection" type="VBoxContainer" parent="TabContainer/Playlists"]
+visible = false
 layout_mode = 2
 
 [node name="PlaylistNameContainer" type="HBoxContainer" parent="TabContainer/Playlists/PlaylistDetailsSection"]

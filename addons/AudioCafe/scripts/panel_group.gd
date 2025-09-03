@@ -48,6 +48,7 @@ extends VBoxContainer
 var generate_manifest_script_instance: EditorScript
 var editor_interface: EditorInterface
 
+const MANIFEST_SAVE_PATH = "res://addons/AudioCafe/resources/audio_manifest.tres"
 const VALID_COLOR = Color(1.0, 1.0, 1.0, 1.0) # Cor de borda padrão (Branco)
 const INVALID_COLOR = Color(1.0, 0.2, 0.2, 1.0) # Cor de borda para erro
 
@@ -100,6 +101,7 @@ func _ready():
 		music_track_file_dialog.file_selected.connect(Callable(self, "_on_music_track_file_dialog_file_selected"))
 
 func _load_config_to_ui():
+	if not tab_container: return # Garante que o tab_container esteja pronto
 	print("[_load_config_to_ui] sfx_paths_vbox_container: ", sfx_paths_vbox_container)
 	print("[_load_config_to_ui] music_paths_vbox_container: ", music_paths_vbox_container)
 	if audio_config:
@@ -131,17 +133,30 @@ func _load_config_to_ui():
 		if music_volume_value_label: _update_volume_label(music_volume_value_label, audio_config.music_volume)
 
 		# Preenche os ItemList com as chaves de música e SFX
-		if music_keys_item_list: music_keys_item_list.clear()
-		print("DEBUG: _load_config_to_ui - music_data keys: ", audio_config.music_data.keys())
-		if music_keys_item_list:
-			for key in audio_config.music_data.keys():
-				music_keys_item_list.add_item(key)
+		var current_music_keys_item_list = tab_container.get_node("AvailableMusic/MusicKeysItemList")
+		var current_sfx_keys_item_list = tab_container.get_node("AvailableSFX/SFXKeysItemList")
 
-		if sfx_keys_item_list: sfx_keys_item_list.clear()
-		print("DEBUG: _load_config_to_ui - sfx_data keys: ", audio_config.sfx_data.keys())
-		if sfx_keys_item_list:
-			for key in audio_config.sfx_data.keys():
-				sfx_keys_item_list.add_item(key)
+		if current_music_keys_item_list: current_music_keys_item_list.clear()
+		if current_sfx_keys_item_list: current_sfx_keys_item_list.clear()
+
+		# Carrega o AudioManifest para obter as chaves de áudio
+		var loaded_manifest = ResourceLoader.load(MANIFEST_SAVE_PATH, "", ResourceLoader.CacheMode.CACHE_MODE_REPLACE)
+		if loaded_manifest and loaded_manifest is AudioManifest:
+			print("DEBUG: _load_config_to_ui - music_data keys from manifest: ", loaded_manifest.music_data.keys())
+			if current_music_keys_item_list:
+				for key in loaded_manifest.music_data.keys():
+					current_music_keys_item_list.add_item(key)
+			else:
+				push_error("current_music_keys_item_list is null when trying to add item.")
+
+			print("DEBUG: _load_config_to_ui - sfx_data keys from manifest: ", loaded_manifest.sfx_data.keys())
+			if current_sfx_keys_item_list:
+				for key in loaded_manifest.sfx_data.keys():
+					current_sfx_keys_item_list.add_item(key)
+			else:
+				push_error("current_sfx_keys_item_list is null when trying to add item.")
+		else:
+			push_error("Falha ao carregar AudioManifest.tres em _load_config_to_ui.")
 
 		# Preenche o ItemList de playlists
 		if playlists_item_list: playlists_item_list.clear()
@@ -332,8 +347,18 @@ func _on_manifest_generation_finished(success: bool, message: String):
 
 	if success:
 		manifest_status_label.text = "Manifest Generated Successfully!"
+		# Recarrega o recurso AudioConfig para garantir que ele reflita as últimas alterações
+		var config_path = audio_config.resource_path if audio_config else "res://addons/AudioCafe/resources/audio_config.tres"
+		var reloaded_config = ResourceLoader.load(config_path, "", ResourceLoader.CacheMode.CACHE_MODE_REPLACE) # Usar CACHE_MODE_REPLACE para recarregar sem cache
+		if reloaded_config and reloaded_config is AudioConfig:
+			audio_config = reloaded_config # Atribui a configuração recarregada à variável export do painel
+			audio_config.emit_changed() # Notifica o editor que o AudioConfig foi modificado
+			print("DEBUG: AudioConfig recarregado e atualizado com novos dados do manifesto.")
+		else:
+			push_error("Falha ao recarregar AudioConfig.tres após a geração do manifesto.")
+
 		# Força a atualização da UI para mostrar as novas chaves
-		_on_audio_config_updated(audio_config)
+		_load_config_to_ui() # Chama _load_config_to_ui diretamente após recarregar a configuração
 	else:
 		manifest_status_label.text = "Manifest Generation Error: %s" % message
 
@@ -358,12 +383,20 @@ func _on_audio_config_updated(config: AudioConfig):
 
 	# Refresca os ItemList com as chaves de música e SFX
 	music_keys_item_list.clear()
-	for key in audio_config.music_data.keys():
-		music_keys_item_list.add_item(key)
-
 	sfx_keys_item_list.clear()
-	for key in audio_config.sfx_data.keys():
-		sfx_keys_item_list.add_item(key)
+
+	# Carrega o AudioManifest para obter as chaves de áudio
+	var loaded_manifest = ResourceLoader.load(MANIFEST_SAVE_PATH, "", ResourceLoader.CacheMode.CACHE_MODE_REPLACE)
+	if loaded_manifest and loaded_manifest is AudioManifest:
+		print("DEBUG: _on_audio_config_updated - music_data keys from manifest: ", loaded_manifest.music_data.keys())
+		for key in loaded_manifest.music_data.keys():
+			music_keys_item_list.add_item(key)
+
+		print("DEBUG: _on_audio_config_updated - sfx_data keys from manifest: ", loaded_manifest.sfx_data.keys())
+		for key in loaded_manifest.sfx_data.keys():
+			sfx_keys_item_list.add_item(key)
+	else:
+		push_error("Falha ao carregar AudioManifest.tres em _on_audio_config_updated.")
 
 func _on_save_feedback_timer_timeout():
 	save_feedback_label.visible = false
