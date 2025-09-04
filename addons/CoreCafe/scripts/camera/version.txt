@@ -1,0 +1,3 @@
+Plugin Name: CameraCafe
+Description: Um sistema de gerenciamento avançado de câmeras que oferece controle total sobre a perspectiva do jogo.
+Version: 0.0.1

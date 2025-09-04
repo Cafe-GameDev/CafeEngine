@@ -1,0 +1,3 @@
+Plugin Name: DisplayCafe
+Description: Sistema abrangente para a exibição dinâmica de elementos de UI e informações contextuais na tela.
+Version: 0.0.1

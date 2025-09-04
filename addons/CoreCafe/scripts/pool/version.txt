@@ -1,0 +1,3 @@
+Plugin Name: PoolCafe
+Description: Um sistema de object pooling eficiente projetado para otimizar o desempenho do jogo, especialmente em cenários com muitos objetos efêmeros.
+Version: 0.0.1

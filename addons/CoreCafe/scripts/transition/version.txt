@@ -1,0 +1,3 @@
+Plugin Name: TransitionCafe
+Description: Atua como um controlador externo de cenas (SceneControl), gerenciando transições suaves e configuráveis entre cenas, estados ou elementos da UI.
+Version: 0.0.1

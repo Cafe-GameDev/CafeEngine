@@ -1,0 +1,3 @@
+Plugin Name: SettingsCafe
+Description: Fornece um menu de configurações completo e pronto para uso, com uma interface de usuário intuitiva e personalizável.
+Version: 0.0.1

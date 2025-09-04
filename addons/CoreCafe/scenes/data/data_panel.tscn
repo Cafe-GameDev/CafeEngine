@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://dq6t5jx2g5x5b"]
+
+[ext_resource type="Script" uid="uid://2sbo1u2cs4i8" path="res://addons/CoreCafe/scenes/data/data_panel.gd" id="1_script"]
+
+[node name="DataPanel" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Data"
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 2
+current_tab = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0

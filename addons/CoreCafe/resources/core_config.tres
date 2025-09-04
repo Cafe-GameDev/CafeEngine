@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CoreConfig" load_steps=2 format=3 uid="uid://d2gsq17ujuqmf"]
+
+[ext_resource type="Script" uid="uid://dbwqw05gqvtal" path="res://addons/CoreCafe/resources/core_config.gd" id="1_56rqu"]
+
+[resource]
+script = ExtResource("1_56rqu")
+enable_camera = false
+enable_console = false
+enable_tests = false
+enable_data = false
+enable_dialogue = false
+enable_display = false
+enable_event = false
+enable_mobile = false
+enable_pool = false
+enable_save = false
+enable_settings = false
+enable_transition = false

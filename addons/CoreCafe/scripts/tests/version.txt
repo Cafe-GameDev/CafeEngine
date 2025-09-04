@@ -1,0 +1,3 @@
+Plugin Name: TestsCafe
+Description: Um sistema de testes unitários e de integração robusto para Godot, inspirado no GUT (Godot Unit Test).
+Version: 0.0.1
