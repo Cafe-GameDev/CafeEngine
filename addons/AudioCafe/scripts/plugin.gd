@@ -8,6 +8,7 @@ const GROUP_SCENE_PATH = "res://addons/AudioCafe/scenes/audio_panel.tscn"
 
 var generate_manifest_script_instance: EditorScript
 var plugin_panel: ScrollContainer
+var group_panel: Control
 
 func _enter_tree():
 	# Adiciona autoload
@@ -27,29 +28,20 @@ func _enter_tree():
 
 
 func _exit_tree():
-	# Garante que a referência ao painel não foi perdida
-	if not plugin_panel:
-		plugin_panel = get_editor_interface().get_base_control().find_child("CafeEngine", true, false)
-
-	if plugin_panel:
-		var content_container = plugin_panel.get_node_or_null("VBoxContainer")
-		if content_container:
-			# Remove o grupo deste plugin
-			var group = content_container.find_child(AUTOLOAD_NAME, false)
-			if group:
-				group.free()
-			
-			# Se o container ficar vazio, remove o painel principal
-			if content_container.get_child_count() == 0:
-				remove_control_from_docks(plugin_panel)
-				plugin_panel.free()
-				plugin_panel = null
-
-	# Remove autoload
 	if ProjectSettings.has_setting("autoload/" + AUTOLOAD_NAME):
 		remove_autoload_singleton(AUTOLOAD_NAME)
 
-	# Desregistra tipos customizados
+	if is_instance_valid(group_panel):
+		group_panel.free()
+
+	# Se o container do painel principal ficar vazio, remove ele também
+	if is_instance_valid(plugin_panel):
+		var content_container = plugin_panel.get_node_or_null("VBoxContainer")
+		if content_container and content_container.get_child_count() == 0:
+			if plugin_panel.get_parent() != null:
+				remove_control_from_docks(plugin_panel)
+			plugin_panel.free()
+
 	_unregister_custom_types()
 
 
@@ -58,7 +50,7 @@ func _create_plugin_panel():
 	plugin_panel = get_editor_interface().get_base_control().find_child("CafeEngine", true, false)
 	if plugin_panel:
 		print("Painel 'CafeEngine' já existente, reaproveitando.")
-		_ensure_group(AUTOLOAD_NAME) # Garante que o grupo seja criado se não existir
+		_ensure_group("AudioCafe") # Garante que o grupo seja criado se não existir
 		return
 
 	# Se não existir, cria um novo
@@ -68,7 +60,7 @@ func _create_plugin_panel():
 		plugin_panel.name = "CafeEngine"
 		add_control_to_dock(DOCK_SLOT_RIGHT_UL, plugin_panel)
 		print("Painel 'CafeEngine' criado.")
-		_ensure_group(AUTOLOAD_NAME) # Cria o grupo no painel novo
+		_ensure_group("AudioCafe") # Cria o grupo no painel novo
 	else:
 		push_error("Não foi possível carregar a cena do painel principal do CafeEngine.")
 
@@ -84,32 +76,32 @@ func _ensure_group(group_name: String) -> VBoxContainer:
 		return null
 
 	# Procura pelo grupo existente
-	var group = content_container.find_child(group_name, false)
-	if group:
+	group_panel = content_container.find_child(group_name, false)
+	if group_panel:
 		# Garante que referências importantes sejam passadas, caso o editor tenha recarregado
-		if group.has_method("set_editor_interface"):
-			group.set_editor_interface(get_editor_interface())
-		return group
+		if group_panel.has_method("set_editor_interface"):
+			group_panel.set_editor_interface(get_editor_interface())
+		return group_panel
 
 	# Se não existir, cria um novo
 	var group_scene = load(GROUP_SCENE_PATH)
 	if group_scene and group_scene is PackedScene:
-		group = group_scene.instantiate()
-		group.name = group_name
+		group_panel = group_scene.instantiate()
+		group_panel.name = group_name
 		
 		# Passa a referência do EditorInterface para o grupo
-		if group.has_method("set_editor_interface"):
-			group.set_editor_interface(get_editor_interface())
+		if group_panel.has_method("set_editor_interface"):
+			group_panel.set_editor_interface(get_editor_interface())
 
 		# Carrega o AudioConfig.tres e passa para o grupo
 		var audio_config_res = load("res://addons/AudioCafe/resources/audio_config.tres")
-		if audio_config_res and group.has_method("set_audio_config"):
-			group.set_audio_config(audio_config_res)
+		if audio_config_res and group_panel.has_method("set_audio_config"):
+			group_panel.set_audio_config(audio_config_res)
 		else:
 			push_error("AudioConfig.tres não encontrado ou set_audio_config não disponível no grupo!")
 
-		content_container.add_child(group)
-		return group
+		content_container.add_child(group_panel)
+		return group_panel
 	
 	push_error("Não foi possível carregar a cena do grupo: " + group_name)
 	return null
