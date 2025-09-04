@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bncj4hbj3yhxt"]
+[gd_scene load_steps=3 format=3 uid="uid://b2pijgg1eb8sg"]
 
-[ext_resource type="Script" uid="uid://d2qybkm7aby25" path="res://addons/AudioCafe/scripts/panel_group.gd" id="1_72lws"]
+[ext_resource type="Script" uid="uid://d2qybkm7aby25" path="res://addons/AudioCafe/scripts/audio_panel.gd" id="1_wixt7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_72lws"]
 font_size = 18
@@ -10,7 +10,7 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 330.0
 grow_vertical = 2
-script = ExtResource("1_72lws")
+script = ExtResource("1_wixt7")
 
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(0, 38)

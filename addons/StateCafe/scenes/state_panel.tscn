@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq305aeeob718"]
+[gd_scene load_steps=3 format=3 uid="uid://cup261gm60gm2"]
 
-[ext_resource type="Script" uid="uid://bvkymppc4tvew" path="res://addons/StateCafe/scripts/cafe_panel.gd" id="1_lhc8r"]
+[ext_resource type="Script" uid="uid://25wgpmkb3dj8" path="res://addons/StateCafe/scripts/state_panel.gd" id="1_ug7v6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_lhc8r"]
 font_size = 18
@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_lhc8r")
+script = ExtResource("1_ug7v6")
 
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(0, 38)
