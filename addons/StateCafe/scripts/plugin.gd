@@ -6,6 +6,7 @@ const AUTOLOAD_PATH = "res://addons/StateCafe/scripts/state_cafe.gd"
 const PANEL_SCENE_PATH = "res://addons/StateCafe/scenes/cafe_panel.tscn"
 const GROUP_SCENE_PATH = "res://addons/StateCafe/scenes/state_panel.tscn"
 var plugin_panel: ScrollContainer
+var group_panel: VBoxContainer
 
 func _enter_tree():
 	# Adiciona autoload
@@ -19,29 +20,20 @@ func _enter_tree():
 
 
 func _exit_tree():
-	# Garante que a referência ao painel não foi perdida
-	if not plugin_panel:
-		plugin_panel = get_editor_interface().get_base_control().find_child("CafeEngine", true, false)
-
-	if plugin_panel:
-		var content_container = plugin_panel.get_node_or_null("VBoxContainer")
-		if content_container:
-			# Remove o grupo deste plugin
-			var group = content_container.find_child(AUTOLOAD_NAME, false)
-			if group:
-				group.free()
-			
-			# Se o container ficar vazio, remove o painel principal
-			if content_container.get_child_count() == 0:
-				remove_control_from_docks(plugin_panel)
-				plugin_panel.free()
-				plugin_panel = null
-
-	# Remove autoload
 	if ProjectSettings.has_setting("autoload/" + AUTOLOAD_NAME):
 		remove_autoload_singleton(AUTOLOAD_NAME)
 
-	# Desregistra tipos customizados
+	if is_instance_valid(group_panel):
+		group_panel.free()
+	
+	if is_instance_valid(plugin_panel):
+		var content_container = plugin_panel.get_node_or_null("VBoxContainer")
+		if content_container and content_container.get_child_count() == 0:
+			if plugin_panel.get_parent() != null:
+				remove_control_from_docks(plugin_panel)
+			plugin_panel.free()
+			plugin_panel = null
+
 	_unregister_custom_types()
 
 
@@ -75,18 +67,18 @@ func _ensure_group(group_name: String) -> VBoxContainer:
 		push_error("O painel 'CafeEngine' não contém o 'VBoxContainer' esperado.")
 		return null
 
-	# Procura pelo grupo existente
-	var group = content_container.find_child(group_name, false)
-	if group:
-		return group
+	# Procura pelo grupo existente e armazena a referência
+	group_panel = content_container.find_child(group_name, false) as VBoxContainer
+	if group_panel:
+		return group_panel
 
-	# Se não existir, cria um novo
+	# Se não existir, cria um novo e armazena a referência
 	var group_scene = load(GROUP_SCENE_PATH)
 	if group_scene and group_scene is PackedScene:
-		group = group_scene.instantiate()
-		group.name = group_name
-		content_container.add_child(group)
-		return group
+		group_panel = group_scene.instantiate() as VBoxContainer
+		group_panel.name = group_name
+		content_container.add_child(group_panel)
+		return group_panel
 	
 	push_error("Não foi possível carregar a cena do grupo: " + group_name)
 	return null

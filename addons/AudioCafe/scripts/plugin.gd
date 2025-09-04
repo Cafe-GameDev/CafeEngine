@@ -8,7 +8,7 @@ const GROUP_SCENE_PATH = "res://addons/AudioCafe/scenes/audio_panel.tscn"
 
 var generate_manifest_script_instance: EditorScript
 var plugin_panel: ScrollContainer
-var group_panel: Control
+var group_panel: VBoxContainer
 
 func _enter_tree():
 	# Adiciona autoload
