@@ -16,7 +16,7 @@ signal volume_changed(bus_name: String, linear_volume: float)
 @warning_ignore("unused_signal")
 signal request_audio_start()
 
-# Sinal emitido quando as configurações de áudio são atualizadas via AudioConfig.tres
+# Sinal emitido quando as configurações de áudio são atualizadas via audio_config.tres
 signal audio_config_updated(config: AudioConfig)
 
 const SFX_BUS_NAME = "SFX"
@@ -52,20 +52,20 @@ func _ready():
 	_setup_audio_buses()
 	_load_audio_from_manifest()
 
-	# Carrega o AudioConfig.tres e conecta ao seu sinal de mudança
+	# Carrega o audio_config.tres e conecta ao seu sinal de mudança
 	audio_config = load("res://addons/AudioCafe/resources/audio_config.tres")
 	if audio_config:
 		audio_config.connect("config_changed", Callable(self, "_on_audio_config_changed"))
 		_apply_initial_config()
 	else:
-		push_error("CafeAudioManager: AudioConfig.tres não encontrado!")
+		push_error("CafeAudioManager: audio_config.tres não encontrado!")
 
 func _apply_initial_config():
 	# Aplica as configurações iniciais do AudioConfig
 	_on_audio_config_changed() # Chama o método de atualização para carregar os valores iniciais
 
 func _on_audio_config_changed():
-	# Este método é chamado quando o AudioConfig.tres é alterado e salvo.
+	# Este método é chamado quando o audio_config.tres é alterado e salvo.
 	# Ele emite o sinal unificado com a instância atual do AudioConfig.
 	if audio_config:
 		emit_signal("audio_config_updated", audio_config)

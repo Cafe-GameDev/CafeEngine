@@ -66,6 +66,9 @@ enum PlaybackMode { SEQUENTIAL, RANDOM, REPEAT_ONE }
 			_save_and_emit_changed()
 
 func _save_and_emit_changed():
-	# Notifica o editor que o recurso foi modificado
+	if self.resource_path and self.resource_path.is_absolute_path():
+		var error = ResourceSaver.save(self, self.resource_path)
+		if error != OK:
+			push_error("Failed to save AudioConfig resource: %s" % error)
 	emit_changed()
 	emit_signal("config_changed")

@@ -330,7 +330,7 @@ func _on_manifest_generation_finished(success: bool, message: String):
 			audio_config.emit_changed() # Notifica o editor que o AudioConfig foi modificado
 			print("DEBUG: AudioConfig recarregado e atualizado com novos dados do manifesto.")
 		else:
-			push_error("Falha ao recarregar AudioConfig.tres após a geração do manifesto.")
+			push_error("Falha ao recarregar audio_config.tres após a geração do manifesto.")
 
 		# Força a atualização da UI para mostrar as novas chaves
 		_load_config_to_ui() # Chama _load_config_to_ui diretamente após recarregar a configuração

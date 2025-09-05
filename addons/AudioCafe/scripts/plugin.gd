@@ -93,12 +93,27 @@ func _ensure_group(group_name: String) -> VBoxContainer:
 		if group_panel.has_method("set_editor_interface"):
 			group_panel.set_editor_interface(get_editor_interface())
 
-		# Carrega o AudioConfig.tres e passa para o grupo
-		var audio_config_res = load("res://addons/AudioCafe/resources/audio_config.tres")
+		# Carrega ou cria o audio_config.tres e passa para o grupo
+		const AUDIO_CONFIG_PATH = "res://addons/AudioCafe/resources/audio_config.tres"
+		var audio_config_res = ResourceLoader.load(AUDIO_CONFIG_PATH)
+
+		if not audio_config_res:
+			print("audio_config.tres not found. Creating a new one.")
+			audio_config_res = preload("res://addons/AudioCafe/scripts/audio_config.gd").new()
+			var dir = AUDIO_CONFIG_PATH.get_base_dir()
+			if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(dir)):
+				DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
+			
+			var error = ResourceSaver.save(audio_config_res, AUDIO_CONFIG_PATH)
+			if error != OK:
+				push_error("Failed to create and save a new AudioConfig resource: %s" % error)
+			else:
+				print("New audio_config.tres created at: " + AUDIO_CONFIG_PATH)
+		
 		if audio_config_res and group_panel.has_method("set_audio_config"):
 			group_panel.set_audio_config(audio_config_res)
 		else:
-			push_error("AudioConfig.tres não encontrado ou set_audio_config não disponível no grupo!")
+			push_error("audio_config.tres could not be loaded/created or set_audio_config is not available.")
 
 		content_container.add_child(group_panel)
 		return group_panel
