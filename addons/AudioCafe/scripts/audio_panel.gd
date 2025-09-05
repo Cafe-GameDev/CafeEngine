@@ -82,20 +82,29 @@ func _ready():
 
 func _load_config_to_ui():
 	if not tab_container: return # Garante que o tab_container esteja pronto
-	print("[_load_config_to_ui] sfx_paths_vbox_container: ", sfx_paths_vbox_container)
-	print("[_load_config_to_ui] music_paths_vbox_container: ", music_paths_vbox_container)
 	if audio_config:
+		print("--- Loading config to UI ---")
+		print("SFX paths in resource: ", audio_config.sfx_paths)
 		# Limpa as entradas de caminho existentes
 		if sfx_paths_vbox_container:
 			for child in sfx_paths_vbox_container.get_children():
 				child.queue_free()
+			var sfx_count = 0
 			for path in audio_config.sfx_paths:
+				sfx_count += 1
 				_create_path_entry(path, true)
+			print("Created ", sfx_count, " SFX path UI entries.")
+
+		print("Music paths in resource: ", audio_config.music_paths)
 		if music_paths_vbox_container:
 			for child in music_paths_vbox_container.get_children():
 				child.queue_free()
+			var music_count = 0
 			for path in audio_config.music_paths:
+				music_count += 1
 				_create_path_entry(path, false)
+			print("Created ", music_count, " Music path UI entries.")
+		print("--- Finished loading config to UI ---")
 
 		print("[_load_config_to_ui] default_click_key_line_edit: ", default_click_key_line_edit)
 		print("[_load_config_to_ui] default_hover_key_line_edit: ", default_hover_key_line_edit)
@@ -141,6 +150,7 @@ func _load_config_to_ui():
 				push_error("current_sfx_keys_rich_text_label is null when trying to add item.")
 		else:
 			push_error("Falha ao carregar AudioManifest.tres em _load_config_to_ui.")
+
 
 func _connect_ui_signals():
 	default_click_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_click_key"))
@@ -272,8 +282,9 @@ func _validate_path_line_edit(line_edit: LineEdit):
 		line_edit.tooltip_text = error_message
 
 func _on_remove_path_button_pressed(path_entry: HBoxContainer, is_sfx: bool):
-	path_entry.queue_free()
+	path_entry.get_parent().remove_child(path_entry)
 	_update_audio_config_paths()
+	path_entry.queue_free()
 
 func _update_audio_config_paths():
 	if not audio_config:

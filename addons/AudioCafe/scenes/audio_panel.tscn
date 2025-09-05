@@ -63,20 +63,6 @@ layout_mode = 2
 theme_override_constants/separation = 10
 metadata/_tab_index = 0
 
-[node name="SFXPathsSection" type="VBoxContainer" parent="TabContainer/Paths"]
-layout_mode = 2
-
-[node name="SFXPathsLabel" type="Label" parent="TabContainer/Paths/SFXPathsSection"]
-layout_mode = 2
-text = "SFX Paths:"
-
-[node name="SFXPathsVBoxContainer" type="VBoxContainer" parent="TabContainer/Paths/SFXPathsSection"]
-layout_mode = 2
-
-[node name="AddSFXPathButton" type="Button" parent="TabContainer/Paths/SFXPathsSection"]
-layout_mode = 2
-text = "Add SFX Path"
-
 [node name="MusicPathsSection" type="VBoxContainer" parent="TabContainer/Paths"]
 layout_mode = 2
 
@@ -90,6 +76,20 @@ layout_mode = 2
 [node name="AddMusicPathButton" type="Button" parent="TabContainer/Paths/MusicPathsSection"]
 layout_mode = 2
 text = "Add Music Path"
+
+[node name="SFXPathsSection" type="VBoxContainer" parent="TabContainer/Paths"]
+layout_mode = 2
+
+[node name="SFXPathsLabel" type="Label" parent="TabContainer/Paths/SFXPathsSection"]
+layout_mode = 2
+text = "SFX Paths:"
+
+[node name="SFXPathsVBoxContainer" type="VBoxContainer" parent="TabContainer/Paths/SFXPathsSection"]
+layout_mode = 2
+
+[node name="AddSFXPathButton" type="Button" parent="TabContainer/Paths/SFXPathsSection"]
+layout_mode = 2
+text = "Add SFX Path"
 
 [node name="DefaultKeys" type="VBoxContainer" parent="TabContainer"]
 visible = false
