@@ -80,15 +80,6 @@ func _ready():
 		sfx_folder_dialog.dir_selected.connect(Callable(self, "_on_sfx_folder_dialog_dir_selected"))
 		music_folder_dialog.dir_selected.connect(Callable(self, "_on_music_folder_dialog_dir_selected"))
 
-		playlists_item_list.item_selected.connect(Callable(self, "_on_playlists_item_list_selected"))
-		add_playlist_button.pressed.connect(Callable(self, "_on_add_playlist_button_pressed"))
-		remove_playlist_button.pressed.connect(Callable(self, "_on_remove_playlist_button_pressed"))
-		playlist_name_line_edit.text_changed.connect(Callable(self, "_on_playlist_name_line_edit_text_changed"))
-		playback_mode_option_button.item_selected.connect(Callable(self, "_on_playback_mode_option_button_item_selected"))
-		add_track_button.pressed.connect(Callable(self, "_on_add_track_button_pressed"))
-		remove_track_button.pressed.connect(Callable(self, "_on_remove_track_button_pressed"))
-		music_track_file_dialog.file_selected.connect(Callable(self, "_on_music_track_file_dialog_file_selected"))
-
 func _load_config_to_ui():
 	if not tab_container: return # Garante que o tab_container esteja pronto
 	print("[_load_config_to_ui] sfx_paths_vbox_container: ", sfx_paths_vbox_container)
@@ -150,15 +141,6 @@ func _load_config_to_ui():
 				push_error("current_sfx_keys_rich_text_label is null when trying to add item.")
 		else:
 			push_error("Falha ao carregar AudioManifest.tres em _load_config_to_ui.")
-
-		# Preenche o ItemList de playlists
-		if playlists_item_list: playlists_item_list.clear()
-		if playlists_item_list:
-			for key in audio_config.music_playlists.keys():
-				playlists_item_list.add_item(key)
-
-		# Esconde a seção de detalhes da playlist por padrão
-		if playlist_details_section: playlist_details_section.visible = false
 
 func _connect_ui_signals():
 	default_click_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_click_key"))
@@ -398,10 +380,6 @@ func _on_audio_config_updated(config: AudioConfig):
 func _on_save_feedback_timer_timeout():
 	save_feedback_label.visible = false
 
-func _on_playlists_item_list_selected(index: int):
-	var playlist_key = playlists_item_list.get_item_text(index)
-	_update_playlist_details_ui(playlist_key)
-
 func _on_add_playlist_button_pressed():
 	var new_playlist_key = "New Playlist %d" % (audio_config.music_playlists.size() + 1)
 	while audio_config.music_playlists.has(new_playlist_key):
@@ -413,87 +391,6 @@ func _on_add_playlist_button_pressed():
 	}
 	_update_audio_config_playlists()
 	_load_config_to_ui() # Recarrega a UI para mostrar a nova playlist
-	playlists_item_list.select(playlists_item_list.get_item_count() - 1) # Seleciona a nova playlist
-	_on_playlists_item_list_selected(playlists_item_list.get_item_count() - 1)
-
-func _on_remove_playlist_button_pressed():
-	var selected_items = playlists_item_list.get_selected_items()
-	if not selected_items.is_empty():
-		var index = selected_items[0]
-		var playlist_key = playlists_item_list.get_item_text(index)
-		audio_config.music_playlists.erase(playlist_key)
-		_update_audio_config_playlists()
-		_load_config_to_ui() # Recarrega a UI
-		playlist_details_section.visible = false # Esconde os detalhes
-
-func _on_playlist_name_line_edit_text_changed(new_name: String):
-	var selected_items = playlists_item_list.get_selected_items()
-	if not selected_items.is_empty():
-		var old_key = playlists_item_list.get_item_text(selected_items[0])
-		if old_key != new_name and not new_name.is_empty() and not audio_config.music_playlists.has(new_name):
-			var playlist_data = audio_config.music_playlists[old_key]
-			audio_config.music_playlists.erase(old_key)
-			audio_config.music_playlists[new_name] = playlist_data
-			_update_audio_config_playlists()
-			_load_config_to_ui() # Recarrega a UI para atualizar o nome na lista
-			# Re-seleciona a playlist com o novo nome
-			for i in range(playlists_item_list.get_item_count()):
-				if playlists_item_list.get_item_text(i) == new_name:
-					playlists_item_list.select(i)
-					break
-
-func _on_playback_mode_option_button_item_selected(index: int):
-	var selected_items = playlists_item_list.get_selected_items()
-	if not selected_items.is_empty():
-		var playlist_key = playlists_item_list.get_item_text(selected_items[0])
-		if audio_config.music_playlists.has(playlist_key):
-			audio_config.music_playlists[playlist_key]["mode"] = index
-			_update_audio_config_playlists()
-
-func _on_add_track_button_pressed():
-	var selected_items = playlists_item_list.get_selected_items()
-	if not selected_items.is_empty():
-		var playlist_key = playlists_item_list.get_item_text(selected_items[0])
-		music_track_file_dialog.popup_centered()
-		music_track_file_dialog.set_meta("target_playlist_key", playlist_key)
-
-func _on_remove_track_button_pressed():
-	var selected_playlist_items = playlists_item_list.get_selected_items()
-	var selected_track_items = playlist_tracks_item_list.get_selected_items()
-
-	if not selected_playlist_items.is_empty() and not selected_track_items.is_empty():
-		var playlist_key = playlists_item_list.get_item_text(selected_playlist_items[0])
-		var track_index = selected_track_items[0]
-
-		if audio_config.music_playlists.has(playlist_key):
-			audio_config.music_playlists[playlist_key]["tracks"].remove_at(track_index)
-			_update_audio_config_playlists()
-			_update_playlist_details_ui(playlist_key) # Atualiza a UI de detalhes
-
-func _on_music_track_file_dialog_file_selected(path: String):
-	var playlist_key = music_track_file_dialog.get_meta("target_playlist_key")
-	if playlist_key and audio_config.music_playlists.has(playlist_key):
-		var localized_path = ProjectSettings.localize_path(path)
-		audio_config.music_playlists[playlist_key]["tracks"].append(localized_path)
-		_update_audio_config_playlists()
-		_update_playlist_details_ui(playlist_key) # Atualiza a UI de detalhes
-
-func _update_playlist_details_ui(playlist_key: String):
-	playlist_details_section.visible = true
-
-	if audio_config.music_playlists.has(playlist_key):
-		var playlist_data = audio_config.music_playlists[playlist_key]
-		playlist_name_line_edit.text = playlist_key
-		playback_mode_option_button.select(playlist_data["mode"])
-
-		playlist_tracks_item_list.clear()
-		for track_path in playlist_data["tracks"]:
-			playlist_tracks_item_list.add_item(track_path.get_file().get_basename())
-			playlist_tracks_item_list.set_item_metadata(playlist_tracks_item_list.get_item_count() - 1, track_path)
-	else:
-		playlist_name_line_edit.text = ""
-		playback_mode_option_button.select(AudioConfig.PlaybackMode.SEQUENTIAL)
-		playlist_tracks_item_list.clear()
 
 func _update_audio_config_playlists():
 	if audio_config:

@@ -58,6 +58,7 @@ current_tab = 0
 tabs_rearrange_group = 0
 
 [node name="Paths" type="VBoxContainer" parent="TabContainer"]
+custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -91,6 +92,7 @@ text = "Add Music Path"
 
 [node name="DefaultKeys" type="VBoxContainer" parent="TabContainer"]
 visible = false
+custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -156,12 +158,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 1.0
 step = 0.01
-value = 0.54
+value = 1.0
 
 [node name="MasterVolumeValueLabel" type="Label" parent="TabContainer/DefaultKeys/VolumeGridContainer"]
 custom_minimum_size = Vector2(42, 0)
 layout_mode = 2
-text = "54%"
+text = "100%"
 horizontal_alignment = 2
 
 [node name="SFXVolumeLabel" type="Label" parent="TabContainer/DefaultKeys/VolumeGridContainer"]
@@ -204,6 +206,7 @@ horizontal_alignment = 2
 
 [node name="AvailableMusic" type="VBoxContainer" parent="TabContainer"]
 visible = false
+custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -215,6 +218,7 @@ fit_content = true
 
 [node name="AvailableSFX" type="VBoxContainer" parent="TabContainer"]
 visible = false
+custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
 metadata/_tab_index = 3
 
@@ -222,6 +226,7 @@ metadata/_tab_index = 3
 custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
 size_flags_vertical = 3
+fit_content = true
 
 [node name="MusicTrackFileDialog" type="FileDialog" parent="."]
 title = "Open a File"
