@@ -12,9 +12,9 @@ extends VBoxContainer
 @onready var add_music_path_button: Button = tab_container.get_node("Paths/MusicPathsSection/AddMusicPathButton")
 @onready var music_folder_dialog: FileDialog = $MusicFolderDialog
 
-@onready var default_click_key_line_edit: LineEdit = tab_container.get_node("DefaultKeys/DefaultClickKeyContainer/DefaultClickKeyLineEdit")
-@onready var default_hover_key_line_edit: LineEdit = tab_container.get_node("DefaultKeys/DefaultHoverKeyContainer/DefaultHoverKeyLineEdit")
-@onready var default_slider_key_line_edit: LineEdit = tab_container.get_node("DefaultKeys/DefaultSliderKeyContainer/DefaultSliderKeyLineEdit")
+@onready var default_click_key_line_edit: LineEdit = $TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultClickKeyLineEdit
+@onready var default_slider_key_line_edit: LineEdit = $TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultSliderKeyLineEdit
+@onready var default_hover_key_line_edit: LineEdit = $TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultHoverKeyLineEdit
 
 @onready var save_feedback_label: Label = $SaveFeedbackLabel
 @onready var save_feedback_timer: Timer = $SaveFeedbackTimer
@@ -26,8 +26,9 @@ extends VBoxContainer
 @onready var music_volume_slider: HSlider = tab_container.get_node("DefaultKeys/MusicVolumeContainer/MusicVolumeSlider")
 @onready var music_volume_value_label: Label = tab_container.get_node("DefaultKeys/MusicVolumeContainer/MusicVolumeValueLabel")
 
-@onready var music_keys_item_list: ItemList = tab_container.get_node("AvailableMusic/MusicKeysItemList")
-@onready var sfx_keys_item_list: ItemList = tab_container.get_node("AvailableSFX/SFXKeysItemList")
+
+@onready var music_keys_rich_text_label: RichTextLabel = tab_container.get_node("AvailableMusic/MusicKeysRichTextLabel")
+@onready var sfx_keys_rich_text_label: RichTextLabel = tab_container.get_node("AvailableSFX/SFXKeysRichTextLabel")
 
 @onready var manifest_progress_bar: ProgressBar = $ManifestProgressBar
 @onready var manifest_status_label: Label = $ManifestStatusLabel
@@ -133,28 +134,32 @@ func _load_config_to_ui():
 		if music_volume_value_label: _update_volume_label(music_volume_value_label, audio_config.music_volume)
 
 		# Preenche os ItemList com as chaves de música e SFX
-		var current_music_keys_item_list = tab_container.get_node("AvailableMusic/MusicKeysItemList")
-		var current_sfx_keys_item_list = tab_container.get_node("AvailableSFX/SFXKeysItemList")
+		var current_music_keys_rich_text_label = tab_container.get_node("AvailableMusic/MusicKeysRichTextLabel")
+		var current_sfx_keys_rich_text_label = tab_container.get_node("AvailableSFX/SFXKeysRichTextLabel")
 
-		if current_music_keys_item_list: current_music_keys_item_list.clear()
-		if current_sfx_keys_item_list: current_sfx_keys_item_list.clear()
+		if current_music_keys_rich_text_label: current_music_keys_rich_text_label.clear()
+		if current_sfx_keys_rich_text_label: current_sfx_keys_rich_text_label.clear()
 
 		# Carrega o AudioManifest para obter as chaves de áudio
 		var loaded_manifest = ResourceLoader.load(MANIFEST_SAVE_PATH, "", ResourceLoader.CacheMode.CACHE_MODE_REPLACE)
 		if loaded_manifest and loaded_manifest is AudioManifest:
 			print("DEBUG: _load_config_to_ui - music_data keys from manifest: ", loaded_manifest.music_data.keys())
-			if current_music_keys_item_list:
-				for key in loaded_manifest.music_data.keys():
-					current_music_keys_item_list.add_item(key)
+			if current_music_keys_rich_text_label:
+				var music_keys = loaded_manifest.music_data.keys()
+				music_keys.sort()
+				for key in music_keys:
+					current_music_keys_rich_text_label.append_text(key + "\n")
 			else:
-				push_error("current_music_keys_item_list is null when trying to add item.")
+				push_error("current_music_keys_rich_text_label is null when trying to add item.")
 
 			print("DEBUG: _load_config_to_ui - sfx_data keys from manifest: ", loaded_manifest.sfx_data.keys())
-			if current_sfx_keys_item_list:
-				for key in loaded_manifest.sfx_data.keys():
-					current_sfx_keys_item_list.add_item(key)
+			if current_sfx_keys_rich_text_label:
+				var sfx_keys = loaded_manifest.sfx_data.keys()
+				sfx_keys.sort()
+				for key in sfx_keys:
+					current_sfx_keys_rich_text_label.append_text(key + "\n")
 			else:
-				push_error("current_sfx_keys_item_list is null when trying to add item.")
+				push_error("current_sfx_keys_rich_text_label is null when trying to add item.")
 		else:
 			push_error("Falha ao carregar AudioManifest.tres em _load_config_to_ui.")
 
@@ -382,19 +387,23 @@ func _on_audio_config_updated(config: AudioConfig):
 	_update_volume_label(music_volume_value_label, audio_config.music_volume)
 
 	# Refresca os ItemList com as chaves de música e SFX
-	music_keys_item_list.clear()
-	sfx_keys_item_list.clear()
+	music_keys_rich_text_label.clear()
+	sfx_keys_rich_text_label.clear()
 
 	# Carrega o AudioManifest para obter as chaves de áudio
 	var loaded_manifest = ResourceLoader.load(MANIFEST_SAVE_PATH, "", ResourceLoader.CacheMode.CACHE_MODE_REPLACE)
 	if loaded_manifest and loaded_manifest is AudioManifest:
 		print("DEBUG: _on_audio_config_updated - music_data keys from manifest: ", loaded_manifest.music_data.keys())
-		for key in loaded_manifest.music_data.keys():
-			music_keys_item_list.add_item(key)
+		var music_keys = loaded_manifest.music_data.keys()
+		music_keys.sort()
+		for key in music_keys:
+			music_keys_rich_text_label.append_text(key + "\n")
 
 		print("DEBUG: _on_audio_config_updated - sfx_data keys from manifest: ", loaded_manifest.sfx_data.keys())
-		for key in loaded_manifest.sfx_data.keys():
-			sfx_keys_item_list.add_item(key)
+		var sfx_keys = loaded_manifest.sfx_data.keys()
+		sfx_keys.sort()
+		for key in sfx_keys:
+			sfx_keys_rich_text_label.append_text(key + "\n")
 	else:
 		push_error("Falha ao carregar AudioManifest.tres em _on_audio_config_updated.")
 
