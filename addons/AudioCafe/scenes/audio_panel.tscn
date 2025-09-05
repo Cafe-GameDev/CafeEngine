@@ -54,11 +54,10 @@ access = 2
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 2
-deselect_enabled = true
+current_tab = 0
+tabs_rearrange_group = 0
 
 [node name="Paths" type="VBoxContainer" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -95,85 +94,82 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="DefaultClickKeyContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
+[node name="DefaultKeyGridContainer" type="GridContainer" parent="TabContainer/DefaultKeys"]
 layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 2
 
-[node name="DefaultClickKeyLabel" type="Label" parent="TabContainer/DefaultKeys/DefaultClickKeyContainer"]
+[node name="DefaultClickKeyLabel" type="Label" parent="TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 tooltip_text = "The default SFX key for UI click events."
 mouse_filter = 1
 text = "Default Click Key:"
 
-[node name="DefaultClickKeyLineEdit" type="LineEdit" parent="TabContainer/DefaultKeys/DefaultClickKeyContainer"]
+[node name="DefaultClickKeyLineEdit" type="LineEdit" parent="TabContainer/DefaultKeys/DefaultKeyGridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "The default SFX key for UI click events."
 text = "ui_click"
 placeholder_text = "ui_click"
 
-[node name="DefaultHoverKeyContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
-layout_mode = 2
-
-[node name="DefaultHoverKeyLabel" type="Label" parent="TabContainer/DefaultKeys/DefaultHoverKeyContainer"]
-layout_mode = 2
-text = "Default Hover Key:"
-
-[node name="DefaultHoverKeyLineEdit" type="LineEdit" parent="TabContainer/DefaultKeys/DefaultHoverKeyContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "The default SFX key for UI hover events."
-text = "ui_hover"
-placeholder_text = "ui_hover"
-
-[node name="DefaultSliderKeyContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
-layout_mode = 2
-
-[node name="DefaultSliderKeyLabel" type="Label" parent="TabContainer/DefaultKeys/DefaultSliderKeyContainer"]
+[node name="DefaultSliderKeyLabel" type="Label" parent="TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
 layout_mode = 2
 text = "Default Slider Key:"
 
-[node name="DefaultSliderKeyLineEdit" type="LineEdit" parent="TabContainer/DefaultKeys/DefaultSliderKeyContainer"]
+[node name="DefaultSliderKeyLineEdit" type="LineEdit" parent="TabContainer/DefaultKeys/DefaultKeyGridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "The default SFX key for value change events in sliders and similar UI elements."
 text = "ui_slider_changed"
 placeholder_text = "ui_slider_changed"
 
+[node name="DefaultHoverKeyLabel" type="Label" parent="TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+text = "Default Hover Key:"
+
+[node name="DefaultHoverKeyLineEdit" type="LineEdit" parent="TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for UI hover events."
+text = "ui_hover"
+placeholder_text = "ui_hover"
+
 [node name="HSeparator2" type="HSeparator" parent="TabContainer/DefaultKeys"]
 layout_mode = 2
 
-[node name="MasterVolumeContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
-layout_direction = 2
+[node name="VolumeGridContainer" type="GridContainer" parent="TabContainer/DefaultKeys"]
 layout_mode = 2
-alignment = 1
+columns = 3
 
-[node name="MasterVolumeLabel" type="Label" parent="TabContainer/DefaultKeys/MasterVolumeContainer"]
+[node name="MasterVolumeLabel" type="Label" parent="TabContainer/DefaultKeys/VolumeGridContainer"]
 custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
 text = "Master Volume:"
 
-[node name="MasterVolumeSlider" type="HSlider" parent="TabContainer/DefaultKeys/MasterVolumeContainer"]
+[node name="MasterVolumeSlider" type="HSlider" parent="TabContainer/DefaultKeys/VolumeGridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 1.0
 step = 0.01
-value = 0.91
+value = 0.54
 
-[node name="MasterVolumeValueLabel" type="Label" parent="TabContainer/DefaultKeys/MasterVolumeContainer"]
+[node name="MasterVolumeValueLabel" type="Label" parent="TabContainer/DefaultKeys/VolumeGridContainer"]
+custom_minimum_size = Vector2(42, 0)
 layout_mode = 2
-text = "91%"
+text = "54%"
+horizontal_alignment = 2
 
-[node name="SFXVolumeContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
-layout_mode = 2
-
-[node name="SFXVolumeLabel" type="Label" parent="TabContainer/DefaultKeys/SFXVolumeContainer"]
+[node name="SFXVolumeLabel" type="Label" parent="TabContainer/DefaultKeys/VolumeGridContainer"]
 custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
 text = "SFX Volume:"
 
-[node name="SFXVolumeSlider" type="HSlider" parent="TabContainer/DefaultKeys/SFXVolumeContainer"]
+[node name="SFXVolumeSlider" type="HSlider" parent="TabContainer/DefaultKeys/VolumeGridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -181,19 +177,18 @@ max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="SFXVolumeValueLabel" type="Label" parent="TabContainer/DefaultKeys/SFXVolumeContainer"]
+[node name="SFXVolumeValueLabel" type="Label" parent="TabContainer/DefaultKeys/VolumeGridContainer"]
+custom_minimum_size = Vector2(42, 0)
 layout_mode = 2
 text = "100%"
+horizontal_alignment = 2
 
-[node name="MusicVolumeContainer" type="HBoxContainer" parent="TabContainer/DefaultKeys"]
-layout_mode = 2
-
-[node name="MusicVolumeLabel" type="Label" parent="TabContainer/DefaultKeys/MusicVolumeContainer"]
+[node name="MusicVolumeLabel" type="Label" parent="TabContainer/DefaultKeys/VolumeGridContainer"]
 custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
 text = "Music Volume:"
 
-[node name="MusicVolumeSlider" type="HSlider" parent="TabContainer/DefaultKeys/MusicVolumeContainer"]
+[node name="MusicVolumeSlider" type="HSlider" parent="TabContainer/DefaultKeys/VolumeGridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -201,142 +196,32 @@ max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="MusicVolumeValueLabel" type="Label" parent="TabContainer/DefaultKeys/MusicVolumeContainer"]
+[node name="MusicVolumeValueLabel" type="Label" parent="TabContainer/DefaultKeys/VolumeGridContainer"]
+custom_minimum_size = Vector2(42, 0)
 layout_mode = 2
 text = "100%"
+horizontal_alignment = 2
 
 [node name="AvailableMusic" type="VBoxContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="MusicKeysLabel" type="Label" parent="TabContainer/AvailableMusic"]
-layout_mode = 2
-text = "Available Music Keys:"
-
-[node name="MusicKeysItemList" type="ItemList" parent="TabContainer/AvailableMusic"]
+[node name="MusicKeysRichTextLabel" type="RichTextLabel" parent="TabContainer/AvailableMusic"]
+custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
 size_flags_vertical = 3
-item_count = 5
-item_0/text = "8-bit_jingles"
-item_1/text = "hit_jingles"
-item_2/text = "pizzicato_jingles"
-item_3/text = "sax_jingles"
-item_4/text = "steel_jingles"
+fit_content = true
 
 [node name="AvailableSFX" type="VBoxContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
 
-[node name="SFXKeysLabel" type="Label" parent="TabContainer/AvailableSFX"]
-layout_mode = 2
-text = "Available SFX Keys:"
-
-[node name="SFXKeysItemList" type="ItemList" parent="TabContainer/AvailableSFX"]
+[node name="SFXKeysRichTextLabel" type="RichTextLabel" parent="TabContainer/AvailableSFX"]
+custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
 size_flags_vertical = 3
-item_count = 25
-item_0/text = "interface_back"
-item_1/text = "interface_bong"
-item_2/text = "interface_click"
-item_3/text = "interface_close"
-item_4/text = "interface_confirmation"
-item_5/text = "interface_drop"
-item_6/text = "interface_error"
-item_7/text = "interface_glass"
-item_8/text = "interface_glitch"
-item_9/text = "interface_maximize"
-item_10/text = "interface_minimize"
-item_11/text = "interface_open"
-item_12/text = "interface_pluck"
-item_13/text = "interface_question"
-item_14/text = "interface_scratch"
-item_15/text = "interface_scroll"
-item_16/text = "interface_select"
-item_17/text = "interface_switch"
-item_18/text = "interface_tick"
-item_19/text = "interface_toggle"
-item_20/text = "ui_click"
-item_21/text = "ui_mouseclick"
-item_22/text = "ui_mouserelease"
-item_23/text = "ui_rollover"
-item_24/text = "ui_switch"
-
-[node name="Playlists" type="VBoxContainer" parent="TabContainer"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 4
-
-[node name="PlaylistsLabel" type="Label" parent="TabContainer/Playlists"]
-layout_mode = 2
-text = "Music Playlists:"
-
-[node name="PlaylistsItemList" type="ItemList" parent="TabContainer/Playlists"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="AddPlaylistButton" type="Button" parent="TabContainer/Playlists"]
-layout_mode = 2
-text = "Add Playlist"
-
-[node name="RemovePlaylistButton" type="Button" parent="TabContainer/Playlists"]
-layout_mode = 2
-text = "Remove Selected Playlist"
-
-[node name="PlaylistDetailsSection" type="VBoxContainer" parent="TabContainer/Playlists"]
-visible = false
-layout_mode = 2
-
-[node name="PlaylistNameContainer" type="HBoxContainer" parent="TabContainer/Playlists/PlaylistDetailsSection"]
-layout_mode = 2
-
-[node name="PlaylistNameLabel" type="Label" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaylistNameContainer"]
-layout_mode = 2
-text = "Playlist Name:"
-
-[node name="PlaylistNameLineEdit" type="LineEdit" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaylistNameContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="PlaybackModeContainer" type="HBoxContainer" parent="TabContainer/Playlists/PlaylistDetailsSection"]
-layout_mode = 2
-
-[node name="PlaybackModeLabel" type="Label" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaybackModeContainer"]
-layout_mode = 2
-text = "Playback Mode:"
-
-[node name="PlaybackModeOptionButton" type="OptionButton" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaybackModeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-selected = 0
-item_count = 3
-popup/item_0/text = "Sequential"
-popup/item_0/id = 0
-popup/item_1/text = "Random"
-popup/item_1/id = 1
-popup/item_2/text = "Repeat One"
-popup/item_2/id = 2
-
-[node name="PlaylistTracksLabel" type="Label" parent="TabContainer/Playlists/PlaylistDetailsSection"]
-layout_mode = 2
-text = "Playlist Tracks:"
-
-[node name="PlaylistTracksItemList" type="ItemList" parent="TabContainer/Playlists/PlaylistDetailsSection"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="PlaylistTrackButtonsContainer" type="HBoxContainer" parent="TabContainer/Playlists/PlaylistDetailsSection"]
-layout_mode = 2
-
-[node name="AddTrackButton" type="Button" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Add Track"
-
-[node name="RemoveTrackButton" type="Button" parent="TabContainer/Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Remove Track"
 
 [node name="MusicTrackFileDialog" type="FileDialog" parent="."]
 title = "Open a File"

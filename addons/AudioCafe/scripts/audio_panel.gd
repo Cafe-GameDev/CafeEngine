@@ -19,30 +19,18 @@ extends VBoxContainer
 @onready var save_feedback_label: Label = $SaveFeedbackLabel
 @onready var save_feedback_timer: Timer = $SaveFeedbackTimer
 
-@onready var master_volume_slider: HSlider = tab_container.get_node("DefaultKeys/MasterVolumeContainer/MasterVolumeSlider")
-@onready var master_volume_value_label: Label = tab_container.get_node("DefaultKeys/MasterVolumeContainer/MasterVolumeValueLabel")
-@onready var sfx_volume_slider: HSlider = tab_container.get_node("DefaultKeys/SFXVolumeContainer/SFXVolumeSlider")
-@onready var sfx_volume_value_label: Label = tab_container.get_node("DefaultKeys/SFXVolumeContainer/SFXVolumeValueLabel")
-@onready var music_volume_slider: HSlider = tab_container.get_node("DefaultKeys/MusicVolumeContainer/MusicVolumeSlider")
-@onready var music_volume_value_label: Label = tab_container.get_node("DefaultKeys/MusicVolumeContainer/MusicVolumeValueLabel")
-
+@onready var master_volume_slider: HSlider = tab_container.get_node("DefaultKeys/VolumeGridContainer/MasterVolumeSlider")
+@onready var master_volume_value_label: Label = tab_container.get_node("DefaultKeys/VolumeGridContainer/MasterVolumeValueLabel")
+@onready var sfx_volume_slider: HSlider = tab_container.get_node("DefaultKeys/VolumeGridContainer/SFXVolumeSlider")
+@onready var sfx_volume_value_label: Label = tab_container.get_node("DefaultKeys/VolumeGridContainer/SFXVolumeValueLabel")
+@onready var music_volume_slider: HSlider = tab_container.get_node("DefaultKeys/VolumeGridContainer/MusicVolumeSlider")
+@onready var music_volume_value_label: Label = tab_container.get_node("DefaultKeys/VolumeGridContainer/MusicVolumeValueLabel")
 
 @onready var music_keys_rich_text_label: RichTextLabel = tab_container.get_node("AvailableMusic/MusicKeysRichTextLabel")
 @onready var sfx_keys_rich_text_label: RichTextLabel = tab_container.get_node("AvailableSFX/SFXKeysRichTextLabel")
 
 @onready var manifest_progress_bar: ProgressBar = $ManifestProgressBar
 @onready var manifest_status_label: Label = $ManifestStatusLabel
-
-@onready var playlists_item_list: ItemList = tab_container.get_node("Playlists/PlaylistsItemList")
-@onready var add_playlist_button: Button = tab_container.get_node("Playlists/AddPlaylistButton")
-@onready var remove_playlist_button: Button = tab_container.get_node("Playlists/RemovePlaylistButton")
-@onready var playlist_name_line_edit: LineEdit = tab_container.get_node("Playlists/PlaylistDetailsSection/PlaylistNameContainer/PlaylistNameLineEdit")
-@onready var playback_mode_option_button: OptionButton = tab_container.get_node("Playlists/PlaylistDetailsSection/PlaybackModeContainer/PlaybackModeOptionButton")
-@onready var playlist_tracks_item_list: ItemList = tab_container.get_node("Playlists/PlaylistDetailsSection/PlaylistTracksItemList")
-@onready var add_track_button: Button = tab_container.get_node("Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer/AddTrackButton")
-@onready var remove_track_button: Button = tab_container.get_node("Playlists/PlaylistDetailsSection/PlaylistTrackButtonsContainer/RemoveTrackButton")
-@onready var music_track_file_dialog: FileDialog = $MusicTrackFileDialog
-@onready var playlist_details_section: VBoxContainer = tab_container.get_node("Playlists/PlaylistDetailsSection")
 
 @export var audio_config: AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
 
