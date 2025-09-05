@@ -67,12 +67,10 @@ func _ensure_group(group_name: String) -> VBoxContainer:
 		push_error("O painel 'CafeEngine' não contém o 'VBoxContainer' esperado.")
 		return null
 
-	# Procura pelo grupo existente e armazena a referência
 	group_panel = content_container.find_child(group_name, false) as VBoxContainer
 	if group_panel:
 		return group_panel
 
-	# Se não existir, cria um novo e armazena a referência
 	var group_scene = load(GROUP_SCENE_PATH)
 	if group_scene and group_scene is PackedScene:
 		group_panel = group_scene.instantiate() as VBoxContainer

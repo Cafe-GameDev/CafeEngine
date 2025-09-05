@@ -4,11 +4,11 @@ extends VBoxContainer
 
 @onready var tab_container: TabContainer = $TabContainer
 
-@onready var sfx_paths_vbox_container: VBoxContainer = tab_container.get_node("Paths/SFXPathsSection/SFXPathsVBoxContainer")
+@onready var sfx_paths_grid_container: GridContainer = tab_container.get_node("Paths/SFXPathsSection/SFXPathsGridContainer")
 @onready var add_sfx_path_button: Button = tab_container.get_node("Paths/SFXPathsSection/AddSFXPathButton")
 @onready var sfx_folder_dialog: FileDialog = $SFXFolderDialog
 
-@onready var music_paths_vbox_container: VBoxContainer = tab_container.get_node("Paths/MusicPathsSection/MusicPathsVBoxContainer")
+@onready var music_paths_grid_container: GridContainer = tab_container.get_node("Paths/MusicPathsSection/MusicPathsGridContainer")
 @onready var add_music_path_button: Button = tab_container.get_node("Paths/MusicPathsSection/AddMusicPathButton")
 @onready var music_folder_dialog: FileDialog = $MusicFolderDialog
 
@@ -86,8 +86,8 @@ func _load_config_to_ui():
 		print("--- Loading config to UI ---")
 		print("SFX paths in resource: ", audio_config.sfx_paths)
 		# Limpa as entradas de caminho existentes
-		if sfx_paths_vbox_container:
-			for child in sfx_paths_vbox_container.get_children():
+		if sfx_paths_grid_container:
+			for child in sfx_paths_grid_container.get_children():
 				child.queue_free()
 			var sfx_count = 0
 			for path in audio_config.sfx_paths:
@@ -96,8 +96,8 @@ func _load_config_to_ui():
 			print("Created ", sfx_count, " SFX path UI entries.")
 
 		print("Music paths in resource: ", audio_config.music_paths)
-		if music_paths_vbox_container:
-			for child in music_paths_vbox_container.get_children():
+		if music_paths_grid_container:
+			for child in music_paths_grid_container.get_children():
 				child.queue_free()
 			var music_count = 0
 			for path in audio_config.music_paths:
@@ -216,21 +216,19 @@ func _create_path_entry(path_value: String, is_sfx: bool):
 	remove_button.pressed.connect(Callable(self, "_on_remove_path_button_pressed").bind(path_entry, is_sfx))
 	path_entry.add_child(remove_button)
 
-	print("[_create_path_entry] sfx_paths_vbox_container: ", sfx_paths_vbox_container)
-	print("[_create_path_entry] music_paths_vbox_container: ", music_paths_vbox_container)
+	print("[_create_path_entry] sfx_paths_grid_container: ", sfx_paths_grid_container)
+	print("[_create_path_entry] music_paths_grid_container: ", music_paths_grid_container)
 
 	if is_sfx:
-		sfx_paths_vbox_container.add_child(path_entry) # Line 219
+		sfx_paths_grid_container.add_child(path_entry) # Line 219
 	else:
-		music_paths_vbox_container.add_child(path_entry) # Line 221
+		music_paths_grid_container.add_child(path_entry) # Line 221
 
 func _on_add_sfx_path_button_pressed():
 	_create_path_entry("", true)
 	_update_audio_config_paths()
 
-func _on_add_music_path_button_pressed():
-	_create_path_entry("", false)
-	_update_audio_config_paths()
+
 
 func _on_browse_button_pressed(line_edit: LineEdit, is_sfx: bool):
 	if is_sfx:
@@ -291,7 +289,7 @@ func _update_audio_config_paths():
 		return
 
 	var new_sfx_paths: Array[String] = []
-	for child in sfx_paths_vbox_container.get_children():
+	for child in sfx_paths_grid_container.get_children():
 		if child is HBoxContainer:
 			var line_edit: LineEdit = child.get_child(0)
 			if line_edit and not line_edit.text.is_empty() and line_edit.text.begins_with("res://"):
@@ -299,7 +297,7 @@ func _update_audio_config_paths():
 	audio_config.sfx_paths = new_sfx_paths
 
 	var new_music_paths: Array[String] = []
-	for child in music_paths_vbox_container.get_children():
+	for child in music_paths_grid_container.get_children():
 		if child is HBoxContainer:
 			var line_edit: LineEdit = child.get_child(0)
 			if line_edit and not line_edit.text.is_empty() and line_edit.text.begins_with("res://"):
@@ -390,19 +388,3 @@ func _on_audio_config_updated(config: AudioConfig):
 
 func _on_save_feedback_timer_timeout():
 	save_feedback_label.visible = false
-
-func _on_add_playlist_button_pressed():
-	var new_playlist_key = "New Playlist %d" % (audio_config.music_playlists.size() + 1)
-	while audio_config.music_playlists.has(new_playlist_key):
-		new_playlist_key = "New Playlist %d" % (audio_config.music_playlists.size() + 1)
-
-	audio_config.music_playlists[new_playlist_key] = {
-		"tracks": [],
-		"mode": AudioConfig.PlaybackMode.SEQUENTIAL
-	}
-	_update_audio_config_playlists()
-	_load_config_to_ui() # Recarrega a UI para mostrar a nova playlist
-
-func _update_audio_config_playlists():
-	if audio_config:
-		audio_config.music_playlists = audio_config.music_playlists.duplicate(true) # Força a detecção de mudança

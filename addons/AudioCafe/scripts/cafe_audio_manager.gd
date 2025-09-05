@@ -31,8 +31,7 @@ var _sfx_library: Dictionary = {}
 var _music_library: Dictionary = {}
 
 var _music_playlist_keys: Array = []
-var _current_playlist_key: String = ""
-var _current_playlist_track_index: int = 0
+
 
 @export var _sfx_player_count = 15
 var _sfx_players: Array[AudioStreamPlayer] = []
@@ -80,10 +79,7 @@ func _on_audio_config_changed():
 func _on_request_audio_start():
 	_setup_audio_buses()
 	_load_audio_from_manifest()
-	# Inicia a reprodução de uma playlist padrão ou aleatória
-	if not audio_config.music_playlists.is_empty():
-		var default_playlist_key = audio_config.music_playlists.keys().pick_random()
-		play_playlist(default_playlist_key)
+	_play_random_music()
 	_music_change_timer.start()
 
 func _setup_audio_buses():
@@ -138,103 +134,9 @@ func _on_play_music_requested(music_key: String):
 func stop_music():
 	_music_player.stop()
 
-func _select_and_play_random_playlist():
-	if _music_playlist_keys.is_empty():
-		printerr("CafeAudioManager: No music playlists found to play.")
-		return
 
-	_current_playlist_key = _music_playlist_keys.pick_random()
-	play_music_requested.emit(_current_playlist_key)
 
-func play_playlist(playlist_key: String):
-	if not audio_config.music_playlists.has(playlist_key):
-		printerr("CafeAudioManager: Playlist '%s' not found." % playlist_key)
-		return
 
-	_current_playlist_key = playlist_key
-	_current_playlist_track_index = 0
-	_play_current_playlist_track()
-
-func next_track():
-	if _current_playlist_key.is_empty() or not audio_config.music_playlists.has(_current_playlist_key):
-		printerr("CafeAudioManager: Nenhuma playlist ativa ou playlist não encontrada.")
-		return
-
-	var playlist_data = audio_config.music_playlists[_current_playlist_key]
-	var tracks = playlist_data["tracks"]
-	var mode = playlist_data["mode"]
-
-	if tracks.is_empty():
-		printerr("CafeAudioManager: Playlist '%s' está vazia." % _current_playlist_key)
-		return
-
-	match mode:
-		AudioConfig.PlaybackMode.SEQUENTIAL:
-			_current_playlist_track_index = (_current_playlist_track_index + 1) % tracks.size()
-		AudioConfig.PlaybackMode.RANDOM:
-			_current_playlist_track_index = randi() % tracks.size()
-		AudioConfig.PlaybackMode.REPEAT_ONE:
-			pass # Permanece na mesma faixa
-
-	_play_current_playlist_track()
-
-func previous_track():
-	if _current_playlist_key.is_empty() or not audio_config.music_playlists.has(_current_playlist_key):
-		printerr("CafeAudioManager: Nenhuma playlist ativa ou playlist não encontrada.")
-		return
-
-	var playlist_data = audio_config.music_playlists[_current_playlist_key]
-	var tracks = playlist_data["tracks"]
-
-	if tracks.is_empty():
-		printerr("CafeAudioManager: Playlist '%s' está vazia." % _current_playlist_key)
-		return
-
-	_current_playlist_track_index = (_current_playlist_track_index - 1 + tracks.size()) % tracks.size()
-	_play_current_playlist_track()
-
-func set_playlist_mode(mode: int):
-	if _current_playlist_key.is_empty() or not audio_config.music_playlists.has(_current_playlist_key):
-		printerr("CafeAudioManager: Nenhuma playlist ativa ou playlist não encontrada.")
-		return
-
-	var playlist_data = audio_config.music_playlists[_current_playlist_key]
-	playlist_data["mode"] = mode
-	# Não precisa salvar o AudioConfig aqui, pois a edição é feita no editor
-
-func _play_current_playlist_track():
-	if _current_playlist_key.is_empty() or not audio_config.music_playlists.has(_current_playlist_key):
-		printerr("CafeAudioManager: Nenhuma playlist ativa ou playlist não encontrada para tocar.")
-		return
-
-	var playlist_data = audio_config.music_playlists[_current_playlist_key]
-	var tracks = playlist_data["tracks"]
-
-	if tracks.is_empty():
-		printerr("CafeAudioManager: Playlist '%s' está vazia. Não há faixas para tocar." % _current_playlist_key)
-		_music_player.stop()
-		return
-
-	if _current_playlist_track_index < 0 or _current_playlist_track_index >= tracks.size():
-		printerr("CafeAudioManager: Índice de faixa inválido na playlist '%s'." % _current_playlist_key)
-		_music_player.stop()
-		return
-
-	var track_path = tracks[_current_playlist_track_index]
-	var music_stream = load(track_path)
-
-	if music_stream == null:
-		printerr("CafeAudioManager: Falha ao carregar faixa de música: '%s' na playlist '%s'." % [track_path, _current_playlist_key])
-		_music_player.stop()
-		return
-
-	if _music_player.stream == music_stream and _music_player.playing:
-		return
-
-	_music_player.stream = music_stream
-	_music_player.volume_db = linear_to_db(audio_config.music_volume) if audio_config else 0.0
-	_music_player.play()
-	music_track_changed.emit(track_path.get_file().get_basename())
 
 func apply_volume_to_bus(bus_name: String, linear_volume: float):
 	var bus_index = AudioServer.get_bus_index(bus_name)
@@ -245,15 +147,19 @@ func apply_volume_to_bus(bus_name: String, linear_volume: float):
 	else:
 		printerr("CafeAudioManager: Audio bus '%s' not found." % bus_name)
 
+func _play_random_music():
+	if _music_playlist_keys.is_empty():
+		printerr("CafeAudioManager: No music keys found in manifest to play.")
+		return
+	
+	var random_key = _music_playlist_keys.pick_random()
+	play_music_by_key(random_key)
+
 func _on_music_finished():
-	next_track() # Avança para a próxima faixa na playlist
+	_play_random_music() # Toca uma música aleatória de uma chave aleatória
 
 func _on_music_change_timer_timeout():
-	# Se houver uma playlist ativa, o timer pode ser usado para avançar a faixa
-	if not _current_playlist_key.is_empty():
-		next_track()
-	else:
-		_select_and_play_random_playlist() # Fallback para o comportamento antigo se não houver playlist
+	_play_random_music()
 
 func _on_sfx_player_finished(player: AudioStreamPlayer):
 	player.stream = null

@@ -56,17 +56,14 @@ signal config_changed
 			music_volume = value
 			_save_and_emit_changed()
 
-enum PlaybackMode { SEQUENTIAL, RANDOM, REPEAT_ONE }
 
-@export_group("Music Playlists")
-@export var music_playlists: Dictionary = {}:
-	set(value):
-		if music_playlists != value:
-			music_playlists = value
-			_save_and_emit_changed()
 
 func _save_and_emit_changed():
-	if self.resource_path and self.resource_path.is_absolute_path():
+	if self.resource_path:
+		var dir = self.resource_path.get_base_dir()
+		if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(dir)):
+			DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
+		
 		var error = ResourceSaver.save(self, self.resource_path)
 		if error != OK:
 			push_error("Failed to save AudioConfig resource: %s" % error)
