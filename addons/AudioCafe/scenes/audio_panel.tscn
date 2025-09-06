@@ -140,6 +140,174 @@ tooltip_text = "The default SFX key for UI hover events."
 text = "ui_rollover"
 placeholder_text = "ui_hover"
 
+[node name="DefaultConfirmKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for confirmation events (e.g., dialogs)."
+mouse_filter = 1
+text = "Default Confirm Key:"
+
+[node name="DefaultConfirmKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for confirmation events (e.g., dialogs)."
+text = "interface_confirmation"
+placeholder_text = "interface_confirmation"
+
+[node name="DefaultCancelKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for cancellation events (e.g., closing dialogs)."
+mouse_filter = 1
+text = "Default Cancel Key:"
+
+[node name="DefaultCancelKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for cancellation events (e.g., closing dialogs)."
+text = "interface_back"
+placeholder_text = "interface_back"
+
+[node name="DefaultToggleKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for toggle events (e.g., checkboxes, switches)."
+mouse_filter = 1
+text = "Default Toggle Key:"
+
+[node name="DefaultToggleKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for toggle events (e.g., checkboxes, switches)."
+text = "interface_toggle"
+placeholder_text = "interface_toggle"
+
+[node name="DefaultSelectKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for selection events (e.g., item lists, option buttons)."
+mouse_filter = 1
+text = "Default Select Key:"
+
+[node name="DefaultSelectKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for selection events (e.g., item lists, option buttons)."
+text = "interface_select"
+placeholder_text = "interface_select"
+
+[node name="DefaultTextInputKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for text input events."
+mouse_filter = 1
+text = "Default Text Input Key:"
+
+[node name="DefaultTextInputKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for text input events."
+text = "interface_type"
+placeholder_text = "interface_type"
+
+[node name="DefaultScrollKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for scrolling events."
+mouse_filter = 1
+text = "Default Scroll Key:"
+
+[node name="DefaultScrollKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for scrolling events."
+text = "interface_scroll"
+placeholder_text = "interface_scroll"
+
+[node name="DefaultFocusKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for focus change events."
+mouse_filter = 1
+text = "Default Focus Key:"
+
+[node name="DefaultFocusKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for focus change events."
+text = "interface_focus"
+placeholder_text = "interface_focus"
+
+[node name="DefaultErrorKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for error events."
+mouse_filter = 1
+text = "Default Error Key:"
+
+[node name="DefaultErrorKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for error events."
+text = "interface_error"
+placeholder_text = "interface_error"
+
+[node name="DefaultWarningKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for warning events."
+mouse_filter = 1
+text = "Default Warning Key:"
+
+[node name="DefaultWarningKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for warning events."
+text = "interface_warning"
+placeholder_text = "interface_warning"
+
+[node name="DefaultSuccessKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for success events."
+mouse_filter = 1
+text = "Default Success Key:"
+
+[node name="DefaultSuccessKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for success events."
+text = "interface_success"
+placeholder_text = "interface_success"
+
+[node name="DefaultOpenKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for opening elements (e.g., menus, dialogs)."
+mouse_filter = 1
+text = "Default Open Key:"
+
+[node name="DefaultOpenKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for opening elements (e.g., menus, dialogs)."
+text = "interface_open"
+placeholder_text = "interface_open"
+
+[node name="DefaultCloseKeyLabel" type="Label" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+custom_minimum_size = Vector2(146, 0)
+layout_mode = 2
+tooltip_text = "The default SFX key for closing elements (e.g., menus, dialogs)."
+mouse_filter = 1
+text = "Default Close Key:"
+
+[node name="DefaultCloseKeyLineEdit" type="LineEdit" parent="CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The default SFX key for closing elements (e.g., menus, dialogs)."
+text = "interface_close"
+placeholder_text = "interface_close"
+
 [node name="HSeparator2" type="HSeparator" parent="CollapsibleContent/TabContainer/DefaultKeys"]
 layout_mode = 2
 

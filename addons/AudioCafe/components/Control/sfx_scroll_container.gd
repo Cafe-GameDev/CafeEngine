@@ -42,6 +42,6 @@ func _on_audio_config_updated(config: AudioConfig):
 	# Atualiza as chaves de SFX com base na configuração atualizada
 	# Apenas se a chave exportada estiver vazia, usa a padrão do AudioConfig
 	if scrolled_sfx_key.is_empty():
-		scrolled_sfx_key = config.default_slider_key # Usando default_slider_key para rolagem
+		scrolled_sfx_key = config.default_scroll_key
 	if hover_sfx_key.is_empty():
 		hover_sfx_key = config.default_hover_key

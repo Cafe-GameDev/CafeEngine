@@ -15,6 +15,18 @@ extends VBoxContainer
 @onready var default_click_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultClickKeyLineEdit
 @onready var default_slider_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultSliderKeyLineEdit
 @onready var default_hover_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultHoverKeyLineEdit
+@onready var default_confirm_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultConfirmKeyLineEdit
+@onready var default_cancel_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultCancelKeyLineEdit
+@onready var default_toggle_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultToggleKeyLineEdit
+@onready var default_select_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultSelectKeyLineEdit
+@onready var default_text_input_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultTextInputKeyLineEdit
+@onready var default_scroll_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultScrollKeyLineEdit
+@onready var default_focus_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultFocusKeyLineEdit
+@onready var default_error_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultErrorKeyLineEdit
+@onready var default_warning_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultWarningKeyLineEdit
+@onready var default_success_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultSuccessKeyLineEdit
+@onready var default_open_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultOpenKeyLineEdit
+@onready var default_close_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultCloseKeyLineEdit
 
 @onready var save_feedback_label: Label = $CollapsibleContent/SaveFeedbackLabel
 @onready var save_feedback_timer: Timer = $CollapsibleContent/SaveFeedbackTimer
@@ -158,6 +170,18 @@ func _load_config_to_ui():
 		if default_click_key_line_edit: default_click_key_line_edit.text = audio_config.default_click_key
 		if default_hover_key_line_edit: default_hover_key_line_edit.text = audio_config.default_hover_key
 		if default_slider_key_line_edit: default_slider_key_line_edit.text = audio_config.default_slider_key
+		if default_confirm_key_line_edit: default_confirm_key_line_edit.text = audio_config.default_confirm_key
+		if default_cancel_key_line_edit: default_cancel_key_line_edit.text = audio_config.default_cancel_key
+		if default_toggle_key_line_edit: default_toggle_key_line_edit.text = audio_config.default_toggle_key
+		if default_select_key_line_edit: default_select_key_line_edit.text = audio_config.default_select_key
+		if default_text_input_key_line_edit: default_text_input_key_line_edit.text = audio_config.default_text_input_key
+		if default_scroll_key_line_edit: default_scroll_key_line_edit.text = audio_config.default_scroll_key
+		if default_focus_key_line_edit: default_focus_key_line_edit.text = audio_config.default_focus_key
+		if default_error_key_line_edit: default_error_key_line_edit.text = audio_config.default_error_key
+		if default_warning_key_line_edit: default_warning_key_line_edit.text = audio_config.default_warning_key
+		if default_success_key_line_edit: default_success_key_line_edit.text = audio_config.default_success_key
+		if default_open_key_line_edit: default_open_key_line_edit.text = audio_config.default_open_key
+		if default_close_key_line_edit: default_close_key_line_edit.text = audio_config.default_close_key
 
 		if master_volume_slider: master_volume_slider.value = audio_config.master_volume
 		if master_volume_value_label: _update_volume_label(master_volume_value_label, audio_config.master_volume)
@@ -203,6 +227,18 @@ func _connect_ui_signals():
 	default_click_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_click_key"))
 	default_hover_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_hover_key"))
 	default_slider_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_slider_key"))
+	default_confirm_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_confirm_key"))
+	default_cancel_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_cancel_key"))
+	default_toggle_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_toggle_key"))
+	default_select_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_select_key"))
+	default_text_input_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_text_input_key"))
+	default_scroll_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_scroll_key"))
+	default_focus_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_focus_key"))
+	default_error_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_error_key"))
+	default_warning_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_warning_key"))
+	default_success_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_success_key"))
+	default_open_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_open_key"))
+	default_close_key_line_edit.text_changed.connect(func(new_text): _on_config_text_changed(new_text, "default_close_key"))
 
 	master_volume_slider.value_changed.connect(func(new_value): _on_volume_slider_value_changed(new_value, "Master", master_volume_value_label, "master_volume"))
 	sfx_volume_slider.value_changed.connect(func(new_value): _on_volume_slider_value_changed(new_value, "SFX", sfx_volume_value_label, "sfx_volume"))

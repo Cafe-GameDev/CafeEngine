@@ -43,6 +43,78 @@ signal config_changed
 			default_slider_key = value
 			_save_and_emit_changed()
 
+@export var default_confirm_key: String = "interface_confirmation":
+	set(value):
+		if default_confirm_key != value:
+			default_confirm_key = value
+			_save_and_emit_changed()
+
+@export var default_cancel_key: String = "interface_back":
+	set(value):
+		if default_cancel_key != value:
+			default_cancel_key = value
+			_save_and_emit_changed()
+
+@export var default_toggle_key: String = "interface_toggle":
+	set(value):
+		if default_toggle_key != value:
+			default_toggle_key = value
+			_save_and_emit_changed()
+
+@export var default_select_key: String = "interface_select":
+	set(value):
+		if default_select_key != value:
+			default_select_key = value
+			_save_and_emit_changed()
+
+@export var default_text_input_key: String = "interface_type": # Assuming a generic type sound
+	set(value):
+		if default_text_input_key != value:
+			default_text_input_key = value
+			_save_and_emit_changed()
+
+@export var default_scroll_key: String = "interface_scroll":
+	set(value):
+		if default_scroll_key != value:
+			default_scroll_key = value
+			_save_and_emit_changed()
+
+@export var default_focus_key: String = "interface_focus": # Assuming a generic focus sound
+	set(value):
+		if default_focus_key != value:
+			default_focus_key = value
+			_save_and_emit_changed()
+
+@export var default_error_key: String = "interface_error":
+	set(value):
+		if default_error_key != value:
+			default_error_key = value
+			_save_and_emit_changed()
+
+@export var default_warning_key: String = "interface_warning": # Assuming a generic warning sound
+	set(value):
+		if default_warning_key != value:
+			default_warning_key = value
+			_save_and_emit_changed()
+
+@export var default_success_key: String = "interface_success": # Assuming a generic success sound
+	set(value):
+		if default_success_key != value:
+			default_success_key = value
+			_save_and_emit_changed()
+
+@export var default_open_key: String = "interface_open":
+	set(value):
+		if default_open_key != value:
+			default_open_key = value
+			_save_and_emit_changed()
+
+@export var default_close_key: String = "interface_close":
+	set(value):
+		if default_close_key != value:
+			default_close_key = value
+			_save_and_emit_changed()
+
 @export_group("Volume Settings")
 @export_range(0.0, 1.0, 0.01) var master_volume: float = 1.0:
 	set(value):

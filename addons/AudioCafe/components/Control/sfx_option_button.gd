@@ -36,6 +36,6 @@ func _on_audio_config_updated(config: AudioConfig):
 	# Atualiza as chaves de SFX com base na configuração atualizada
 	# Apenas se a chave exportada estiver vazia, usa a padrão do AudioConfig
 	if item_selected_sfx_key.is_empty():
-		item_selected_sfx_key = config.default_click_key # Usando default_click_key para seleção de item
+		item_selected_sfx_key = config.default_select_key
 	if hover_sfx_key.is_empty():
 		hover_sfx_key = config.default_hover_key
