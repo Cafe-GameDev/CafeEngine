@@ -6,8 +6,8 @@
 script = ExtResource("1_ufiej")
 music_data = {}
 sfx_data = {}
-sfx_paths = Array[String](["res://addons/AudioCafe/assets/sfx/"])
-music_paths = Array[String](["res://addons/AudioCafe/assets/music/"])
+sfx_paths = Array[String](["res://addons/AudioCafe/assets/sfx"])
+music_paths = Array[String](["res://addons/AudioCafe/assets/music"])
 default_click_key = "ui_click"
 default_hover_key = "ui_hover"
 default_slider_key = "ui_slider_changed"

@@ -7,13 +7,13 @@ signal config_changed
 @export var music_data: Dictionary = {}
 @export var sfx_data: Dictionary = {}
 
-@export var sfx_paths: Array[String] = ["res://addons/AudioCafe/assets/sfx/"]:
+@export var sfx_paths: Array[String] = ["res://addons/AudioCafe/assets/sfx"]:
 	set(value):
 		if sfx_paths != value:
 			sfx_paths = value
 			_save_and_emit_changed()
 
-@export var music_paths: Array[String] = ["res://addons/AudioCafe/assets/music/"]:
+@export var music_paths: Array[String] = ["res://addons/AudioCafe/assets/music"]:
 	set(value):
 		if music_paths != value:
 			music_paths = value
