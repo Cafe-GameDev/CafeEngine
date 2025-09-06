@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="StateConfig" load_steps=2 format=3 uid="uid://cmunocxvdx3kc"]
+
+[ext_resource type="Script" uid="uid://dlqpbugnwaxu7" path="res://addons/StateCafe/scripts/state_config.gd" id="1_nqemx"]
+
+[resource]
+script = ExtResource("1_nqemx")
+is_panel_expanded = true
+metadata/_custom_type_script = "uid://dlqpbugnwaxu7"
