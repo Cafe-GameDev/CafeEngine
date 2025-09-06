@@ -26,8 +26,8 @@ extends VBoxContainer
 @onready var music_volume_slider: HSlider = tab_container.get_node("DefaultKeys/VolumeGridContainer/MusicVolumeSlider")
 @onready var music_volume_value_label: Label = tab_container.get_node("DefaultKeys/VolumeGridContainer/MusicVolumeValueLabel")
 
-@onready var music_keys_rich_text_label: RichTextLabel = tab_container.get_node("AvailableMusic/MusicKeysRichTextLabel")
-@onready var sfx_keys_rich_text_label: RichTextLabel = tab_container.get_node("AvailableSFX/SFXKeysRichTextLabel")
+@onready var music_keys_rich_text_label: RichTextLabel = tab_container.get_node("MusicList/MusicKeysRichTextLabel")
+@onready var sfx_keys_rich_text_label: RichTextLabel = tab_container.get_node("SFXList/SFXKeysRichTextLabel")
 
 @onready var manifest_progress_bar: ProgressBar = $ManifestProgressBar
 @onready var manifest_status_label: Label = $ManifestStatusLabel
@@ -122,8 +122,8 @@ func _load_config_to_ui():
 		if music_volume_value_label: _update_volume_label(music_volume_value_label, audio_config.music_volume)
 
 		# Preenche os ItemList com as chaves de música e SFX
-		var current_music_keys_rich_text_label = tab_container.get_node("AvailableMusic/MusicKeysRichTextLabel")
-		var current_sfx_keys_rich_text_label = tab_container.get_node("AvailableSFX/SFXKeysRichTextLabel")
+		var current_music_keys_rich_text_label = tab_container.get_node("MusicList/MusicKeysRichTextLabel")
+		var current_sfx_keys_rich_text_label = tab_container.get_node("SFXList/SFXKeysRichTextLabel")
 
 		if current_music_keys_rich_text_label: current_music_keys_rich_text_label.clear()
 		if current_sfx_keys_rich_text_label: current_sfx_keys_rich_text_label.clear()
