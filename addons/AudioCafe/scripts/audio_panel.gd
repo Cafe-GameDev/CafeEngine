@@ -66,7 +66,6 @@ func _ready():
 		await ready
 
 	if has_node("HeaderButton") and has_node("CollapsibleContent"):
-		get_node("HeaderButton").pressed.connect(Callable(self, "_on_header_button_pressed"))
 		get_node("CollapsibleContent").custom_minimum_size.y = 0
 		get_node("CollapsibleContent").visible = false
 		call_deferred("_calculate_expanded_height")
