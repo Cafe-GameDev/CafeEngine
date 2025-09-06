@@ -1,23 +1,23 @@
 @tool
 extends VBoxContainer
-@onready var audio_manifest: Button = $AudioManifest
+@onready var audio_manifest: Button = $CollapsibleContent/AudioManifest
 
-@onready var tab_container: TabContainer = $TabContainer
+@onready var tab_container: TabContainer = $CollapsibleContent/TabContainer
 
 @onready var sfx_paths_grid_container: GridContainer = tab_container.get_node("Paths/SFXPathsSection/SFXPathsGridContainer")
 @onready var add_sfx_path_button: Button = tab_container.get_node("Paths/SFXPathsSection/AddSFXPathButton")
-@onready var sfx_folder_dialog: FileDialog = $SFXFolderDialog
+@onready var sfx_folder_dialog: FileDialog = $CollapsibleContent/SFXFolderDialog
 
 @onready var music_paths_grid_container: GridContainer = tab_container.get_node("Paths/MusicPathsSection/MusicPathsGridContainer")
 @onready var add_music_path_button: Button = tab_container.get_node("Paths/MusicPathsSection/AddMusicPathButton")
-@onready var music_folder_dialog: FileDialog = $MusicFolderDialog
+@onready var music_folder_dialog: FileDialog = $CollapsibleContent/MusicFolderDialog
 
-@onready var default_click_key_line_edit: LineEdit = $TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultClickKeyLineEdit
-@onready var default_slider_key_line_edit: LineEdit = $TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultSliderKeyLineEdit
-@onready var default_hover_key_line_edit: LineEdit = $TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultHoverKeyLineEdit
+@onready var default_click_key_line_edit: LineEdit = $CollapsibleContent/CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultClickKeyLineEdit
+@onready var default_slider_key_line_edit: LineEdit = $CollapsibleContent/CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultSliderKeyLineEdit
+@onready var default_hover_key_line_edit: LineEdit = $CollapsibleContent/CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultHoverKeyLineEdit
 
-@onready var save_feedback_label: Label = $SaveFeedbackLabel
-@onready var save_feedback_timer: Timer = $SaveFeedbackTimer
+@onready var save_feedback_label: Label = $CollapsibleContent/CollapsibleContent/SaveFeedbackLabel
+@onready var save_feedback_timer: Timer = $CollapsibleContent/CollapsibleContent/SaveFeedbackTimer
 
 @onready var master_volume_slider: HSlider = tab_container.get_node("DefaultKeys/VolumeGridContainer/MasterVolumeSlider")
 @onready var master_volume_value_label: Label = tab_container.get_node("DefaultKeys/VolumeGridContainer/MasterVolumeValueLabel")
@@ -29,8 +29,8 @@ extends VBoxContainer
 @onready var music_keys_rich_text_label: RichTextLabel = tab_container.get_node("MusicList/MusicKeysRichTextLabel")
 @onready var sfx_keys_rich_text_label: RichTextLabel = tab_container.get_node("SFXList/SFXKeysRichTextLabel")
 
-@onready var manifest_progress_bar: ProgressBar = $ManifestProgressBar
-@onready var manifest_status_label: Label = $ManifestStatusLabel
+@onready var manifest_progress_bar: ProgressBar = $CollapsibleContent/ManifestProgressBar
+@onready var manifest_status_label: Label = $CollapsibleContent/ManifestStatusLabel
 
 @export var audio_config: AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
 
@@ -40,6 +40,9 @@ var editor_interface: EditorInterface
 const MANIFEST_SAVE_PATH = "res://addons/AudioCafe/resources/audio_manifest.tres"
 const VALID_COLOR = Color(1.0, 1.0, 1.0, 1.0) # Cor de borda padrão (Branco)
 const INVALID_COLOR = Color(1.0, 0.2, 0.2, 1.0) # Cor de borda para erro
+
+var _is_expanded: bool = false
+var _expanded_height: float = 0.0
 
 func set_editor_interface(interface: EditorInterface):
 	editor_interface = interface
@@ -57,6 +60,19 @@ func _show_save_feedback():
 	save_feedback_timer.start()
 
 func _ready():
+	# User will set up @onready var header_button and collapsible_content
+	# Assuming 'header_button' and 'collapsible_content' are correctly @onready'd by the user.
+	if not is_node_ready():
+		await ready
+
+	if has_node("HeaderButton") and has_node("CollapsibleContent"):
+		get_node("HeaderButton").pressed.connect(Callable(self, "_on_header_button_pressed"))
+		get_node("CollapsibleContent").custom_minimum_size.y = 0
+		get_node("CollapsibleContent").visible = false
+		call_deferred("_calculate_expanded_height")
+	else:
+		push_error("HeaderButton or CollapsibleContent node not found. Please ensure they exist and are correctly named.")
+
 	print("[_ready] tab_container: ", tab_container)
 	# Conecta ao sinal de atualização do AudioConfig do CafeAudioManager
 	if CafeAudioManager: # Verifica se o autoload está disponível
@@ -394,3 +410,56 @@ func _on_add_sfx_path_button_pressed():
 func _on_add_music_path_button_pressed() -> void:
 	_create_path_entry("", false)
 	_update_audio_config_paths()
+
+func _calculate_expanded_height():
+	# This function will be called by the user after they have moved the nodes
+	# into CollapsibleContent and set up the @onready variables.
+	# Assuming 'collapsible_content' and 'header_button' are correctly @onready'd by the user.
+	if not is_node_ready():
+		await ready
+
+	# Ensure collapsible_content is a valid node before proceeding
+	if not has_node("CollapsibleContent"):
+		push_error("CollapsibleContent node not found. Please ensure it exists and is correctly named.")
+		return
+
+	var collapsible_content_node = get_node("CollapsibleContent")
+
+	collapsible_content_node.visible = true
+	collapsible_content_node.custom_minimum_size.y = -1 # Reset to natural size
+	await get_tree().process_frame # Wait for layout update
+	_expanded_height = collapsible_content_node.size.y
+	
+	# Set back to collapsed state
+	collapsible_content_node.custom_minimum_size.y = 0
+	collapsible_content_node.visible = false
+
+func _on_header_button_pressed():
+	# This function will be called by the user after they have moved the nodes
+	# into CollapsibleContent and set up the @onready variables.
+	# Assuming 'collapsible_content' and 'header_button' are correctly @onready'd by the user.
+	if not is_node_ready():
+		await ready
+
+	# Ensure collapsible_content and header_button are valid nodes before proceeding
+	if not has_node("CollapsibleContent") or not has_node("HeaderButton"):
+		push_error("CollapsibleContent or HeaderButton node not found. Please ensure they exist and are correctly named.")
+		return
+
+	var collapsible_content_node = get_node("CollapsibleContent")
+	var header_button_node = get_node("HeaderButton")
+
+	_is_expanded = not _is_expanded
+	
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_QUAD)
+	
+	if _is_expanded:
+		collapsible_content_node.visible = true
+		tween.tween_property(collapsible_content_node, "custom_minimum_size:y", _expanded_height, 0.3)
+		header_button_node.text = "AudioCafe ▲"
+	else:
+		tween.tween_property(collapsible_content_node, "custom_minimum_size:y", 0, 0.3)
+		tween.tween_callback(Callable(collapsible_content_node, "set_visible").bind(false))
+		header_button_node.text = "AudioCafe ▼"
