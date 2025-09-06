@@ -65,14 +65,6 @@ func _ready():
 	if not is_node_ready():
 		await ready
 
-	if has_node("HeaderButton") and has_node("CollapsibleContent"):
-		get_node("CollapsibleContent").custom_minimum_size.y = 0
-		get_node("CollapsibleContent").visible = false
-		call_deferred("_calculate_expanded_height")
-	else:
-		push_error("HeaderButton or CollapsibleContent node not found. Please ensure they exist and are correctly named.")
-
-	print("[_ready] tab_container: ", tab_container)
 	# Conecta ao sinal de atualização do AudioConfig do CafeAudioManager
 	if CafeAudioManager: # Verifica se o autoload está disponível
 		CafeAudioManager.audio_config_updated.connect(Callable(self, "_on_audio_config_updated"))
@@ -87,7 +79,6 @@ func _ready():
 	if Engine.is_editor_hint() and editor_interface:
 		audio_manifest.icon = editor_interface.get_base_control().get_theme_icon("Reload", "EditorIcons")
 		if has_node("HeaderButton"):
-			get_node("HeaderButton").icon = editor_interface.get_base_control().get_theme_icon("ArrowDown", "EditorIcons")
 			get_node("HeaderButton").text = "AudioCafe" # Remove arrow from text
 	
 	if Engine.is_editor_hint():
@@ -97,6 +88,42 @@ func _ready():
 		add_music_path_button.pressed.connect(Callable(self, "_on_add_music_path_button_pressed"))
 		sfx_folder_dialog.dir_selected.connect(Callable(self, "_on_sfx_folder_dialog_dir_selected"))
 		music_folder_dialog.dir_selected.connect(Callable(self, "_on_music_folder_dialog_dir_selected"))
+		
+		# Call the new initialization function after _ready is complete
+		call_deferred("_initialize_panel_state")
+
+func _initialize_panel_state():
+	if not has_node("HeaderButton") or not has_node("CollapsibleContent"):
+		push_error("HeaderButton or CollapsibleContent node not found. Please ensure they exist and are correctly named.")
+		return
+
+	var collapsible_content_node = get_node("CollapsibleContent")
+	var header_button_node = get_node("HeaderButton")
+
+	# Temporarily make visible and reset size to calculate natural height
+	collapsible_content_node.visible = true
+	collapsible_content_node.custom_minimum_size.y = -1 
+	await get_tree().process_frame # Wait for layout update
+
+	_expanded_height = collapsible_content_node.size.y
+
+	# Apply the saved state
+	if audio_config:
+		_is_expanded = audio_config.is_panel_expanded
+		collapsible_content_node.visible = _is_expanded
+		if _is_expanded:
+			collapsible_content_node.custom_minimum_size.y = _expanded_height
+			header_button_node.icon = editor_interface.get_base_control().get_theme_icon("ArrowUp", "EditorIcons") if editor_interface else null
+		else:
+			collapsible_content_node.custom_minimum_size.y = 0
+			header_button_node.icon = editor_interface.get_base_control().get_theme_icon("ArrowDown", "EditorIcons") if editor_interface else null
+	else:
+		# Default to collapsed if no config or config not loaded
+		_is_expanded = false
+		collapsible_content_node.visible = false
+		collapsible_content_node.custom_minimum_size.y = 0
+		header_button_node.icon = editor_interface.get_base_control().get_theme_icon("ArrowDown", "EditorIcons") if editor_interface else null
+
 
 func _load_config_to_ui():
 	if not tab_container: return # Garante que o tab_container esteja pronto
@@ -452,6 +479,10 @@ func _on_header_button_pressed():
 	var header_button_node = get_node("HeaderButton")
 
 	_is_expanded = not _is_expanded
+
+	# Update the AudioConfig with the new expanded state
+	if audio_config:
+		audio_config.is_panel_expanded = _is_expanded
 	
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT)
