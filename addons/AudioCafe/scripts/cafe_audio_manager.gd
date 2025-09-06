@@ -1,6 +1,9 @@
 @tool
 extends Node
 
+
+signal audio_config_updated(config: AudioConfig)
+
 @warning_ignore("unused_signal")
 signal play_sfx_requested(sfx_key: String, bus: String, manager_node: Node)
 
@@ -19,7 +22,8 @@ signal request_audio_start()
 const SFX_BUS_NAME = "SFX"
 const MUSIC_BUS_NAME = "Music"
 
-@export var audio_manifest: AudioManifest
+const audio_config : AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
+const audio_manifest: AudioManifest = preload("res://addons/AudioCafe/resources/audio_manifest.tres")
 
 var _sfx_library: Dictionary = {}
 var _music_library: Dictionary = {}

@@ -224,12 +224,6 @@ func _create_path_entry(path_value: String, is_sfx: bool):
 	else:
 		music_paths_grid_container.add_child(path_entry) # Line 221
 
-func _on_add_sfx_path_button_pressed():
-	_create_path_entry("", true)
-	_update_audio_config_paths()
-
-
-
 func _on_browse_button_pressed(line_edit: LineEdit, is_sfx: bool):
 	if is_sfx:
 		sfx_folder_dialog.current_dir = line_edit.text if not line_edit.text.is_empty() else "res://"
@@ -388,3 +382,11 @@ func _on_audio_config_updated(config: AudioConfig):
 
 func _on_save_feedback_timer_timeout():
 	save_feedback_label.visible = false
+
+func _on_add_sfx_path_button_pressed():
+	_create_path_entry("", true)
+	_update_audio_config_paths()
+
+func _on_add_music_path_button_pressed() -> void:
+	_create_path_entry("", false)
+	_update_audio_config_paths()
