@@ -103,7 +103,7 @@ func _initialize_panel_state():
 	# Temporarily make visible and reset size to calculate natural height
 	collapsible_content_node.visible = true
 	collapsible_content_node.custom_minimum_size.y = -1 
-	await get_tree().process_frame # Wait for layout update
+
 
 	_expanded_height = collapsible_content_node.size.y
 
@@ -456,7 +456,7 @@ func _calculate_expanded_height():
 
 	collapsible_content_node.visible = true
 	collapsible_content_node.custom_minimum_size.y = -1 # Reset to natural size
-	await get_tree().process_frame # Wait for layout update
+
 	_expanded_height = collapsible_content_node.size.y
 	
 	# Set back to collapsed state

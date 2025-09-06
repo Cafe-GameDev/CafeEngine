@@ -1,4 +1,4 @@
 class_name SceneControl extends Control
 
 func _ready() -> void:
-	pass
+	CafeAudioManager.request_audio_start.emit()

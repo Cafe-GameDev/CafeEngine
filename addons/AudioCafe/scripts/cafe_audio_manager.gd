@@ -1,7 +1,6 @@
 @tool
 extends Node
 
-
 signal audio_config_updated(config: AudioConfig)
 
 @warning_ignore("unused_signal")
@@ -44,10 +43,10 @@ func _ready():
 	play_sfx_requested.connect(_on_play_sfx_requested)
 	play_music_requested.connect(_on_play_music_requested)
 	
+	request_audio_start.connect(_on_request_audio_start)
+	
 	_setup_audio_buses()
 	_load_audio_from_manifest()
-	_select_and_play_random_playlist()
-	_music_change_timer.start()
 
 func _setup_audio_buses():
 	if AudioServer.get_bus_index(MUSIC_BUS_NAME) == -1:
@@ -192,3 +191,7 @@ func _on_music_change_timer_timeout():
 
 func _on_sfx_player_finished(player: AudioStreamPlayer):
 	player.stream = null # Clear stream after playing to free up memory and allow reuse
+
+func _on_request_audio_start():
+	_select_and_play_random_playlist()
+	_music_change_timer.start()

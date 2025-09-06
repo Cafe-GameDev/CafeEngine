@@ -15,7 +15,7 @@ flat = true
 alignment = 0
 
 [node name="CollapsibleContent" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(0, -1)
+custom_minimum_size = Vector2(0, 309)
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -137,7 +137,7 @@ text = "Default Hover Key:"
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "The default SFX key for UI hover events."
-text = "ui_hover"
+text = "ui_rollover"
 placeholder_text = "ui_hover"
 
 [node name="HSeparator2" type="HSeparator" parent="CollapsibleContent/TabContainer/DefaultKeys"]
