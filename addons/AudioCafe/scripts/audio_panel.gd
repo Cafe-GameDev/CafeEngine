@@ -12,12 +12,12 @@ extends VBoxContainer
 @onready var add_music_path_button: Button = tab_container.get_node("Paths/MusicPathsSection/AddMusicPathButton")
 @onready var music_folder_dialog: FileDialog = $CollapsibleContent/MusicFolderDialog
 
-@onready var default_click_key_line_edit: LineEdit = $CollapsibleContent/CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultClickKeyLineEdit
-@onready var default_slider_key_line_edit: LineEdit = $CollapsibleContent/CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultSliderKeyLineEdit
-@onready var default_hover_key_line_edit: LineEdit = $CollapsibleContent/CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultHoverKeyLineEdit
+@onready var default_click_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultClickKeyLineEdit
+@onready var default_slider_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultSliderKeyLineEdit
+@onready var default_hover_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultHoverKeyLineEdit
 
-@onready var save_feedback_label: Label = $CollapsibleContent/CollapsibleContent/SaveFeedbackLabel
-@onready var save_feedback_timer: Timer = $CollapsibleContent/CollapsibleContent/SaveFeedbackTimer
+@onready var save_feedback_label: Label = $CollapsibleContent/SaveFeedbackLabel
+@onready var save_feedback_timer: Timer = $CollapsibleContent/SaveFeedbackTimer
 
 @onready var master_volume_slider: HSlider = tab_container.get_node("DefaultKeys/VolumeGridContainer/MasterVolumeSlider")
 @onready var master_volume_value_label: Label = tab_container.get_node("DefaultKeys/VolumeGridContainer/MasterVolumeValueLabel")
