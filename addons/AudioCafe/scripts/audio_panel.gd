@@ -136,7 +136,8 @@ func _load_config_to_ui():
 				var music_keys = loaded_manifest.music_data.keys()
 				music_keys.sort()
 				for key in music_keys:
-					current_music_keys_rich_text_label.append_text(key + "\n")
+					var count = loaded_manifest.music_data[key].size()
+					current_music_keys_rich_text_label.append_text(key + " [%d]" % count + "\n")
 			else:
 				push_error("current_music_keys_rich_text_label is null when trying to add item.")
 
@@ -145,7 +146,8 @@ func _load_config_to_ui():
 				var sfx_keys = loaded_manifest.sfx_data.keys()
 				sfx_keys.sort()
 				for key in sfx_keys:
-					current_sfx_keys_rich_text_label.append_text(key + "\n")
+					var count = loaded_manifest.sfx_data[key].size()
+					current_sfx_keys_rich_text_label.append_text(key + " [%d]" % count + "\n")
 			else:
 				push_error("current_sfx_keys_rich_text_label is null when trying to add item.")
 		else:
@@ -370,13 +372,15 @@ func _on_audio_config_updated(config: AudioConfig):
 		var music_keys = loaded_manifest.music_data.keys()
 		music_keys.sort()
 		for key in music_keys:
-			music_keys_rich_text_label.append_text(key + "\n")
+			var count = loaded_manifest.music_data[key].size()
+			music_keys_rich_text_label.append_text(key + " [%d]" % count + "\n")
 
 		print("DEBUG: _on_audio_config_updated - sfx_data keys from manifest: ", loaded_manifest.sfx_data.keys())
 		var sfx_keys = loaded_manifest.sfx_data.keys()
 		sfx_keys.sort()
 		for key in sfx_keys:
-			sfx_keys_rich_text_label.append_text(key + "\n")
+			var count = loaded_manifest.sfx_data[key].size()
+			sfx_keys_rich_text_label.append_text(key + " [%d]" % count + "\n")
 	else:
 		push_error("Falha ao carregar AudioManifest.tres em _on_audio_config_updated.")
 
