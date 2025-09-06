@@ -44,9 +44,6 @@ func _ready():
 	play_sfx_requested.connect(_on_play_sfx_requested)
 	play_music_requested.connect(_on_play_music_requested)
 	
-	request_audio_start.connect(_on_request_audio_start)
-
-func _on_request_audio_start():
 	_setup_audio_buses()
 	_load_audio_from_manifest()
 	_select_and_play_random_playlist()
@@ -67,6 +64,11 @@ func _setup_audio_buses():
 		AudioServer.set_bus_send(sfx_bus_idx, "Master")
 		print("CafeAudioManager: Created SFX audio bus.")
 
+	# Apply initial volumes from audio_config
+	apply_volume_to_bus("Master", audio_config.master_volume)
+	apply_volume_to_bus(SFX_BUS_NAME, audio_config.sfx_volume)
+	apply_volume_to_bus(MUSIC_BUS_NAME, audio_config.music_volume)
+
 func _load_audio_from_manifest():
 	if not audio_manifest:
 		printerr("CafeAudioManager: AudioManifest not assigned. Please generate it in the editor.")
@@ -77,6 +79,7 @@ func _load_audio_from_manifest():
 	_music_playlist_keys = _music_library.keys()
 	
 	print("CafeAudioManager: Loaded audio from manifest. %d music playlists and %d SFX categories found." % [_music_playlist_keys.size(), _sfx_library.size()])
+	print("CafeAudioManager: SFX Library Keys: ", _sfx_library.keys())
 
 	var sfx_player_node = get_node_or_null("SFXPlayer")
 	if sfx_player_node:

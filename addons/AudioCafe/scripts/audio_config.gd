@@ -31,7 +31,7 @@ signal config_changed
 			default_click_key = value
 			_save_and_emit_changed()
 
-@export var default_hover_key: String = "ui_hover":
+@export var default_hover_key: String = "ui_rollover":
 	set(value):
 		if default_hover_key != value:
 			default_hover_key = value
