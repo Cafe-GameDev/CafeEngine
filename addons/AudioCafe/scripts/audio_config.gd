@@ -4,6 +4,12 @@ class_name AudioConfig
 
 signal config_changed
 
+@export var is_panel_expanded: bool = false:
+	set(value):
+		if is_panel_expanded != value:
+			is_panel_expanded = value
+			_save_and_emit_changed()
+
 @export var music_data: Dictionary = {}
 @export var sfx_data: Dictionary = {}
 
