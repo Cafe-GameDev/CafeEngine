@@ -87,6 +87,9 @@ func _ready():
 	
 	if Engine.is_editor_hint() and editor_interface:
 		audio_manifest.icon = editor_interface.get_base_control().get_theme_icon("Reload", "EditorIcons")
+		if has_node("HeaderButton"):
+			get_node("HeaderButton").icon = editor_interface.get_base_control().get_theme_icon("ArrowDown", "EditorIcons")
+			get_node("HeaderButton").text = "AudioCafe" # Remove arrow from text
 	
 	if Engine.is_editor_hint():
 		_load_config_to_ui()
@@ -458,8 +461,10 @@ func _on_header_button_pressed():
 	if _is_expanded:
 		collapsible_content_node.visible = true
 		tween.tween_property(collapsible_content_node, "custom_minimum_size:y", _expanded_height, 0.3)
-		header_button_node.text = "AudioCafe ▲"
+		header_button_node.text = "AudioCafe" # Keep text consistent
+		header_button_node.icon = editor_interface.get_base_control().get_theme_icon("ArrowUp", "EditorIcons")
 	else:
 		tween.tween_property(collapsible_content_node, "custom_minimum_size:y", 0, 0.3)
 		tween.tween_callback(Callable(collapsible_content_node, "set_visible").bind(false))
-		header_button_node.text = "AudioCafe ▼"
+		header_button_node.text = "AudioCafe" # Keep text consistent
+		header_button_node.icon = editor_interface.get_base_control().get_theme_icon("ArrowDown", "EditorIcons")

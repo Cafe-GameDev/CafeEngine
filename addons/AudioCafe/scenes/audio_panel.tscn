@@ -10,9 +10,9 @@ script = ExtResource("1_wixt7")
 [node name="HeaderButton" type="Button" parent="."]
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
-size_flags_horizontal = 0
-text = "AudioCafe ▼"
+text = "AudioCafe"
 flat = true
+alignment = 0
 
 [node name="CollapsibleContent" type="VBoxContainer" parent="."]
 visible = false
