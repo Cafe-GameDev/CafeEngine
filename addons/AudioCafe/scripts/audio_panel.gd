@@ -50,8 +50,8 @@ var generate_manifest_script_instance: EditorScript
 var editor_interface: EditorInterface
 
 const MANIFEST_SAVE_PATH = "res://addons/AudioCafe/resources/audio_manifest.tres"
-const VALID_COLOR = Color(1.0, 1.0, 1.0, 1.0) # Cor de borda padrão (Branco)
-const INVALID_COLOR = Color(1.0, 0.2, 0.2, 1.0) # Cor de borda para erro
+const VALID_COLOR = Color(1.0, 1.0, 1.0, 1.0)
+const INVALID_COLOR = Color(1.0, 0.2, 0.2, 1.0)
 
 var _is_expanded: bool = false
 var _expanded_height: float = 0.0
@@ -65,20 +65,17 @@ func set_audio_config(config: AudioConfig):
 	audio_config = config
 	if audio_config:
 		audio_config.connect("config_changed", Callable(self, "_show_save_feedback"))
-	_load_config_to_ui() # Recarrega a UI com a nova configuração
+	_load_config_to_ui()
 
 func _show_save_feedback():
 	save_feedback_label.visible = true
 	save_feedback_timer.start()
 
 func _ready():
-	# User will set up @onready var header_button and collapsible_content
-	# Assuming 'header_button' and 'collapsible_content' are correctly @onready'd by the user.
 	if not is_node_ready():
 		await ready
 
-	# Conecta ao sinal de atualização do AudioConfig do CafeAudioManager
-	if CafeAudioManager: # Verifica se o autoload está disponível
+	if CafeAudioManager:
 		CafeAudioManager.audio_config_updated.connect(Callable(self, "_on_audio_config_updated"))
 
 	var manifest_script_res = load("res://addons/AudioCafe/scripts/generate_audio_manifest.gd")
@@ -91,7 +88,7 @@ func _ready():
 	if Engine.is_editor_hint() and editor_interface:
 		audio_manifest.icon = editor_interface.get_base_control().get_theme_icon("Reload", "EditorIcons")
 		if has_node("HeaderButton"):
-			get_node("HeaderButton").text = "AudioCafe" # Remove arrow from text
+			get_node("HeaderButton").text = "AudioCafe"
 	
 	if Engine.is_editor_hint():
 		_load_config_to_ui()
@@ -101,7 +98,6 @@ func _ready():
 		sfx_folder_dialog.dir_selected.connect(Callable(self, "_on_sfx_folder_dialog_dir_selected"))
 		music_folder_dialog.dir_selected.connect(Callable(self, "_on_music_folder_dialog_dir_selected"))
 		
-		# Call the new initialization function after _ready is complete
 		call_deferred("_initialize_panel_state")
 
 func _initialize_panel_state():
@@ -112,14 +108,12 @@ func _initialize_panel_state():
 	var collapsible_content_node = get_node("CollapsibleContent")
 	var header_button_node = get_node("HeaderButton")
 
-	# Temporarily make visible and reset size to calculate natural height
 	collapsible_content_node.visible = true
 	collapsible_content_node.custom_minimum_size.y = -1 
 
 
 	_expanded_height = collapsible_content_node.size.y
 
-	# Apply the saved state
 	if audio_config:
 		_is_expanded = audio_config.is_panel_expanded
 		collapsible_content_node.visible = _is_expanded
@@ -130,7 +124,6 @@ func _initialize_panel_state():
 			collapsible_content_node.custom_minimum_size.y = 0
 			header_button_node.icon = editor_interface.get_base_control().get_theme_icon("ArrowDown", "EditorIcons") if editor_interface else null
 	else:
-		# Default to collapsed if no config or config not loaded
 		_is_expanded = false
 		collapsible_content_node.visible = false
 		collapsible_content_node.custom_minimum_size.y = 0
@@ -138,11 +131,10 @@ func _initialize_panel_state():
 
 
 func _load_config_to_ui():
-	if not tab_container: return # Garante que o tab_container esteja pronto
+	if not tab_container: return
 	if audio_config:
 		print("--- Loading config to UI ---")
 		print("SFX paths in resource: ", audio_config.sfx_paths)
-		# Limpa as entradas de caminho existentes
 		if sfx_paths_grid_container:
 			for child in sfx_paths_grid_container.get_children():
 				child.queue_free()
@@ -190,14 +182,12 @@ func _load_config_to_ui():
 		if music_volume_slider: music_volume_slider.value = audio_config.music_volume
 		if music_volume_value_label: _update_volume_label(music_volume_value_label, audio_config.music_volume)
 
-		# Preenche os ItemList com as chaves de música e SFX
 		var current_music_keys_rich_text_label = tab_container.get_node("MusicList/MusicKeysRichTextLabel")
 		var current_sfx_keys_rich_text_label = tab_container.get_node("SFXList/SFXKeysRichTextLabel")
 
 		if current_music_keys_rich_text_label: current_music_keys_rich_text_label.clear()
 		if current_sfx_keys_rich_text_label: current_sfx_keys_rich_text_label.clear()
 
-		# Carrega o AudioManifest para obter as chaves de áudio
 		var loaded_manifest = ResourceLoader.load(MANIFEST_SAVE_PATH, "", ResourceLoader.CacheMode.CACHE_MODE_REPLACE)
 		if loaded_manifest and loaded_manifest is AudioManifest:
 			print("DEBUG: _load_config_to_ui - music_data keys from manifest: ", loaded_manifest.music_data.keys())
@@ -246,7 +236,7 @@ func _connect_ui_signals():
 
 func _on_config_text_changed(new_text: String, config_property: String):
 	if audio_config:
-		var line_edit: LineEdit = get_node_or_null("%" + config_property.capitalize() + "LineEdit") # Obtém a referência ao LineEdit
+		var line_edit: LineEdit = get_node_or_null("%" + config_property.capitalize() + "LineEdit")
 		var is_valid = true
 		var error_message = ""
 
@@ -286,7 +276,6 @@ func _create_path_entry(path_value: String, is_sfx: bool):
 	line_edit.text_changed.connect(Callable(self, "_on_path_line_edit_text_changed").bind(line_edit, is_sfx))
 	path_entry.add_child(line_edit)
 
-	# Define a cor da borda inicial e valida
 	_validate_path_line_edit(line_edit)
 
 	var browse_button = Button.new()
@@ -303,9 +292,9 @@ func _create_path_entry(path_value: String, is_sfx: bool):
 	print("[_create_path_entry] music_paths_grid_container: ", music_paths_grid_container)
 
 	if is_sfx:
-		sfx_paths_grid_container.add_child(path_entry) # Line 219
+		sfx_paths_grid_container.add_child(path_entry)
 	else:
-		music_paths_grid_container.add_child(path_entry) # Line 221
+		music_paths_grid_container.add_child(path_entry)
 
 func _on_browse_button_pressed(line_edit: LineEdit, is_sfx: bool):
 	if is_sfx:
@@ -387,9 +376,8 @@ func _on_audio_manifest_pressed() -> void:
 		manifest_progress_bar.visible = true
 		manifest_status_label.text = "Generating Manifest..."
 		manifest_status_label.visible = true
-		audio_manifest.disabled = true # Desabilita o botão durante a geração
+		audio_manifest.disabled = true
 
-		# Conecta os sinais do script de geração do manifesto
 		generate_manifest_script_instance.connect("progress_updated", Callable(self, "_on_manifest_progress_updated"))
 		generate_manifest_script_instance.connect("generation_finished", Callable(self, "_on_manifest_generation_finished"))
 
@@ -404,22 +392,20 @@ func _on_manifest_progress_updated(current: int, total: int):
 
 func _on_manifest_generation_finished(success: bool, message: String):
 	manifest_progress_bar.visible = false
-	audio_manifest.disabled = false # Reabilita o botão
+	audio_manifest.disabled = false
 
 	if success:
 		manifest_status_label.text = "Manifest Generated Successfully!"
-		# Recarrega o recurso AudioConfig para garantir que ele reflita as últimas alterações
 		var config_path = audio_config.resource_path if audio_config else "res://addons/AudioCafe/resources/audio_config.tres"
 		var reloaded_config = ResourceLoader.load(config_path, "", ResourceLoader.CacheMode.CACHE_MODE_REPLACE) # Usar CACHE_MODE_REPLACE para recarregar sem cache
 		if reloaded_config and reloaded_config is AudioConfig:
-			audio_config = reloaded_config # Atribui a configuração recarregada à variável export do painel
-			audio_config.emit_changed() # Notifica o editor que o AudioConfig foi modificado
+			audio_config = reloaded_config
+			audio_config.emit_changed()
 			print("DEBUG: AudioConfig recarregado e atualizado com novos dados do manifesto.")
 		else:
 			push_error("Falha ao recarregar audio_config.tres após a geração do manifesto.")
 
-		# Força a atualização da UI para mostrar as novas chaves
-		_load_config_to_ui() # Chama _load_config_to_ui diretamente após recarregar a configuração
+		_load_config_to_ui()
 	else:
 		manifest_status_label.text = "Manifest Generation Error: %s" % message
 

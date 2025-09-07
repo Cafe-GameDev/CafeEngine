@@ -67,7 +67,7 @@ signal config_changed
 			default_select_key = value
 			_save_and_emit_changed()
 
-@export var default_text_input_key: String = "interface_type": # Assuming a generic type sound
+@export var default_text_input_key: String = "interface_type":
 	set(value):
 		if default_text_input_key != value:
 			default_text_input_key = value
@@ -79,7 +79,7 @@ signal config_changed
 			default_scroll_key = value
 			_save_and_emit_changed()
 
-@export var default_focus_key: String = "interface_focus": # Assuming a generic focus sound
+@export var default_focus_key: String = "interface_focus":
 	set(value):
 		if default_focus_key != value:
 			default_focus_key = value
@@ -91,13 +91,13 @@ signal config_changed
 			default_error_key = value
 			_save_and_emit_changed()
 
-@export var default_warning_key: String = "interface_warning": # Assuming a generic warning sound
+@export var default_warning_key: String = "interface_warning":
 	set(value):
 		if default_warning_key != value:
 			default_warning_key = value
 			_save_and_emit_changed()
 
-@export var default_success_key: String = "interface_success": # Assuming a generic success sound
+@export var default_success_key: String = "interface_success":
 	set(value):
 		if default_success_key != value:
 			default_success_key = value
