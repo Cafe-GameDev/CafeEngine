@@ -17,3 +17,54 @@
 
 #### **6. `Nó Pai / _super` (Exemplo de Integração)**
 *   **Função:** O nó Pai (ex: um `CharacterBody2D` representando o jogador) atua como o **orquestrador de seus `AudioPosition`s filhos**. Ele contém a(s) máquina(s) de estado e é responsável por traduzir os estados e ações do jogo em comandos de áudio. A arquitetura de controle é dividida em duas vias distintas: **1) Controle Direto:** Para o som de estado primário e contínuo, o script do Pai obtém uma referência direta ao seu `AudioPosition` principal (ex: `@onready var audio_movimento = $AudioPosition_Movement`) e comanda a mudança de som através de uma chamada de método direta (`audio_movimento.set_state("RUNNING")`) sempre que sua máquina de estados de movimento mudar. **2) Controle por Sinal Direto:** Para ações secundárias e pontuais, o script do Pai define e emite um sinal local (ex: `signal atacar_som(sfx_key)`). Este sinal é então conectado, através do inspetor do editor Godot, a um método no `AudioPosition` (ex: `play_secondary_sound`). Isso permite que a máquina de estados de ação do Pai (`fsm_acoes.emit_signal("atacar_som", "sfx_espada")`) dispare sons de ataque sem interromper o som de passos que já está tocando.
+
+**Exemplo de Código GDScript para o Nó Pai:**
+
+```gdscript
+# Exemplo de script para um CharacterBody2D (Nó Pai)
+extends CharacterBody2D
+
+@onready var audio_movement: AudioPosition2D = $AudioPosition_Movement # Assumindo que AudioPosition_Movement é um nó filho
+@onready var audio_actions: AudioPosition2D = $AudioPosition_Actions # Outro nó AudioPosition para ações
+
+# Sinal para ações secundárias que podem ser conectadas via editor
+signal attack_sound_requested(sfx_key: String)
+
+func _ready():
+    # Exemplo de conexão de sinal local para o AudioPosition_Actions
+    attack_sound_requested.connect(audio_actions.play_secondary_sound)
+
+func _physics_process(delta):
+    # Lógica de movimento do personagem
+    var current_state = get_current_movement_state() # Função hipotética que retorna o estado de movimento
+    audio_movement.set_state(current_state) # Controle direto do som de movimento
+
+    # Exemplo de disparo de som de ataque via sinal
+    if Input.is_action_just_pressed("attack"):
+        attack_sound_requested.emit("sfx_sword_swing") # Emite o sinal para tocar o som de ataque
+
+func get_current_movement_state() -> String:
+    # Lógica para determinar o estado de movimento (ex: "idle", "walking", "running")
+    if velocity.length() > 0:
+        return "running"
+    return "idle"
+
+```
+
+**Exemplo de Código GDScript para uma AudioZone:**
+
+```gdscript
+# Exemplo de script para uma AudioZone2D
+extends AudioZone2D
+
+func _ready():
+    # Conectar o sinal zone_event_triggered ao CafeAudioManager
+    # CafeAudioManager deve ser um Autoload ou acessível globalmente
+    if CafeAudioManager:
+        zone_event_triggered.connect(CafeAudioManager._on_audio_zone_event_triggered)
+    else:
+        printerr("CafeAudioManager not found. AudioZone events will not be retransmitted.")
+
+# Configurações de zone_name, target_group, target_class_name via Inspetor
+# Ex: zone_name = "forest_area", target_group = "players"
+```

@@ -1,0 +1,2 @@
+extends AudioPosition2D
+class_name AudioPlayerPosition

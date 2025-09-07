@@ -147,6 +147,10 @@ func _register_custom_types():
 	add_custom_type("SFXTree", "AudioCafe", preload("res://addons/AudioCafe/components/Control/sfx_tree.gd"), null)
 	add_custom_type("SFXVolumeSlider", "AudioCafe", preload("res://addons/AudioCafe/components/Control/sfx_volume_slider.gd"), null)
 	add_custom_type("SFXWindow", "AudioCafe", preload("res://addons/AudioCafe/components/Control/sfx_window.gd"), null)
+	add_custom_type("AudioPosition2D", "AudioStreamPlayer2D", preload("res://addons/AudioCafe/components/2D/audio_position_2d.gd"), null)
+	add_custom_type("AudioPosition3D", "AudioStreamPlayer3D", preload("res://addons/AudioCafe/components/3D/audio_position_3d.gd"), null)
+	add_custom_type("AudioZone2D", "Area2D", preload("res://addons/AudioCafe/components/2D/audio_zone_2d.gd"), null)
+	add_custom_type("AudioZone3D", "Area3D", preload("res://addons/AudioCafe/components/3D/audio_zone_3d.gd"), null)
 
 
 func _unregister_custom_types():
@@ -174,3 +178,7 @@ func _unregister_custom_types():
 	remove_custom_type("SFXTree")
 	remove_custom_type("SFXVolumeSlider")
 	remove_custom_type("SFXWindow")
+	remove_custom_type("AudioPosition2D")
+	remove_custom_type("AudioPosition3D")
+	remove_custom_type("AudioZone2D")
+	remove_custom_type("AudioZone3D")

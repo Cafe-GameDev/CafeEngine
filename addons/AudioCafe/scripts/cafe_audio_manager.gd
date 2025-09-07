@@ -18,6 +18,8 @@ signal volume_changed(bus_name: String, linear_volume: float)
 @warning_ignore("unused_signal")
 signal request_audio_start()
 
+signal zone_event_triggered(zone_name: String, event_type: String, body: Node)
+
 const SFX_BUS_NAME = "SFX"
 const MUSIC_BUS_NAME = "Music"
 
@@ -195,3 +197,13 @@ func _on_sfx_player_finished(player: AudioStreamPlayer):
 func _on_request_audio_start():
 	_select_and_play_random_playlist()
 	_music_change_timer.start()
+
+func register_audio_zone(audio_zone_node: Node):
+	if audio_zone_node.has_signal("zone_event_triggered"):
+		audio_zone_node.zone_event_triggered.connect(Callable(self, "_on_audio_zone_event_triggered"))
+	else:
+		printerr("CafeAudioManager: Node '%s' does not have 'zone_event_triggered' signal." % audio_zone_node.name)
+
+func _on_audio_zone_event_triggered(zone_name: String, event_type: String, body: Node):
+	zone_event_triggered.emit(zone_name, event_type, body)
+	print("CafeAudioManager: Zone event triggered: %s - %s by %s" % [zone_name, event_type, body.name])
