@@ -11,6 +11,7 @@ var player_data: PlayerData
 func _ready():
 	player_data = preload("res://resources/player/player_data.tres")
 	current_weapon_data = available_weapons[player_data.current_weapon_index]
+	animated_sprite_2d.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
 
 @export var initial_weapon_index: int = 0
 
@@ -27,6 +28,9 @@ enum ActionState { NONE, ATTACKING, INTERACTING, HURT, DEAD, AIMING, SHEATHE }
 var current_movement_state: MovementState = MovementState.IDLE
 var current_weapon_data: WeaponData # Reference to the currently equipped weapon's data
 var current_action_state: ActionState = ActionState.NONE
+
+var can_attack: bool = true
+var attack_cooldown_timer: float = 0.0
 
 var state_timer: float = 0.0
 var dash_speed: float = 700.0
@@ -86,6 +90,11 @@ func _physics_process(delta: float) -> void:
 			   current_movement_state == MovementState.SLIDE:
 				current_movement_state = MovementState.IDLE
 
+	if attack_cooldown_timer > 0:
+		attack_cooldown_timer -= delta
+		if attack_cooldown_timer <= 0:
+			can_attack = true
+
 	if not is_on_floor():
 		velocity.y += player_data.gravity_strength * delta
 
@@ -94,27 +103,31 @@ func _physics_process(delta: float) -> void:
 
 	var is_running = Input.is_action_pressed("move_run")
 
-	match current_movement_state:
-		MovementState.DASH:
-			if velocity.x != 0:
-				velocity.x = sign(velocity.x) * dash_speed
-			else:
-				velocity.x = 1 * dash_speed
-			velocity.y = 0
-		MovementState.ROLL:
-			velocity.x = sign(velocity.x) * roll_speed
-		MovementState.SLIDE:
-			velocity.x = sign(velocity.x) * slide_speed
-		_:
-			var direction := Input.get_axis("move_left", "move_right")
-			if direction:
-				var speed = player_data.movement_speed
-				if is_running:
-					speed = player_data.run_speed
-				velocity.x = direction * speed
-				animated_sprite_2d.flip_h = direction < 0
-			else:
-				velocity.x = move_toward(velocity.x, 0, player_data.movement_speed)
+	# Block movement if attacking
+	if current_action_state == ActionState.ATTACKING:
+		velocity.x = 0
+	else:
+		match current_movement_state:
+			MovementState.DASH:
+				if velocity.x != 0:
+					velocity.x = sign(velocity.x) * dash_speed
+				else:
+					velocity.x = 1 * dash_speed
+				velocity.y = 0
+			MovementState.ROLL:
+				velocity.x = sign(velocity.x) * roll_speed
+			MovementState.SLIDE:
+				velocity.x = sign(velocity.x) * slide_speed
+			_:
+				var direction := Input.get_axis("move_left", "move_right")
+				if direction:
+					var speed = player_data.movement_speed
+					if is_running:
+						speed = player_data.run_speed
+					velocity.x = direction * speed
+					animated_sprite_2d.flip_h = direction < 0
+				else:
+					velocity.x = move_toward(velocity.x, 0, player_data.movement_speed)
 
 	move_and_slide()
 
@@ -125,9 +138,10 @@ func _input(event: InputEvent):
 	if event.is_action_pressed("weapon_next"):
 		_switch_weapon_next()
 	if event.is_action_pressed("action_attack"):
+	if can_attack and current_action_state == ActionState.NONE:
 		set_action_state(ActionState.ATTACKING)
-	if event.is_action_released("action_attack"):
-		set_action_state(ActionState.NONE)
+		can_attack = false
+		attack_cooldown_timer = current_weapon_data.attack_cooldown
 	if event.is_action_pressed("move_dash"):
 		_try_dash()
 	if event.is_action_pressed("move_roll"):
@@ -251,6 +265,8 @@ func update_movement_state(was_on_floor: bool, is_running: bool):
 		current_movement_state = new_state
 
 func set_action_state(new_state: ActionState):
+	if current_action_state == ActionState.ATTACKING and animated_sprite_2d.is_playing():
+		return # Cannot interrupt attack animation
 	current_action_state = new_state
 
 func update_animation():
@@ -348,3 +364,8 @@ func update_animation():
 		else:
 			print("Animation '", base_anim_name, "' not found and already playing 'idle'.")
 		printerr("Animation '", base_anim_name, "' not found. Falling back to 'idle'.")
+
+func _on_animated_sprite_2d_animation_finished():
+	if current_action_state == ActionState.ATTACKING:
+		current_action_state = ActionState.NONE
+		can_attack = true
