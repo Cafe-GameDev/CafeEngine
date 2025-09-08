@@ -107,8 +107,8 @@ func _scan_and_populate_library(current_path: String, library: Dictionary, audio
 
 				if not library.has(final_key):
 					library[final_key] = []
-				library[final_key].append("uid://%s" % str(uid))
-				print("  - Added %s audio to playlist '%s' with UID: uid://%s" % [audio_type, final_key, str(uid)])
+				library[final_key].append("%s" % str(uid))
+				print("  - Added %s audio to playlist '%s' with UID: %s" % [audio_type, final_key, str(uid)])
 		file_or_dir_name = dir.get_next()
 	return true
 
