@@ -1,4 +1,4 @@
-extends Resource
+extends CharacterData
 class_name CompanionData
 
 @export var companion_name: String = ""
