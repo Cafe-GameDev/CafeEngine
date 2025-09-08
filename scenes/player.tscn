@@ -28,3 +28,7 @@ shape = SubResource("RectangleShape2D_dqkch")
 [node name="AudioPosition2D" type="AudioStreamPlayer2D" parent="."]
 script = ExtResource("3_qhqgy")
 metadata/_custom_type_script = "uid://dtxhjs4tjtuqr"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_smoothed = true
+position_smoothing_enabled = true
