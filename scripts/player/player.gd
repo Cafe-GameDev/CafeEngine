@@ -369,3 +369,31 @@ func _on_animated_sprite_2d_animation_finished():
 	if current_action_state == ActionState.ATTACKING:
 		current_action_state = ActionState.NONE
 		can_attack = true
+
+
+func _on_animated_sprite_2d_animation_changed() -> void:
+	pass # Replace with function body.
+
+
+func _on_animated_sprite_2d_animation_looped() -> void:
+	pass # Replace with function body.
+
+
+func _on_damage_area_2d_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.
+
+
+func _on_katana_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+	pass # Replace with function body.
+
+
+func _on_sword_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+	pass # Replace with function body.
+
+
+func _on_punch_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+	pass # Replace with function body.
+
+
+func _on_audio_position_2d_finished() -> void:
+	pass # Replace with function body.

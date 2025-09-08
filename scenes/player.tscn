@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcghiih82n8rs"]
+[gd_scene load_steps=9 format=3 uid="uid://bcghiih82n8rs"]
 
 [ext_resource type="SpriteFrames" uid="uid://dg3xv8bc4n5sr" path="res://resources/player/player_sprites.tres" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://sudm2t8ta1sf" path="res://scripts/player/player.gd" id="1_dqkch"]
@@ -17,6 +17,10 @@ height = 72.0
 radius = 11.0
 height = 72.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tuyoq"]
+radius = 11.0
+height = 72.0
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_dqkch")
 
@@ -28,12 +32,6 @@ sprite_frames = ExtResource("1_3vyb7")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="DamageArea2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea2D"]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_dqkch")
-
 [node name="AudioPosition2D" type="AudioStreamPlayer2D" parent="."]
 script = ExtResource("3_qhqgy")
 metadata/_custom_type_script = "uid://dtxhjs4tjtuqr"
@@ -43,6 +41,12 @@ limit_bottom = 700
 limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 14.0
+
+[node name="DamageArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_dqkch")
 
 [node name="KatanaArea2D" type="Area2D" parent="."]
 
@@ -55,3 +59,18 @@ shape = SubResource("CapsuleShape2D_dqkch")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwordArea2D"]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_qlg0r")
+
+[node name="PunchArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PunchArea2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_tuyoq")
+
+[connection signal="animation_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_changed"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_looped" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]
+[connection signal="finished" from="AudioPosition2D" to="." method="_on_audio_position_2d_finished"]
+[connection signal="body_entered" from="DamageArea2D" to="." method="_on_damage_area_2d_body_entered"]
+[connection signal="body_shape_entered" from="KatanaArea2D" to="." method="_on_katana_area_2d_body_shape_entered"]
+[connection signal="body_shape_entered" from="SwordArea2D" to="." method="_on_sword_area_2d_body_shape_entered"]
+[connection signal="body_shape_entered" from="PunchArea2D" to="." method="_on_punch_area_2d_body_shape_entered"]

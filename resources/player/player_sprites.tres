@@ -1523,7 +1523,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xvcut")
 }],
-"loop": true,
+"loop": false,
 "name": &"katana_air_attack",
 "speed": 10.0
 }, {
@@ -1558,7 +1558,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sq312")
 }],
-"loop": true,
+"loop": false,
 "name": &"katana_attack_sheathe",
 "speed": 10.0
 }, {
@@ -1590,7 +1590,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5d48a")
 }],
-"loop": true,
+"loop": false,
 "name": &"katana_continuous_attack",
 "speed": 10.0
 }, {
@@ -1648,7 +1648,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_05yfe")
 }],
-"loop": true,
+"loop": false,
 "name": &"katana_run_attack",
 "speed": 10.0
 }, {
@@ -1735,7 +1735,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_24372")
 }],
-"loop": true,
+"loop": false,
 "name": &"ledge_grab_climb",
 "speed": 10.0
 }, {
@@ -1813,7 +1813,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pxdng")
 }],
-"loop": true,
+"loop": false,
 "name": &"punch_cross",
 "speed": 10.0
 }, {
@@ -1848,7 +1848,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4xbep")
 }],
-"loop": true,
+"loop": false,
 "name": &"punch_jab",
 "speed": 10.0
 }, {
@@ -2025,7 +2025,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_e1vpo")
 }],
-"loop": true,
+"loop": false,
 "name": &"running_shooting",
 "speed": 10.0
 }, {
@@ -2060,7 +2060,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1mxx6")
 }],
-"loop": true,
+"loop": false,
 "name": &"shooting_two_handed",
 "speed": 10.0
 }, {
@@ -2089,7 +2089,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_42ghw")
 }],
-"loop": true,
+"loop": false,
 "name": &"slide",
 "speed": 10.0
 }, {
@@ -2112,7 +2112,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mlar1")
 }],
-"loop": true,
+"loop": false,
 "name": &"sword_attack",
 "speed": 10.0
 }, {
@@ -2202,7 +2202,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0tecd")
 }],
-"loop": true,
+"loop": false,
 "name": &"sword_stab",
 "speed": 10.0
 }, {
