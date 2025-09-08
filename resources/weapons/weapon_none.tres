@@ -5,11 +5,19 @@
 [resource]
 script = ExtResource("1_duod3")
 weapon_name = "Punch"
-attack_animation_name = ""
+weapon_type = 0
+attack_animation_name = "punch"
 damage = 10.0
 is_ranged = false
 projectile_scene = ""
 sheathe_animation_name = ""
 idle_animation_name = "idle"
 run_animation_name = "run"
-metadata/_custom_type_script = "uid://cuswe85etao6w"
+attack_range = 0.0
+attack_cooldown = 0.5
+mana_cost = 0.0
+stamina_cost = 0.0
+sound_effect_path = ""
+visual_effect_path = ""
+on_hit_effects = []
+on_equip_effects = []

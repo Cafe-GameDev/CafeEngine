@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/enemies/enemy_data.gd" id="1_placeholder_enemy_data"]
+
+[resource]
+script = ExtResource("1_placeholder_enemy_data")
+enemy_name = "Placeholder Enemy"
+description = "A generic enemy for testing."
+max_health = 100.0
+current_health = 100.0
+damage = 10.0
+movement_speed = 100.0
+attack_cooldown = 1.0
+experience_on_defeat = 10
+loot_table = []
+abilities = []
+weaknesses = []
+resistances = []

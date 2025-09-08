@@ -4,6 +4,38 @@ class_name PlayerData
 @export var player_name: String = "Player"
 @export var max_health: float = 100.0
 @export var current_health: float = 100.0
+
+# Core Stats
+@export var strength: int = 10
+@export var dexterity: int = 10
+@export var intelligence: int = 10
+@export var constitution: int = 10
+@export var luck: int = 10
+
+# Combat Stats
+@export var physical_defense: float = 0.0
+@export var magical_defense: float = 0.0
+@export var evasion_chance: float = 0.0
+@export var accuracy: float = 0.0
+
+# Resource Pools
+@export var max_mana: float = 0.0
+@export var current_mana: float = 0.0
+@export var mana_regeneration: float = 0.0
+@export var max_stamina: float = 0.0
+@export var current_stamina: float = 0.0
+@export var stamina_regeneration: float = 0.0
+
+# Experience/Leveling
+@export var current_level: int = 1
+@export var current_experience: float = 0.0
+@export var experience_to_next_level: float = 100.0
+
+# Resistances
+@export var fire_resistance: float = 0.0
+@export var ice_resistance: float = 0.0
+@export var poison_resistance: float = 0.0
+
 @export var movement_speed: float = 300.0 # Walk speed
 @export var run_speed: float = 450.0 # Run speed
 @export var jump_velocity: float = -400.0

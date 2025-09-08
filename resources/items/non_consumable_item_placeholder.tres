@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="NonConsumableItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/items/non_consumable_item_data.gd" id="1_placeholder_non_consumable_item_data"]
+
+[resource]
+script = ExtResource("1_placeholder_non_consumable_item_data")
+item_name = "Placeholder Non-Consumable Item"
+description = "A generic non-consumable item."
+icon_path = ""
+stackable = false
+max_stack_size = 1
+rarity = 0 # COMMON
+is_unique = false
+can_be_equipped = false
+equipped_slot = 0 # NONE
+stat_bonuses = []
