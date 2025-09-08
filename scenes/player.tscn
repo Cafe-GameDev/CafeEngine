@@ -1,13 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcghiih82n8rs"]
+[gd_scene load_steps=8 format=3 uid="uid://bcghiih82n8rs"]
 
 [ext_resource type="SpriteFrames" uid="uid://dg3xv8bc4n5sr" path="res://resources/player/player_sprites.tres" id="1_3vyb7"]
-[ext_resource type="Script" uid="uid://dpnbagi0sjuli" path="res://scripts/player/player.gd" id="1_dqkch"]
+[ext_resource type="Script" uid="uid://sudm2t8ta1sf" path="res://scripts/player/player.gd" id="1_dqkch"]
 [ext_resource type="Script" uid="uid://dtxhjs4tjtuqr" path="res://addons/AudioCafe/nodes/2D/audio_position_2d.gd" id="3_qhqgy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
-size = Vector2(60, 60)
+size = Vector2(22, 36)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dqkch"]
+radius = 11.0
+height = 72.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qlg0r"]
+radius = 11.0
+height = 72.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_dqkch")
@@ -20,9 +28,10 @@ sprite_frames = ExtResource("1_3vyb7")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="DamageArea2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea2D"]
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_dqkch")
 
 [node name="AudioPosition2D" type="AudioStreamPlayer2D" parent="."]
@@ -32,3 +41,15 @@ metadata/_custom_type_script = "uid://dtxhjs4tjtuqr"
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_smoothed = true
 position_smoothing_enabled = true
+
+[node name="KatanaArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KatanaArea2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_dqkch")
+
+[node name="SwordArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwordArea2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_qlg0r")

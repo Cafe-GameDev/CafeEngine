@@ -1,4 +1,4 @@
-[gd_resource type="WeaponData" load_steps=2 format=3 uid="uid://placeholder_weapon_none"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://placeholder_weapon_none"]
 
 [ext_resource type="Script" path="res://resources/weapon_data.gd" id="1_placeholder_weapon_data"]
 
@@ -6,7 +6,7 @@
 script = ExtResource("1_placeholder_weapon_data")
 weapon_name = "None"
 attack_animation_name = "punch"
-attack_sfx_path = "res://assets/audio/sfx/punch.wav"
+
 damage = 10.0
 is_ranged = false
 projectile_scene_path = ""

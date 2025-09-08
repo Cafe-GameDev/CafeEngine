@@ -1,161 +1,303 @@
 extends CharacterBody2D
 class_name Player
 
+const PLAYER_DATA = preload("res://resources/player/PLAYER_DATA.tres")
+const WEAPON_NONE = preload("res://resources/weapons/weapon_none.tres")
+const WEAPON_KATANA = preload("res://resources/weapons/weapon_katana.tres")
+const WEAPON_PISTOL = preload("res://resources/weapons/weapon_pistol.tres")
+const WEAPON_SWORD = preload("res://resources/weapons/weapon_sword.tres")
+
+@export var initial_weapon_index: int = 0
+
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var area_2d: Area2D = $Area2D
 @onready var audio_position_2d: AudioPosition2D = $AudioPosition2D
 
-enum MovementState { IDLE, WALK, RUN, JUMP, CROUCH_IDLE, CROUCH_WALK, DASH, ROLL, SLIDE, WALL_SLIDE, WALL_LAND, AIR_SPIN, LEDGE_GRAB_CLIMB, CLIMB_BACK, CLIMB_SIDE, PULL, PUSH, PUSH_IDLE }
-enum WeaponState { NONE, SWORD, KATANA, PISTOL }
-enum ActionState { NONE, ATTACKING, INTERACTING, HURT, DEAD }
+@onready var damage_area_2d: Area2D = $DamageArea2D
+@onready var katana_area_2d: Area2D = $KatanaArea2D
+@onready var sword_area_2d: Area2D = $SwordArea2D
+
+enum MovementState { IDLE, WALK, RUN, JUMP, FALLING, LAND, CROUCH_IDLE, CROUCH_WALK, DASH, ROLL, SLIDE, WALL_SLIDE, WALL_LAND, AIR_SPIN, LEDGE_GRAB_CLIMB, CLIMB_BACK, CLIMB_SIDE, PULL, PUSH, PUSH_IDLE }
+enum ActionState { NONE, ATTACKING, INTERACTING, HURT, DEAD, AIMING, SHEATHE }
 
 var current_movement_state: MovementState = MovementState.IDLE
-var current_weapon_state: WeaponState = WeaponState.NONE
+var current_weapon_data: WeaponData # Reference to the currently equipped weapon's data
 var current_action_state: ActionState = ActionState.NONE
 
-func _ready():
-	pass
+var state_timer: float = 0.0
+var dash_speed: float = 700.0
+var dash_duration: float = 0.2
+var roll_speed: float = 500.0
+var roll_duration: float = 0.5
+var slide_speed: float = 400.0
+var slide_duration: float = 0.3
 
-func _physics_process(_delta):
-	update_movement_state()
+var available_weapons: Array[WeaponData] = [
+	WEAPON_NONE,
+	WEAPON_KATANA,
+	WEAPON_SWORD,
+	WEAPON_PISTOL
+]
+
+func take_damage(amount: float):
+	if PLAYER_DATA.current_health <= 0:
+		return
+
+	PLAYER_DATA.current_health -= amount
+	if PLAYER_DATA.current_health <= 0:
+		PLAYER_DATA.current_health = 0
+		set_action_state(ActionState.DEAD)
+		print("Player died!")
+	else:
+		set_action_state(ActionState.HURT)
+		print("Player took ", amount, " damage. Current health: ", PLAYER_DATA.current_health)
+	_save_PLAYER_DATA()
+
+func heal(amount: float):
+	PLAYER_DATA.current_health += amount
+	if PLAYER_DATA.current_health > PLAYER_DATA.max_health:
+		PLAYER_DATA.current_health = PLAYER_DATA.max_health
+	print("Player healed ", amount, ". Current health: ", PLAYER_DATA.current_health)
+	_save_PLAYER_DATA()
+
+func _save_PLAYER_DATA():
+	var error = ResourceSaver.save(PLAYER_DATA, PLAYER_DATA)
+	if error != OK:
+		printerr("Failed to save player data: ", error)
+	else:
+		print("Player data saved successfully.")
+
+func _physics_process(delta: float) -> void:
+	if PLAYER_DATA == null:
+		return # Cannot process without player data
+
+	var was_on_floor = is_on_floor()
+
+	if state_timer > 0:
+		state_timer -= delta
+		if state_timer <= 0:
+			state_timer = 0
+			if current_movement_state == MovementState.DASH or \
+			   current_movement_state == MovementState.ROLL or \
+			   current_movement_state == MovementState.SLIDE:
+				current_movement_state = MovementState.IDLE
+
+	if not is_on_floor():
+		velocity.y += PLAYER_DATA.gravity_strength * delta
+
+	if Input.is_action_just_pressed("move_up") and is_on_floor():
+		velocity.y = PLAYER_DATA.jump_velocity
+
+	var is_running = Input.is_action_pressed("action_run")
+
+	match current_movement_state:
+		MovementState.DASH:
+			if velocity.x != 0:
+				velocity.x = sign(velocity.x) * dash_speed
+			else:
+				velocity.x = 1 * dash_speed
+			velocity.y = 0
+		MovementState.ROLL:
+			velocity.x = sign(velocity.x) * roll_speed
+		MovementState.SLIDE:
+			velocity.x = sign(velocity.x) * slide_speed
+		_:
+			var direction := Input.get_axis("move_left", "move_right")
+			if direction:
+				var speed = PLAYER_DATA.movement_speed
+				if is_running:
+					speed = PLAYER_DATA.run_speed
+				velocity.x = direction * speed
+				animated_sprite_2d.flip_h = direction < 0
+			else:
+				velocity.x = move_toward(velocity.x, 0, PLAYER_DATA.movement_speed)
+
+	move_and_slide()
+
+	update_movement_state(was_on_floor)
 	update_animation()
 
-func update_movement_state():
-	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	velocity = input_direction * 100 # Exemplo de velocidade
+func _input(event: InputEvent):
+	if event.is_action_pressed("weapon_next"):
+		_switch_weapon_next()
+	if event.is_action_pressed("action_attack"):
+		set_action_state(ActionState.ATTACKING)
+	if event.is_action_released("action_attack"):
+		set_action_state(ActionState.NONE)
+	if event.is_action_pressed("move_dash"):
+		_try_dash()
+	if event.is_action_pressed("move_roll"):
+		_try_roll()
+	if event.is_action_pressed("move_slide"):
+		_try_slide()
+	if event.is_action_pressed("move_climb"):
+		_try_climb()
+	if event.is_action_pressed("move_air_spin"):
+		_try_air_spin()
+	if event.is_action_pressed("action_interact"):
+		set_action_state(ActionState.INTERACTING)
+	if event.is_action_pressed("action_sheathe_weapon"):
+		print("Sheathe/Unsheathe weapon")
+	if event.is_action_pressed("action_pull"):
+		_try_pull()
+	if event.is_action_pressed("action_push"):
+		_try_push()
+	if event.is_action_pressed("weapon_previous"):
+		_switch_weapon_previous()
 
-	if velocity.length() > 0:
-		if current_movement_state != MovementState.RUN:
-			set_movement_state(MovementState.RUN)
+func _switch_weapon_previous():
+	if available_weapons.is_empty():
+		printerr("No weapons available to switch!")
+		return
+
+	var current_index = available_weapons.find(current_weapon_data)
+	var prev_index = (current_index - 1 + available_weapons.size()) % available_weapons.size()
+	current_weapon_data = available_weapons[prev_index]
+	PLAYER_DATA.current_weapon_index = prev_index
+	_save_PLAYER_DATA()
+
+func _switch_weapon_next():
+	if available_weapons.is_empty():
+		printerr("No weapons available to switch!")
+		return
+
+	var current_index = available_weapons.find(current_weapon_data)
+	var next_index = (current_index + 1) % available_weapons.size()
+	current_weapon_data = available_weapons[next_index]
+	PLAYER_DATA.current_weapon_index = next_index
+	_save_PLAYER_DATA()
+
+func _try_dash():
+	if current_action_state == ActionState.NONE:
+		print("Dash initiated!")
+		current_movement_state = MovementState.DASH
+		state_timer = dash_duration
+		if velocity.x != 0:
+			velocity.x = sign(velocity.x) * dash_speed
+		else:
+			velocity.x = 1 * dash_speed
+
+func _try_roll():
+	if is_on_floor() and current_action_state == ActionState.NONE:
+		print("Roll initiated!")
+		current_movement_state = MovementState.ROLL
+		state_timer = roll_duration
+		velocity.x = sign(velocity.x) * roll_speed if velocity.x != 0 else 1 * roll_speed
+
+func _try_slide():
+	if is_on_floor() and current_action_state == ActionState.NONE:
+		print("Slide initiated!")
+		current_movement_state = MovementState.SLIDE
+		state_timer = slide_duration
+		velocity.x = sign(velocity.x) * slide_speed if velocity.x != 0 else 1 * slide_speed
+
+func _try_climb():
+	print("Climb initiated!")
+	current_movement_state = MovementState.CLIMB_BACK
+
+func _try_air_spin():
+	print("Air Spin initiated!")
+	current_movement_state = MovementState.AIR_SPIN
+
+func _try_pull():
+	print("Pull initiated!")
+	current_movement_state = MovementState.PULL
+
+func _try_push():
+	print("Push initiated!")
+	current_movement_state = MovementState.PUSH
+
+func update_movement_state(was_on_floor: bool):
+	if state_timer > 0:
+		return
+
+	var new_state: MovementState
+
+	if is_on_floor() and not was_on_floor:
+		new_state = MovementState.LAND
+	elif not is_on_floor():
+		if is_on_wall():
+			if velocity.y > 0:
+				new_state = MovementState.WALL_SLIDE
+			else:
+				new_state = MovementState.JUMP
+		elif velocity.y < 0:
+			new_state = MovementState.JUMP
+		elif velocity.y > 0:
+			new_state = MovementState.FALLING
+		else:
+			new_state = MovementState.JUMP
 	else:
-		if current_movement_state != MovementState.IDLE:
-			set_movement_state(MovementState.IDLE)
+		if Input.is_action_pressed("move_down"):
+			if abs(velocity.x) > 0:
+				new_state = MovementState.CROUCH_WALK
+			else:
+				new_state = MovementState.CROUCH_IDLE
+		elif abs(velocity.x) > 0:
+			if abs(velocity.x) > PLAYER_DATA.movement_speed:
+				new_state = MovementState.RUN
+			else:
+				new_state = MovementState.WALK
+		else:
+			new_state = MovementState.IDLE
 
-func set_movement_state(new_state: MovementState):
-	current_movement_state = new_state
-	match current_movement_state:
-		MovementState.IDLE:
-			audio_position_2d.set_state("player_idle_loop")
-		MovementState.WALK:
-			audio_position_2d.set_state("player_walk_loop")
-		MovementState.RUN:
-			audio_position_2d.set_state("player_run_loop")
-		MovementState.JUMP:
-			audio_position_2d.set_state("player_jump_sfx")
-		# Add other movement states for sound if needed
-		_:
-			pass
-
-func set_weapon_state(new_state: WeaponState):
-	current_weapon_state = new_state
-	match current_weapon_state:
-		WeaponState.NONE:
-			audio_position_2d.play_secondary_sound("weapon_none_sfx")
-		WeaponState.SWORD:
-			audio_position_2d.play_secondary_sound("weapon_sword_sfx")
-		WeaponState.KATANA:
-			audio_position_2d.play_secondary_sound("weapon_katana_sfx")
-		WeaponState.PISTOL:
-			audio_position_2d.play_secondary_sound("weapon_pistol_sfx")
+	if new_state != current_movement_state:
+		current_movement_state = new_state
 
 func set_action_state(new_state: ActionState):
 	current_action_state = new_state
-	match current_action_state:
-		ActionState.ATTACKING:
-			audio_position_2d.play_secondary_sound("weapon_attack_sfx")
-		ActionState.INTERACTING:
-			audio_position_2d.play_secondary_sound("player_interact_sfx")
-		ActionState.HURT:
-			audio_position_2d.play_secondary_sound("player_hurt_sfx")
-		ActionState.DEAD:
-			audio_position_2d.play_secondary_sound("player_death_sfx")
-		_:
-			pass
 
 func update_animation():
 	if not animated_sprite_2d:
+		print("AnimatedSprite2D node not found!")
 		return
 
 	var base_anim_name = ""
 	var current_anim = animated_sprite_2d.animation
 
-	# Prioritize ActionState
 	match current_action_state:
-		ActionState.ATTACKING:
-			match current_weapon_state:
-				WeaponState.SWORD:
-					base_anim_name = "sword_attack"
-				WeaponState.KATANA:
-					if current_movement_state == MovementState.RUN:
-						base_anim_name = "katana_run_attack"
-					else:
-						base_anim_name = "katana_continuous_attack" # Or katana_attack_sheathe, depending on desired default
-				WeaponState.PISTOL:
-					if current_movement_state == MovementState.RUN:
-						base_anim_name = "running_shooting"
-					else:
-						base_anim_name = "shooting_two_handed"
-				_:
-					base_anim_name = "punch" # Default attack if no weapon or unknown weapon
-		ActionState.HURT:
-			base_anim_name = "hurt_damaged"
 		ActionState.DEAD:
 			base_anim_name = "death"
+		ActionState.HURT:
+			base_anim_name = "hurt_damaged"
+		ActionState.ATTACKING:
+			if current_weapon_data != null:
+				if current_weapon_data.weapon_name == "Katana" and not is_on_floor():
+					base_anim_name = "katana_air_attack"
+				elif current_weapon_data.weapon_name == "Pistol" and abs(velocity.x) > 0:
+					base_anim_name = "running_shooting"
+				else:
+					base_anim_name = current_weapon_data.attack_animation_name
+			else:
+				base_anim_name = "punch"
+		ActionState.AIMING:
+			base_anim_name = "running_aiming"
+		ActionState.SHEATHE:
+			if current_weapon_data != null and not current_weapon_data.sheathe_animation_name.is_empty():
+				base_anim_name = current_weapon_data.sheathe_animation_name
+			else:
+				base_anim_name = "idle"
 		ActionState.INTERACTING:
-			# Assuming no specific animation for interacting, or it's handled elsewhere
 			pass
 		_:
-			# No specific action, proceed to weapon/movement states
 			pass
 
-	# If no action-specific animation, consider WeaponState + MovementState
-	if base_anim_name == "":
-		match current_weapon_state:
-			WeaponState.SWORD:
-				match current_movement_state:
-					MovementState.IDLE:
-						base_anim_name = "sword_idle"
-					MovementState.WALK:
-						base_anim_name = "sword_idle" # Assuming no sword_walk, fallback to sword_idle
-					MovementState.RUN:
-						base_anim_name = "sword_run"
-					_:
-						base_anim_name = "sword_idle"
-			WeaponState.KATANA:
-				match current_movement_state:
-					MovementState.IDLE:
-						base_anim_name = "katana_walk" # Assuming katana_walk is also for idle with katana
-					MovementState.WALK:
-						base_anim_name = "katana_walk"
-					MovementState.RUN:
-						base_anim_name = "katana_run"
-					_:
-						base_anim_name = "katana_walk"
-			WeaponState.PISTOL:
-				match current_movement_state:
-					MovementState.IDLE:
-						base_anim_name = "shooting_two_handed" # Assuming pistol idle is shooting_two_handed
-					MovementState.WALK:
-						base_anim_name = "running_aiming" # Assuming running_aiming is for pistol walk/run
-					MovementState.RUN:
-						base_anim_name = "running_aiming"
-					_:
-						base_anim_name = "shooting_two_handed"
-			_:
-				# No specific weapon, proceed to MovementState
-				pass
-
-	# If no weapon-specific animation, consider only MovementState
-	if base_anim_name == "":
+	if base_anim_name.is_empty():
 		match current_movement_state:
 			MovementState.IDLE:
-				base_anim_name = "idle"
+				base_anim_name = current_weapon_data.idle_animation_name if current_weapon_data else "idle"
 			MovementState.WALK:
-				base_anim_name = "walk"
+				if current_weapon_data and not current_weapon_data.idle_animation_name.is_empty() and current_weapon_data.idle_animation_name != "idle":
+					base_anim_name = current_weapon_data.idle_animation_name
+				else:
+					base_anim_name = "walk"
 			MovementState.RUN:
-				base_anim_name = "run"
+				base_anim_name = current_weapon_data.run_animation_name if current_weapon_data else "run"
 			MovementState.JUMP:
 				base_anim_name = "jump"
+			MovementState.FALLING:
+				base_anim_name = "jump"
+			MovementState.LAND:
+				base_anim_name = "land"
 			MovementState.CROUCH_IDLE:
 				base_anim_name = "crouch_idle"
 			MovementState.CROUCH_WALK:
@@ -167,9 +309,9 @@ func update_animation():
 			MovementState.SLIDE:
 				base_anim_name = "slide"
 			MovementState.WALL_SLIDE:
-				base_anim_name = "wall_slide"
+				base_anim_name = "wall_slide_left" if animated_sprite_2d.flip_h else "wall_slide"
 			MovementState.WALL_LAND:
-				base_anim_name = "wall_land"
+				base_anim_name = "wall_land_left" if animated_sprite_2d.flip_h else "wall_land"
 			MovementState.AIR_SPIN:
 				base_anim_name = "air_spin"
 			MovementState.LEDGE_GRAB_CLIMB:
@@ -185,14 +327,17 @@ func update_animation():
 			MovementState.PUSH_IDLE:
 				base_anim_name = "pushpull_idle_state"
 			_:
-				base_anim_name = "idle" # Fallback for unknown movement state
+				base_anim_name = "idle"
+	print("Base Animation Name: ", base_anim_name)
 
-	# Ensure the animation exists before playing
 	if animated_sprite_2d.sprite_frames.has_animation(base_anim_name):
 		if current_anim != base_anim_name:
 			animated_sprite_2d.play(base_anim_name)
+			print("Playing animation: ", base_anim_name)
 	else:
-		# Fallback if the constructed animation name doesn't exist
 		if current_anim != "idle":
 			animated_sprite_2d.play("idle")
+			print("Animation '", base_anim_name, "' not found. Falling back to 'idle'.")
+		else:
+			print("Animation '", base_anim_name, "' not found and already playing 'idle'.")
 		printerr("Animation '", base_anim_name, "' not found. Falling back to 'idle'.")
