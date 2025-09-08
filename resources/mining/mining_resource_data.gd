@@ -1,7 +1,7 @@
 extends Resource
 class_name MiningResourceData
 
-@export var resource_name: String = ""
+@export var mining_resource_name: String = ""
 @export var description: String = ""
 @export var icon_path: String = ""
 @export var value: float = 1.0

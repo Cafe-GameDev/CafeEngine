@@ -3,8 +3,6 @@ class_name EnemyData
 
 @export var enemy_name: String = ""
 @export var description: String = ""
-@export var max_health: float = 100.0
-@export var current_health: float = 100.0
 @export var damage: float = 10.0
 @export var movement_speed: float = 100.0
 @export var attack_cooldown: float = 1.0

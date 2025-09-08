@@ -138,10 +138,10 @@ func _input(event: InputEvent):
 	if event.is_action_pressed("weapon_next"):
 		_switch_weapon_next()
 	if event.is_action_pressed("action_attack"):
-	if can_attack and current_action_state == ActionState.NONE:
-		set_action_state(ActionState.ATTACKING)
-		can_attack = false
-		attack_cooldown_timer = current_weapon_data.attack_cooldown
+		if can_attack and current_action_state == ActionState.NONE:
+			set_action_state(ActionState.ATTACKING)
+			can_attack = false
+			attack_cooldown_timer = current_weapon_data.attack_cooldown
 	if event.is_action_pressed("move_dash"):
 		_try_dash()
 	if event.is_action_pressed("move_roll"):
