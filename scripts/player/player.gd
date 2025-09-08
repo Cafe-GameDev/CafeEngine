@@ -1,8 +1,9 @@
 extends CharacterBody2D
 class_name Player
 
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var audio_position: AudioPosition2D = $AudioPosition_Movement
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var area_2d: Area2D = $Area2D
+@onready var audio_position_2d: AudioPosition2D = $AudioPosition2D
 
 enum MovementState { IDLE, WALK, RUN, JUMP }
 enum WeaponState { NONE, SWORD, KATANA, PISTOL }
@@ -15,7 +16,7 @@ var current_action_state: ActionState = ActionState.NONE
 func _ready():
 	pass
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	update_movement_state()
 	update_animation()
 
@@ -34,42 +35,42 @@ func set_movement_state(new_state: MovementState):
 	current_movement_state = new_state
 	match current_movement_state:
 		MovementState.IDLE:
-			audio_position.set_state("player_idle_loop")
+			audio_position_2d.set_state("player_idle_loop")
 		MovementState.WALK:
-			audio_position.set_state("player_walk_loop")
+			audio_position_2d.set_state("player_walk_loop")
 		MovementState.RUN:
-			audio_position.set_state("player_run_loop")
+			audio_position_2d.set_state("player_run_loop")
 		MovementState.JUMP:
-			audio_position.play_secondary_sound("player_jump_sfx")
+			audio_position_2d.set_state("player_jump_sfx")
 
 func set_weapon_state(new_state: WeaponState):
 	current_weapon_state = new_state
 	match current_weapon_state:
 		WeaponState.NONE:
-			audio_position.play_secondary_sound("weapon_none_sfx") # Usar play_secondary_sound para sons de arma
+			audio_position_2d.play_secondary_sound("weapon_none_sfx") # Usar play_secondary_sound para sons de arma
 		WeaponState.SWORD:
-			audio_position.play_secondary_sound("weapon_sword_sfx")
+			audio_position_2d.play_secondary_sound("weapon_sword_sfx")
 		WeaponState.KATANA:
-			audio_position.play_secondary_sound("weapon_katana_sfx")
+			audio_position_2d.play_secondary_sound("weapon_katana_sfx")
 		WeaponState.PISTOL:
-			audio_position.play_secondary_sound("weapon_pistol_sfx")
+			audio_position_2d.play_secondary_sound("weapon_pistol_sfx")
 
 func set_action_state(new_state: ActionState):
 	current_action_state = new_state
 	match current_action_state:
 		ActionState.ATTACKING:
-			audio_position.play_secondary_sound("weapon_attack_sfx")
+			audio_position_2d.play_secondary_sound("weapon_attack_sfx")
 		ActionState.INTERACTING:
-			audio_position.play_secondary_sound("player_interact_sfx")
+			audio_position_2d.play_secondary_sound("player_interact_sfx")
 		ActionState.HURT:
-			audio_position.play_secondary_sound("player_hurt_sfx")
+			audio_position_2d.play_secondary_sound("player_hurt_sfx")
 		ActionState.DEAD:
-			audio_position.play_secondary_sound("player_death_sfx")
+			audio_position_2d.play_secondary_sound("player_death_sfx")
 		_:
 			pass
 
 func update_animation():
-	if animated_sprite:
+	if animated_sprite_2d:
 		var anim_name = "idle"
 		match current_movement_state:
 			MovementState.WALK:
@@ -79,5 +80,5 @@ func update_animation():
 			MovementState.JUMP:
 				anim_name = "jump"
 		
-		if animated_sprite.animation != anim_name:
-			animated_sprite.play(anim_name)
+		if animated_sprite_2d.animation != anim_name:
+			animated_sprite_2d.play(anim_name)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://o18345jso8ke"]
 
 [ext_resource type="Script" uid="uid://gferjbue33qu" path="res://addons/AudioCafe/scripts/cafe_panel.gd" id="1_lxtw0"]
 

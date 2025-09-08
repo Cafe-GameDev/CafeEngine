@@ -4,18 +4,21 @@
 [ext_resource type="Script" uid="uid://dpnbagi0sjuli" path="res://scripts/player/player.gd" id="1_dqkch"]
 [ext_resource type="Script" uid="uid://dtxhjs4tjtuqr" path="res://addons/AudioCafe/nodes/2D/audio_position_2d.gd" id="3_qhqgy"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
+size = Vector2(60, 60)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_dqkch")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_g2els")
+shape = SubResource("CapsuleShape2D_qhqgy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_3vyb7")
+animation = &"run"
+autoplay = "idle"
 
 [node name="Area2D" type="Area2D" parent="."]
 
