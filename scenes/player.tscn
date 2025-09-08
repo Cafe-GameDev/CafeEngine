@@ -2,7 +2,7 @@
 
 [ext_resource type="SpriteFrames" uid="uid://bgsc6kls7pttt" path="res://resources/player/player_sprites.tres" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dpnbagi0sjuli" path="res://scripts/player/player.gd" id="1_dqkch"]
-[ext_resource type="Script" uid="uid://cjyu7oxln88ld" path="res://addons/AudioCafe/components/2D/audio_zone_2d.gd" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://cjyu7oxln88ld" path="res://addons/AudioCafe/nodes/2D/audio_zone_2d.gd" id="2_qhqgy"]
 [ext_resource type="Script" uid="uid://7qt6qwed4hli" path="res://scripts/player/audio_position_2d.gd" id="4_qlg0r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
