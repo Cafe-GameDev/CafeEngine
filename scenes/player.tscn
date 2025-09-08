@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bcghiih82n8rs"]
 
-[ext_resource type="SpriteFrames" uid="uid://bgsc6kls7pttt" path="res://resources/player/player_sprites.tres" id="1_3vyb7"]
+[ext_resource type="SpriteFrames" uid="uid://dg3xv8bc4n5sr" path="res://resources/player/player_sprites.tres" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dpnbagi0sjuli" path="res://scripts/player/player.gd" id="1_dqkch"]
 [ext_resource type="Script" uid="uid://dtxhjs4tjtuqr" path="res://addons/AudioCafe/nodes/2D/audio_position_2d.gd" id="3_qhqgy"]
 
@@ -17,7 +17,7 @@ shape = SubResource("CapsuleShape2D_qhqgy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_3vyb7")
-animation = &"run"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="Area2D" type="Area2D" parent="."]
