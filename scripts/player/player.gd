@@ -1,11 +1,16 @@
 extends CharacterBody2D
 class_name Player
 
-const PLAYER_DATA = preload("res://resources/player/PLAYER_DATA.tres")
 const WEAPON_NONE = preload("res://resources/weapons/weapon_none.tres")
 const WEAPON_KATANA = preload("res://resources/weapons/weapon_katana.tres")
 const WEAPON_PISTOL = preload("res://resources/weapons/weapon_pistol.tres")
 const WEAPON_SWORD = preload("res://resources/weapons/weapon_sword.tres")
+
+var player_data: PlayerData
+
+func _ready():
+	player_data = preload("res://resources/player/player_data.tres")
+	current_weapon_data = available_weapons[player_data.current_weapon_index]
 
 @export var initial_weapon_index: int = 0
 
@@ -39,35 +44,35 @@ var available_weapons: Array[WeaponData] = [
 ]
 
 func take_damage(amount: float):
-	if PLAYER_DATA.current_health <= 0:
+	if player_data.current_health <= 0:
 		return
 
-	PLAYER_DATA.current_health -= amount
-	if PLAYER_DATA.current_health <= 0:
-		PLAYER_DATA.current_health = 0
+	player_data.current_health -= amount
+	if player_data.current_health <= 0:
+		player_data.current_health = 0
 		set_action_state(ActionState.DEAD)
 		print("Player died!")
 	else:
 		set_action_state(ActionState.HURT)
-		print("Player took ", amount, " damage. Current health: ", PLAYER_DATA.current_health)
+		print("Player took ", amount, " damage. Current health: ", player_data.current_health)
 	_save_PLAYER_DATA()
 
 func heal(amount: float):
-	PLAYER_DATA.current_health += amount
-	if PLAYER_DATA.current_health > PLAYER_DATA.max_health:
-		PLAYER_DATA.current_health = PLAYER_DATA.max_health
-	print("Player healed ", amount, ". Current health: ", PLAYER_DATA.current_health)
+	player_data.current_health += amount
+	if player_data.current_health > player_data.max_health:
+		player_data.current_health = player_data.max_health
+	print("Player healed ", amount, ". Current health: ", player_data.current_health)
 	_save_PLAYER_DATA()
 
 func _save_PLAYER_DATA():
-	var error = ResourceSaver.save(PLAYER_DATA, PLAYER_DATA)
+	var error = ResourceSaver.save(player_data, "res://resources/player/player_data.tres")
 	if error != OK:
 		printerr("Failed to save player data: ", error)
 	else:
 		print("Player data saved successfully.")
 
 func _physics_process(delta: float) -> void:
-	if PLAYER_DATA == null:
+	if player_data == null:
 		return # Cannot process without player data
 
 	var was_on_floor = is_on_floor()
@@ -82,12 +87,12 @@ func _physics_process(delta: float) -> void:
 				current_movement_state = MovementState.IDLE
 
 	if not is_on_floor():
-		velocity.y += PLAYER_DATA.gravity_strength * delta
+		velocity.y += player_data.gravity_strength * delta
 
 	if Input.is_action_just_pressed("move_up") and is_on_floor():
-		velocity.y = PLAYER_DATA.jump_velocity
+		velocity.y = player_data.jump_velocity
 
-	var is_running = Input.is_action_pressed("action_run")
+	var is_running = Input.is_action_pressed("move_run")
 
 	match current_movement_state:
 		MovementState.DASH:
@@ -103,17 +108,17 @@ func _physics_process(delta: float) -> void:
 		_:
 			var direction := Input.get_axis("move_left", "move_right")
 			if direction:
-				var speed = PLAYER_DATA.movement_speed
+				var speed = player_data.movement_speed
 				if is_running:
-					speed = PLAYER_DATA.run_speed
+					speed = player_data.run_speed
 				velocity.x = direction * speed
 				animated_sprite_2d.flip_h = direction < 0
 			else:
-				velocity.x = move_toward(velocity.x, 0, PLAYER_DATA.movement_speed)
+				velocity.x = move_toward(velocity.x, 0, player_data.movement_speed)
 
 	move_and_slide()
 
-	update_movement_state(was_on_floor)
+	update_movement_state(was_on_floor, is_running)
 	update_animation()
 
 func _input(event: InputEvent):
@@ -152,7 +157,7 @@ func _switch_weapon_previous():
 	var current_index = available_weapons.find(current_weapon_data)
 	var prev_index = (current_index - 1 + available_weapons.size()) % available_weapons.size()
 	current_weapon_data = available_weapons[prev_index]
-	PLAYER_DATA.current_weapon_index = prev_index
+	player_data.current_weapon_index = prev_index
 	_save_PLAYER_DATA()
 
 func _switch_weapon_next():
@@ -163,7 +168,7 @@ func _switch_weapon_next():
 	var current_index = available_weapons.find(current_weapon_data)
 	var next_index = (current_index + 1) % available_weapons.size()
 	current_weapon_data = available_weapons[next_index]
-	PLAYER_DATA.current_weapon_index = next_index
+	player_data.current_weapon_index = next_index
 	_save_PLAYER_DATA()
 
 func _try_dash():
@@ -206,7 +211,7 @@ func _try_push():
 	print("Push initiated!")
 	current_movement_state = MovementState.PUSH
 
-func update_movement_state(was_on_floor: bool):
+func update_movement_state(was_on_floor: bool, is_running: bool):
 	if state_timer > 0:
 		return
 
@@ -233,7 +238,9 @@ func update_movement_state(was_on_floor: bool):
 			else:
 				new_state = MovementState.CROUCH_IDLE
 		elif abs(velocity.x) > 0:
-			if abs(velocity.x) > PLAYER_DATA.movement_speed:
+			if is_running:
+				new_state = MovementState.RUN
+			elif abs(velocity.x) > player_data.movement_speed:
 				new_state = MovementState.RUN
 			else:
 				new_state = MovementState.WALK
