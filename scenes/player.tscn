@@ -1,13 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcghiih82n8rs"]
+[gd_scene load_steps=6 format=3 uid="uid://bcghiih82n8rs"]
 
 [ext_resource type="SpriteFrames" uid="uid://bgsc6kls7pttt" path="res://resources/player/player_sprites.tres" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dpnbagi0sjuli" path="res://scripts/player/player.gd" id="1_dqkch"]
-[ext_resource type="Script" uid="uid://cjyu7oxln88ld" path="res://addons/AudioCafe/nodes/2D/audio_zone_2d.gd" id="2_qhqgy"]
-[ext_resource type="Script" uid="uid://7qt6qwed4hli" path="res://scripts/player/audio_position_2d.gd" id="4_qlg0r"]
+[ext_resource type="Script" uid="uid://dtxhjs4tjtuqr" path="res://addons/AudioCafe/nodes/2D/audio_position_2d.gd" id="3_qhqgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
 
@@ -20,18 +17,11 @@ shape = SubResource("RectangleShape2D_g2els")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_3vyb7")
 
-[node name="AudioZone2D" type="Area2D" parent="."]
-script = ExtResource("2_qhqgy")
-metadata/_custom_type_script = "uid://cjyu7oxln88ld"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioZone2D"]
-shape = SubResource("RectangleShape2D_qhqgy")
-
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_dqkch")
 
 [node name="AudioPosition2D" type="AudioStreamPlayer2D" parent="."]
-script = ExtResource("4_qlg0r")
+script = ExtResource("3_qhqgy")
 metadata/_custom_type_script = "uid://dtxhjs4tjtuqr"
