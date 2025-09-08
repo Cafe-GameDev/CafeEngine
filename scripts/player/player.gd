@@ -31,6 +31,7 @@ var current_action_state: ActionState = ActionState.NONE
 
 var can_attack: bool = true
 var attack_cooldown_timer: float = 0.0
+var attack_duration_timer: float = 0.0
 
 var state_timer: float = 0.0
 var dash_speed: float = 700.0
@@ -95,6 +96,12 @@ func _physics_process(delta: float) -> void:
 		if attack_cooldown_timer <= 0:
 			can_attack = true
 
+	if current_action_state == ActionState.ATTACKING and attack_duration_timer > 0:
+		attack_duration_timer -= delta
+		if attack_duration_timer <= 0:
+			current_action_state = ActionState.NONE # Failsafe to exit attack state
+			can_attack = true
+
 	if not is_on_floor():
 		velocity.y += player_data.gravity_strength * delta
 
@@ -142,6 +149,7 @@ func _input(event: InputEvent):
 			set_action_state(ActionState.ATTACKING)
 			can_attack = false
 			attack_cooldown_timer = current_weapon_data.attack_cooldown
+			attack_duration_timer = current_weapon_data.attack_cooldown # Use attack_cooldown as a fallback duration
 	if event.is_action_pressed("move_dash"):
 		_try_dash()
 	if event.is_action_pressed("move_roll"):
@@ -354,7 +362,7 @@ func update_animation():
 	print("Base Animation Name: ", base_anim_name)
 
 	if animated_sprite_2d.sprite_frames.has_animation(base_anim_name):
-		if current_anim != base_anim_name:
+		if animated_sprite_2d.animation != base_anim_name or not animated_sprite_2d.is_playing():
 			animated_sprite_2d.play(base_anim_name)
 			print("Playing animation: ", base_anim_name)
 	else:
