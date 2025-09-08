@@ -50,8 +50,13 @@ O objetivo principal da suíte CafeEngine é fornecer plugins que se integrem ao
 *   **Diretriz:** Fundamental para que os componentes do plugin sejam facilmente adicionados às cenas e recursos do usuário, como se fossem tipos nativos do Godot.
 
 ### 10. Configurações Persistentes (`.tres`)
-*   **Propósito:** Armazenar configurações globais do plugin, manifestos de dados, ou qualquer informação que precise ser persistida e editável no editor.
+*   **Propósito:** Armazenar configurações globais do plugin, manifestos de dados, ou qualquer informação que precise ser persistida e editada no editor.
 *   **Diretriz:** Criar classes `Resource` dedicadas para cada tipo de configuração. Essas instâncias de recurso devem ser salvas como `.tres` e referenciadas pelos scripts do plugin. Isso permite que o usuário edite as configurações diretamente no inspetor.
+
+### 11. Recursos Personalizados (`Resource`)
+*   **Propósito:** Definir estruturas de dados customizadas para o jogo (ex: `ItemData`, `EnemyData`, `SaveData`). Permitem que os dados sejam criados e editados como arquivos `.tres` diretamente no editor Godot, proporcionando uma experiência de design de dados integrada e visual.
+*   **Diretriz:** Cada plugin que necessitar de estruturas de dados específicas para o jogo (não apenas configurações do plugin) deve definir seus próprios recursos personalizados, estendendo a classe `Resource`. Esses recursos devem ser registrados via `add_custom_type` no `EditorPlugin` principal para que apareçam no diálogo "Criar Novo Recurso" do Godot. Isso é crucial para que os usuários possam criar e gerenciar seus dados de jogo de forma nativa dentro do editor.
+*   **Exemplo (DataCafe, SaveCafe, InventoryCafe):** O `DataCafe` fornecerá um `DataResource` genérico que servirá como base para todos os tipos de dados estáticos do jogo. Outros plugins, como `InventoryCafe`, poderão estender ou utilizar esse `DataResource` para suas definições de item, garantindo interoperabilidade e consistência. O `SaveCafe` fará o mesmo com seu `SaveResource` para dados de save.
 
 ## Plano de Ação (Exemplo para AudioCafe)
 
