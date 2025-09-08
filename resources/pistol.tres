@@ -1,0 +1,15 @@
+[gd_resource type="WeaponData" load_steps=2 format=3 uid="uid://placeholder_pistol"]
+
+[ext_resource type="Script" path="res://resources/weapon_data.gd" id="1_placeholder_weapon_data"]
+
+[resource]
+script = ExtResource("1_placeholder_weapon_data")
+weapon_name = "Pistol"
+attack_animation_name = "shooting_two_handed"
+attack_sfx_path = "res://assets/audio/sfx/pistol_shot.wav"
+damage = 15.0
+is_ranged = true
+projectile_scene_path = "res://scenes/projectile/bullet.tscn"
+sheathe_animation_name = ""
+idle_animation_name = "shooting_two_handed"
+run_animation_name = "running_aiming"

@@ -1,0 +1,15 @@
+[gd_resource type="WeaponData" load_steps=2 format=3 uid="uid://placeholder_katana"]
+
+[ext_resource type="Script" path="res://resources/weapon_data.gd" id="1_placeholder_weapon_data"]
+
+[resource]
+script = ExtResource("1_placeholder_weapon_data")
+weapon_name = "Katana"
+attack_animation_name = "katana_continuous_attack"
+attack_sfx_path = "res://assets/audio/sfx/katana_swing.wav"
+damage = 25.0
+is_ranged = false
+projectile_scene_path = ""
+sheathe_animation_name = "katana_attack_sheathe"
+idle_animation_name = "katana_walk"
+run_animation_name = "katana_run"

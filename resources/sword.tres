@@ -1,0 +1,15 @@
+[gd_resource type="WeaponData" load_steps=2 format=3 uid="uid://placeholder_sword"]
+
+[ext_resource type="Script" path="res://resources/weapon_data.gd" id="1_placeholder_weapon_data"]
+
+[resource]
+script = ExtResource("1_placeholder_weapon_data")
+weapon_name = "Sword"
+attack_animation_name = "sword_attack"
+attack_sfx_path = "res://assets/audio/sfx/sword_swing.wav"
+damage = 20.0
+is_ranged = false
+projectile_scene_path = ""
+sheathe_animation_name = ""
+idle_animation_name = "sword_idle"
+run_animation_name = "sword_run"
