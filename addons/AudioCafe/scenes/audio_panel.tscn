@@ -16,6 +16,7 @@ flat = true
 alignment = 0
 
 [node name="CollapsibleContent" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 18027)
 layout_mode = 2
 
 [node name="AudioManifest" type="Button" parent="CollapsibleContent"]
@@ -444,13 +445,13 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "To use AudioPosition signals, you must attach a script to your AudioPosition node and assign it a 'class_name'. Then, you can emit signals directly from the node instance or connect to them.
 
-Example: YourAudioPositionNode.audio_entered_zone.emit(zone_name)
+YourAudioPositionNode.audio_entered_zone.emit(zone_name)
 Emitted when the AudioPosition enters an AudioZone. 'zone_name' is the unique identifier of the AudioZone.
 
-Example: YourAudioPositionNode.audio_exited_zone.emit(zone_name)
+YourAudioPositionNode.audio_exited_zone.emit(zone_name)
 Emitted when the AudioPosition exits an AudioZone. 'zone_name' is the unique identifier of the AudioZone.
 
-Example: YourAudioPositionNode.audio_state_changed.emit(new_state)
+YourAudioPositionNode.audio_state_changed.emit(new_state)
 Emitted when the AudioPosition's internal state changes (e.g., for character movement sounds). 'new_state' is the new state of the AudioPosition.
 "
 fit_content = true
@@ -469,16 +470,16 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "To use AudioZone signals, you must attach a script to your AudioZone node and assign it a 'class_name'. Then, you can emit signals directly from the node instance or connect to them.
 
-Example: YourAudioZoneNode.player_entered_zone.emit()
+YourAudioZoneNode.player_entered_zone.emit()
 Emitted when the player's AudioPosition enters this zone.
 
-Example: YourAudioZoneNode.player_exited_zone.emit()
+YourAudioZoneNode.player_exited_zone.emit()
 Emitted when the player's AudioPosition exits this zone.
 
-Example: YourAudioZoneNode.zone_activated.emit()
+YourAudioZoneNode.zone_activated.emit()
 Emitted when the zone becomes active.
 
-Example: YourAudioZoneNode.zone_deactivated.emit()
+YourAudioZoneNode.zone_deactivated.emit()
 Emitted when the zone becomes inactive.
 "
 fit_content = true
