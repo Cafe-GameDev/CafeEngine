@@ -24,7 +24,7 @@ CafeAudioManager="*res://addons/AudioCafe/scenes/cafe_audio_manager.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/AudioCafe/plugin.cfg")
 
 [global_groups]
 
