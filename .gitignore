@@ -12,7 +12,7 @@ addons/CafeAudioManager/briefingv1.md
 addons/CafeAudioManager/briefingv2.md
 /addons/CafeAudioManager
 /addons/AudioCafe/assets/music/Teste
-*.import
 *.aseprite
 *.gif
-assets/2d_pixel_art_character_template/air_spin/.DS_Store
+*.DS_Store
+*DS_Store
