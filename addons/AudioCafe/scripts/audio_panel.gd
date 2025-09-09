@@ -1,6 +1,6 @@
 @tool
 extends VBoxContainer
-@onready var audio_manifest: Button = $CollapsibleContent/AudioManifest
+@onready var audio_manifest: Button = $CollapsibleContent/HBoxContainer/AudioManifest
 
 @onready var tab_container: TabContainer = $CollapsibleContent/TabContainer
 
@@ -12,31 +12,31 @@ extends VBoxContainer
 @onready var add_music_path_button: Button = tab_container.get_node("Paths/MusicPathsSection/AddMusicPathButton")
 @onready var music_folder_dialog: FileDialog = $CollapsibleContent/MusicFolderDialog
 
-@onready var default_click_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultClickKeyLineEdit
-@onready var default_slider_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultSliderKeyLineEdit
-@onready var default_hover_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultHoverKeyLineEdit
-@onready var default_confirm_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultConfirmKeyLineEdit
-@onready var default_cancel_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultCancelKeyLineEdit
-@onready var default_toggle_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultToggleKeyLineEdit
-@onready var default_select_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultSelectKeyLineEdit
-@onready var default_text_input_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultTextInputKeyLineEdit
-@onready var default_scroll_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultScrollKeyLineEdit
-@onready var default_focus_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultFocusKeyLineEdit
-@onready var default_error_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultErrorKeyLineEdit
-@onready var default_warning_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultWarningKeyLineEdit
-@onready var default_success_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultSuccessKeyLineEdit
-@onready var default_open_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultOpenKeyLineEdit
-@onready var default_close_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/DefaultKeys/DefaultKeyGridContainer/DefaultCloseKeyLineEdit
+@onready var default_click_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultClickKeyLineEdit
+@onready var default_slider_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultSliderKeyLineEdit
+@onready var default_hover_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultHoverKeyLineEdit
+@onready var default_confirm_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultConfirmKeyLineEdit
+@onready var default_cancel_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultCancelKeyLineEdit
+@onready var default_toggle_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultToggleKeyLineEdit
+@onready var default_select_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultSelectKeyLineEdit
+@onready var default_text_input_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultTextInputKeyLineEdit
+@onready var default_scroll_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultScrollKeyLineEdit
+@onready var default_focus_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultFocusKeyLineEdit
+@onready var default_error_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultErrorKeyLineEdit
+@onready var default_warning_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultWarningKeyLineEdit
+@onready var default_success_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultSuccessKeyLineEdit
+@onready var default_open_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultOpenKeyLineEdit
+@onready var default_close_key_line_edit: LineEdit = $CollapsibleContent/TabContainer/Keys/DefaultKeyGridContainer/DefaultCloseKeyLineEdit
 
 @onready var save_feedback_label: Label = $CollapsibleContent/SaveFeedbackLabel
 @onready var save_feedback_timer: Timer = $CollapsibleContent/SaveFeedbackTimer
 
-@onready var master_volume_slider: HSlider = tab_container.get_node("DefaultKeys/VolumeGridContainer/MasterVolumeSlider")
-@onready var master_volume_value_label: Label = tab_container.get_node("DefaultKeys/VolumeGridContainer/MasterVolumeValueLabel")
-@onready var sfx_volume_slider: HSlider = tab_container.get_node("DefaultKeys/VolumeGridContainer/SFXVolumeSlider")
-@onready var sfx_volume_value_label: Label = tab_container.get_node("DefaultKeys/VolumeGridContainer/SFXVolumeValueLabel")
-@onready var music_volume_slider: HSlider = tab_container.get_node("DefaultKeys/VolumeGridContainer/MusicVolumeSlider")
-@onready var music_volume_value_label: Label = tab_container.get_node("DefaultKeys/VolumeGridContainer/MusicVolumeValueLabel")
+@onready var master_volume_slider: HSlider = tab_container.get_node("Keys/VolumeGridContainer/MasterVolumeSlider")
+@onready var master_volume_value_label: Label = tab_container.get_node("Keys/VolumeGridContainer/MasterVolumeValueLabel")
+@onready var sfx_volume_slider: HSlider = tab_container.get_node("Keys/VolumeGridContainer/SFXVolumeSlider")
+@onready var sfx_volume_value_label: Label = tab_container.get_node("Keys/VolumeGridContainer/SFXVolumeValueLabel")
+@onready var music_volume_slider: HSlider = tab_container.get_node("Keys/VolumeGridContainer/MusicVolumeSlider")
+@onready var music_volume_value_label: Label = tab_container.get_node("Keys/VolumeGridContainer/MusicVolumeValueLabel")
 
 @onready var music_keys_rich_text_label: RichTextLabel = tab_container.get_node("MusicList/MusicKeysRichTextLabel")
 @onready var sfx_keys_rich_text_label: RichTextLabel = tab_container.get_node("SFXList/SFXKeysRichTextLabel")
