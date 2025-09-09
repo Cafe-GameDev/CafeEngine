@@ -1,5 +1,6 @@
 @tool
 extends VBoxContainer
+
 @onready var audio_manifest: Button = $CollapsibleContent/HBoxContainer/AudioManifest
 
 @onready var tab_container: TabContainer = $CollapsibleContent/TabContainer
