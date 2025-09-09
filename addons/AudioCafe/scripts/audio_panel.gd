@@ -46,6 +46,8 @@ extends VBoxContainer
 
 @export var audio_config: AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
 
+const DOCS : String = "https://cafegame.dev/plugins/audiocafe"
+
 var generate_manifest_script_instance: EditorScript
 var editor_interface: EditorInterface
 
@@ -520,3 +522,7 @@ func _on_header_button_pressed():
 		tween.tween_callback(Callable(collapsible_content_node, "set_visible").bind(false))
 		header_button_node.text = "AudioCafe" # Keep text consistent
 		header_button_node.icon = editor_interface.get_base_control().get_theme_icon("ArrowDown", "EditorIcons")
+
+
+func _on_docs_button_pressed() -> void:
+	OS.shell_open(DOCS)

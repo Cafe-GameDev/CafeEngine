@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b2pijgg1eb8sg"]
+[gd_scene load_steps=3 format=3 uid="uid://b2pijgg1eb8sg"]
 
 [ext_resource type="Script" uid="uid://d2qybkm7aby25" path="res://addons/AudioCafe/scripts/audio_panel.gd" id="1_wixt7"]
+[ext_resource type="Texture2D" uid="uid://cbagaxsdgndkc" path="res://addons/AudioCafe/icons/book-open-text.svg" id="2_mi0lv"]
 
 [node name="CafeAudioManager" type="VBoxContainer"]
 offset_right = 440.0
@@ -403,6 +404,7 @@ metadata/_tab_index = 4
 [node name="DocsButton" type="Button" parent="CollapsibleContent/TabContainer/Docs"]
 layout_mode = 2
 text = "AudioCafe Documentation"
+icon = ExtResource("2_mi0lv")
 
 [node name="HSeparator" type="HSeparator" parent="CollapsibleContent/TabContainer/Docs"]
 layout_mode = 2
@@ -465,4 +467,5 @@ one_shot = true
 
 [connection signal="pressed" from="HeaderButton" to="." method="_on_header_button_pressed"]
 [connection signal="pressed" from="CollapsibleContent/AudioManifest" to="." method="_on_audio_manifest_pressed"]
+[connection signal="pressed" from="CollapsibleContent/TabContainer/Docs/DocsButton" to="." method="_on_docs_button_pressed"]
 [connection signal="timeout" from="CollapsibleContent/SaveFeedbackTimer" to="." method="_on_save_feedback_timer_timeout"]
