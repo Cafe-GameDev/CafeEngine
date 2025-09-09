@@ -16,9 +16,7 @@ flat = true
 alignment = 0
 
 [node name="CollapsibleContent" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(0, 17567)
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="AudioManifest" type="Button" parent="CollapsibleContent"]
 custom_minimum_size = Vector2(0, 34)
@@ -418,18 +416,17 @@ text = "CafeAudioManager Signals:"
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
-text = "[b]emit signal: music_started(key: String)[/b]
+text = "CafeAudioManager.music_started.emit(key)
 Emitted when a music track starts playing. The 'key' parameter is the unique identifier of the music track.
 
-[b]emit signal: music_stopped(key: String)[/b]
+CafeAudioManager.music_stopped.emit(key)
 Emitted when a music track stops playing. The 'key' parameter is the unique identifier of the music track.
 
-[b]emit signal: sfx_played(key: String)[/b]
+CafeAudioManager.sfx_played.emit(key)
 Emitted when an SFX is played. The 'key' parameter is the unique identifier of the SFX.
 
-[b]emit signal: volume_changed(bus_name: String, volume: float)[/b]
-Emitted when a volume bus changes. 'bus_name' is the name of the audio bus (e.g., 'Master', 'SFX', 'Music') and 'volume' is the new volume value (0.0 to 1.0).
-"
+CafeAudioManager.volume_changed.emit(bus_name, volume)
+Emitted when a volume bus changes. 'bus_name' is the name of the audio bus (e.g., 'Master', 'SFX', 'Music') and 'volume' is the new volume value (0.0 to 1.0)."
 fit_content = true
 
 [node name="HSeparator2" type="HSeparator" parent="CollapsibleContent/TabContainer/Docs"]
@@ -444,17 +441,16 @@ text = "AudioPosition (2D/3D) Signals:"
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
-text = "To use AudioPosition signals, you must attach a script to your AudioPosition node and assign it a 'class_name'. Then, emit signals to this 'class_name' or use it as a parameter in other signals.
+text = "To use AudioPosition signals, you must attach a script to your AudioPosition node and assign it a 'class_name'. Then, you can emit signals directly from the node instance or connect to them.
 
-[b]emit signal: audio_entered_zone(zone_name: String)[/b]
+Example: YourAudioPositionNode.audio_entered_zone.emit(zone_name)
 Emitted when the AudioPosition enters an AudioZone. 'zone_name' is the unique identifier of the AudioZone.
 
-[b]emit signal: audio_exited_zone(zone_name: String)[/b]
+Example: YourAudioPositionNode.audio_exited_zone.emit(zone_name)
 Emitted when the AudioPosition exits an AudioZone. 'zone_name' is the unique identifier of the AudioZone.
 
-[b]emit signal: audio_state_changed(new_state: String)[/b]
-Emitted when the AudioPosition's internal state changes (e.g., for character movement sounds). 'new_state' is the new state of the AudioPosition.
-"
+Example: YourAudioPositionNode.audio_state_changed.emit(new_state)
+Emitted when the AudioPosition's internal state changes (e.g., for character movement sounds). 'new_state' is the new state of the AudioPosition."
 fit_content = true
 
 [node name="HSeparator3" type="HSeparator" parent="CollapsibleContent/TabContainer/Docs"]
