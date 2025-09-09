@@ -16,7 +16,7 @@ flat = true
 alignment = 0
 
 [node name="CollapsibleContent" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(0, 727)
+custom_minimum_size = Vector2(0, 17567)
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -418,6 +418,18 @@ text = "CafeAudioManager Signals:"
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
+text = "[b]emit signal: music_started(key: String)[/b]
+Emitted when a music track starts playing. The 'key' parameter is the unique identifier of the music track.
+
+[b]emit signal: music_stopped(key: String)[/b]
+Emitted when a music track stops playing. The 'key' parameter is the unique identifier of the music track.
+
+[b]emit signal: sfx_played(key: String)[/b]
+Emitted when an SFX is played. The 'key' parameter is the unique identifier of the SFX.
+
+[b]emit signal: volume_changed(bus_name: String, volume: float)[/b]
+Emitted when a volume bus changes. 'bus_name' is the name of the audio bus (e.g., 'Master', 'SFX', 'Music') and 'volume' is the new volume value (0.0 to 1.0).
+"
 fit_content = true
 
 [node name="HSeparator2" type="HSeparator" parent="CollapsibleContent/TabContainer/Docs"]
@@ -432,6 +444,17 @@ text = "AudioPosition (2D/3D) Signals:"
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
+text = "To use AudioPosition signals, you must attach a script to your AudioPosition node and assign it a 'class_name'. Then, emit signals to this 'class_name' or use it as a parameter in other signals.
+
+[b]emit signal: audio_entered_zone(zone_name: String)[/b]
+Emitted when the AudioPosition enters an AudioZone. 'zone_name' is the unique identifier of the AudioZone.
+
+[b]emit signal: audio_exited_zone(zone_name: String)[/b]
+Emitted when the AudioPosition exits an AudioZone. 'zone_name' is the unique identifier of the AudioZone.
+
+[b]emit signal: audio_state_changed(new_state: String)[/b]
+Emitted when the AudioPosition's internal state changes (e.g., for character movement sounds). 'new_state' is the new state of the AudioPosition.
+"
 fit_content = true
 
 [node name="HSeparator3" type="HSeparator" parent="CollapsibleContent/TabContainer/Docs"]
@@ -446,6 +469,20 @@ text = "AudioZone (2D/3D) Signals:"
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
+text = "To use AudioZone signals, you must attach a script to your AudioZone node and assign it a 'class_name'. Then, emit signals to this 'class_name' or use it as a parameter in other signals.
+
+[b]emit signal: player_entered_zone()[/b]
+Emitted when the player's AudioPosition enters this zone.
+
+[b]emit signal: player_exited_zone()[/b]
+Emitted when the player's AudioPosition exits this zone.
+
+[b]emit signal: zone_activated()[/b]
+Emitted when the zone becomes active.
+
+[b]emit signal: zone_deactivated()[/b]
+Emitted when the zone becomes inactive.
+"
 fit_content = true
 
 [node name="MusicTrackFileDialog" type="FileDialog" parent="CollapsibleContent"]
