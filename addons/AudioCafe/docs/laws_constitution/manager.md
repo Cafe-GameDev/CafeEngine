@@ -5,15 +5,14 @@
 
 ---
 
-### **Artigo I: Propósito e Função**
+### **Artigo I: Princípio da Orquestração Global**
 
-O `CafeAudioManager` é o **singleton orquestrador** do sistema. Ele existe como um nó global (`Autoload`) e serve como o ponto central de execução para todas as operações de áudio em tempo de execução.
+O `CafeAudioManager` deve existir como um **singleton global** que atua como o ponto central de orquestração para todas as operações de áudio em tempo de execução. Ele deve prover uma interface simplificada para as funcionalidades de áudio mais comuns.
 
-### **Artigo II: Responsabilidades Fundamentais**
+### **Artigo II: Princípio da Otimização de Performance**
 
-As responsabilidades invioláveis do `CafeAudioManager` na v1.0 são:
+O Gerenciador Central deve ser responsável por otimizações de performance que não são triviais para o usuário final implementar, como o **pooling de recursos** (`AudioStreamPlayer`s) para a reprodução eficiente de SFX.
 
-1.  **Pooling de SFX:** Gerenciar um pool de nós `AudioStreamPlayer` para a reprodução eficiente de efeitos sonoros, evitando o custo de instanciar nós repetidamente.
-2.  **Reprodução de Música:** Gerenciar um `AudioStreamPlayer` dedicado para a reprodução de música, incluindo a lógica para seleção aleatória de faixas dentro de uma playlist definida no `AudioManifest`.
-3.  **Dispatcher de Sinais:** Atuar como o hub central para receber sinais de requisição (ex: `play_sfx_requested`) e emitir sinais de notificação (ex: `volume_changed`).
-4.  **Gerenciamento de Buses:** Garantir a existência e o controle de volume dos buses de áudio "Music" e "SFX".
+### **Artigo III: Princípio da Comunicação Centralizada**
+
+O `CafeAudioManager` deve servir como o **hub central para a comunicação de eventos de áudio**, tanto recebendo requisições de reprodução quanto emitindo notificações sobre o estado do áudio no jogo.

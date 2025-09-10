@@ -5,14 +5,14 @@
 
 ---
 
-### **Artigo I: Propósito e Função**
+### **Artigo I: Princípio da Integração Transparente**
 
-Os scripts na pasta `editor/` são a cola que torna o AudioCafe uma parte integrada da experiência de desenvolvimento no Godot. Sua função é automatizar processos e registrar os componentes do plugin para um uso transparente.
+A integração com o editor Godot deve ser transparente e intuitiva, fazendo com que os componentes do AudioCafe se comportem como extensões nativas da engine.
 
-### **Artigo II: Componentes Essenciais**
+### **Artigo II: Princípio da Automação de Tarefas**
 
-1.  **`EditorPlugin` (`editor_plugin.gd`):**
-    *   **Responsabilidade:** É o orquestrador principal. Deve gerenciar o ciclo de vida do `AudioPanel` e do autoload `CafeAudioManager`, e registrar todos os tipos de nós customizados (`SFX*`, `AudioPosition`, etc.) para que estejam disponíveis no editor.
+Os scripts de editor devem automatizar tarefas críticas e repetitivas, como a geração do manifesto de áudio antes da exportação do projeto, para garantir a consistência e a confiabilidade da build final.
 
-2.  **`EditorExportPlugin` (`editor_export_plugin.gd`):**
-    *   **Responsabilidade:** É o guardião da build. Sua função inviolável é acionar a geração do `AudioManifest` antes da exportação do projeto, garantindo que a versão final do jogo nunca tenha um manifesto desatualizado.
+### **Artigo III: Princípio do Registro de Componentes**
+
+Os scripts de editor são responsáveis por registrar todos os nós e recursos customizados do AudioCafe, garantindo que eles estejam disponíveis no editor para instanciação e configuração pelo usuário.

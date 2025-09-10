@@ -5,20 +5,14 @@
 
 ---
 
-### **Artigo I: Propósito e Função**
+### **Artigo I: Princípio da Comunicação Desacoplada**
 
-Os sinais são a **API pública e o sistema nervoso** do AudioCafe. Eles permitem uma comunicação desacoplada entre os componentes do plugin e o código do jogo. Esta constituição define os sinais essenciais da v1.0.
+A comunicação entre os componentes do plugin e o código do usuário deve ser feita, preferencialmente, através de um **conjunto bem definido de sinais globais**. Isso garante um baixo acoplamento e facilita a manutenção e a extensão do sistema.
 
-### **Artigo II: Sinais Invioláveis**
+### **Artigo II: Princípio da Clareza da API**
 
-Os seguintes sinais formam o núcleo da API de eventos do AudioCafe:
+Os sinais devem ter nomes claros e descritivos, e seus parâmetros devem ser bem definidos. A API de sinais deve ser intuitiva e fácil de usar para o desenvolvedor.
 
-1.  **Sinais de Requisição (Emitidos pelo Jogo):**
-    *   `play_sfx_requested(sfx_key: String, bus: String, manager_node: Node)`: A única forma de solicitar a reprodução de um SFX.
-    *   `play_music_requested(music_key: String, manager_node: Node)`: A única forma de solicitar a reprodução de uma música ou playlist.
+### **Artigo III: Princípio da Estabilidade da API**
 
-2.  **Sinais de Notificação (Escutados pelo Jogo):**
-    *   `music_track_changed(music_key: String)`: Notifica quando uma nova faixa de música começa.
-    *   `volume_changed(bus_name: String, linear_volume: float)`: Notifica quando um volume de bus é alterado.
-    *   `zone_event_triggered(zone_name: String, event_type: String, body: Node)`: Notifica sobre eventos de `AudioZone`.
-    *   `audio_config_updated(config: AudioConfig)`: Notifica sobre mudanças no `AudioConfig`.
+Uma vez que um sinal é definido como parte da API pública, sua assinatura (nome e parâmetros) deve ser considerada estável. Qualquer alteração que quebre a compatibilidade de um sinal público deve ser tratada como uma **quebra de compatibilidade maior** e seguir as regras de versionamento estabelecidas na Constituição do Versionamento.
