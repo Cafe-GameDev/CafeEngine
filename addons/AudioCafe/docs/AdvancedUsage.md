@@ -15,6 +15,56 @@ func _on_player_powerup():
     # CafeAudioManager.play_sfx_requested.emit("sfx_voice_line", "Voice")
 ```
 
+## Como tocar uma sequência de SFX?
+
+Se você precisa que vários sons toquem em uma ordem específica, um após o outro, você pode usar `await` com o sinal `finished` de um `AudioStreamPlayer`. Como o `CafeAudioManager` usa um pool de players compartilhados, a abordagem mais segura é criar um player dedicado para a sua sequência.
+
+```gdscript
+# Script que controla a sequência
+extends Node
+
+var sfx_sequence = ["ui_notification_1", "ui_notification_2", "ui_success"]
+var sequence_player = AudioStreamPlayer.new()
+
+func _ready():
+    add_child(sequence_player)
+
+func play_my_sequence():
+    for sfx_key in sfx_sequence:
+        # Pede para o manager tocar o som, mas em nosso player dedicado
+        CafeAudioManager.play_sfx_requested.emit(sfx_key, "SFX", sequence_player)
+        # Espera o som atual terminar antes de ir para o próximo
+        await sequence_player.finished
+    print("Sequência de SFX concluída!")
+```
+
+## Como integrar com o AnimationPlayer?
+
+Sincronizar sons com animações é um caso de uso muito comum. A melhor maneira de fazer isso é usando uma "Call Method Track".
+
+1.  **Adicione um `AnimationPlayer`** à sua cena.
+2.  Crie sua animação (por exemplo, uma animação de ataque).
+3.  Adicione uma nova trilha do tipo **"Call Method Track"**.
+
+    ![Add Call Method Track](https://i.imgur.com/your-image-url.png) <!-- Placeholder para imagem -->
+
+4.  Selecione o nó que contém o script que irá tocar o som (pode ser o nó raiz do personagem ou o próprio `AudioPosition`).
+5.  Nos pontos da animação onde você quer que o som toque (ex: no meio de um swing de espada), clique com o botão direito na Call Method Track e insira uma nova chave.
+6.  Na janela que se abre, digite o nome da função que você quer chamar. Por exemplo, `play_swing_sfx`.
+7.  No script do seu personagem, crie essa função:
+
+```gdscript
+# player.gd
+
+func play_swing_sfx():
+    # Se você tem um AudioPosition, pode usar o play_secondary_sound
+    $AudioPosition2D.play_secondary_sound("sfx_sword_swing")
+    
+    # Ou, se não estiver usando AudioPosition para isso, pode chamar o manager globalmente
+    # CafeAudioManager.play_sfx_requested.emit("sfx_sword_swing")
+```
+Agora, toda vez que a `AnimationPlayer` passar por aquela chave, a função `play_swing_sfx` será chamada, tocando o som em perfeita sincronia com a animação.
+
 ## Como criar um controle de UI customizado com SFX?
 
 Se você criar seu próprio componente de UI e quiser que ele tenha SFX integrado, o processo é simples:

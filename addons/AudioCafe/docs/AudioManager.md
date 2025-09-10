@@ -44,5 +44,7 @@ O `CafeAudioManager` se conecta automaticamente aos signals emitidos por qualque
 
 ## Estrutura Interna
 
-- **Pool de SFX Players**: Para evitar a criação e destruição constante de nós, o `CafeAudioManager` mantém um pool de `AudioStreamPlayer`s. Quando um SFX é solicitado, ele usa um player inativo. Após a reprodução, o player é liberado e fica disponível novamente. O tamanho do pool pode ser configurado na propriedade `_sfx_player_count` no `CafeAudioManager.tscn`.
+- **Pool de SFX Players**: Para evitar a criação e destruição constante de nós, o `CafeAudioManager` mantém um pool de `AudioStreamPlayer`s. Quando um SFX é solicitado, ele usa um player inativo. Após a reprodução, o player é liberado e fica disponível novamente. 
+    - **Configurando o Tamanho do Pool:** O tamanho do pool pode ser configurado na propriedade `_sfx_player_count` no nó `CafeAudioManager` na cena `cafe_audio_manager.tscn`. O valor padrão é 15. Um número maior permite mais sons simultâneos ao custo de um pouco mais de memória, enquanto um número menor pode economizar memória mas arrisca que alguns sons não sejam tocados se muitos forem disparados ao mesmo tempo.
+
 - **Player de Música Dedicado**: Um `AudioStreamPlayer` separado é usado exclusivamente para a música, permitindo um controle mais preciso sobre a trilha sonora.

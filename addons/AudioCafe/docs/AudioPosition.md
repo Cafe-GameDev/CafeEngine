@@ -15,10 +15,10 @@ Os nós `AudioPosition2D` e `AudioPosition3D` são componentes especializados pa
 
 ### State Audio
 
-`State Audio` é um dicionário onde você mapeia **chaves de estado** (Strings) para **chaves de SFX** (PackedStringArray, mas no editor você insere uma String simples).
+`State Audio` é um dicionário onde você mapeia **chaves de estado** (Strings) para **chaves de SFX** (do seu `AudioManifest`).
 
 - **Chave (Key)**: Um nome que representa um estado do seu objeto. Por exemplo: "walk", "jump", "attack".
-- **Valor (Value)**: A chave do SFX (do `AudioManifest`) que deve ser tocada quando este estado for ativado. Por exemplo: "sfx_player_walk", "sfx_player_jump".
+- **Valor (Value)**: A chave do SFX que deve ser tocada quando este estado for ativado. Por exemplo: "sfx_player_walk", "sfx_player_jump".
 
 ## Uso em Código
 
@@ -34,7 +34,7 @@ Esta é a função principal. Chame-a para tocar o som associado a um estado. O 
 
 **Exemplo: Máquina de Estado Simples**
 
-Imagine que você tem um script de personagem com uma máquina de estado.
+Imagine que você tem um script de personagem com uma máquina de estado. Para um exemplo mais detalhado e completo, veja o guia [Usando AudioPosition com uma Máquina de Estado](./StateMachineIntegration.md).
 
 ```gdscript
 # player.gd
@@ -58,10 +58,10 @@ func _physics_process(delta):
 
     if new_state != state:
         state = new_state
-        audio_position.set_state(state)
+        # Apenas chama set_state se houver um som para o estado
+        if state == "walk" or state == "jump":
+            audio_position.set_state(state)
 ```
-
-Neste exemplo, sempre que o estado do jogador muda (`idle`, `walk`, `jump`), `audio_position.set_state()` é chamado, tocando o som correspondente que você configurou no `Inspector`.
 
 ### `play_secondary_sound(sfx_key: String)`
 
