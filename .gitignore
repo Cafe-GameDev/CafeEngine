@@ -16,3 +16,5 @@ addons/CafeAudioManager/briefingv2.md
 *.gif
 *.DS_Store
 *DS_Store
+/addons/resonate
+addons/AudioCafe/assets
