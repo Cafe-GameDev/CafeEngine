@@ -71,6 +71,17 @@ O código da máquina de estado se torna mais simples e mais declarativo. Ele n�
 
 ---
 
+### **Artigo IV: Garantia de Retrocompatibilidade (v1)**
+
+*   **Seção 4.1: Preservação do Sistema de Dicionário:** Para garantir que projetos existentes não quebrem, o nó `AudioPosition` **manterá** a propriedade `@export var state_audio: Dictionary` e o método `set_state(state_key: String)` da v1.
+
+*   **Seção 4.2: Lógica de Execução Dupla:**
+    *   O novo sistema (`interactive_stream` e `travel()`) é o método preferencial.
+    *   O método `set_state()` da v1 continuará a funcionar como antes, usando o `AudioManifest`.
+    *   Se um desenvolvedor tentar usar ambos os sistemas no mesmo nó `AudioPosition` (ex: atribuir um `interactive_stream` e também chamar `set_state()`), o nó dará prioridade ao novo sistema e emitirá um `push_warning` no console, recomendando a migração completa para o `AudioStreamInteractive` para evitar comportamentos conflitantes.
+
+---
+
 ### **Conclusão**
 
 Esta lei estabelece um padrão de integração moderno e robusto para o `AudioPosition`. Ao adotar o `AudioStreamInteractive` como peça central, o AudioCafe v2.0 promove um fluxo de trabalho mais limpo, mais poderoso e mais colaborativo entre programadores e designers de som, permitindo a criação de experiências de áudio dinâmicas com maior facilidade e flexibilidade.

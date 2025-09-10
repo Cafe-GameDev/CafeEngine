@@ -13,10 +13,11 @@ Com a evolução do AudioCafe para uma camada de workflow sobre os recursos nati
 
 ### **Artigo I: Redesenho da Interface e Funcionalidades Principais**
 
-*   **Seção 1.1: Foco na Criação de Ativos:** O painel deve capacitar o usuário a criar os novos recursos de áudio com o mínimo de atrito.
-    *   **Diretriz 1.1.1:** O painel incluirá um botão proeminente **"New Audio Playlist"**. Ao ser clicado, ele abrirá um `FileDialog` para que o usuário escolha um nome e local para salvar um novo recurso `AudioStreamPlaylist` (`.tres`).
-    *   **Diretriz 1.1.2:** Da mesma forma, um botão **"New Interactive Audio"** será adicionado para criar e salvar um novo recurso `AudioStreamInteractive`.
-    *   **Diretriz 1.1.3:** O botão **"Generate Audio Manifest"** será mantido como a ação principal para sincronizar o projeto, mas sua funcionalidade será expandida conforme a "Lei do Manifesto Extensível".
+*   **Seção 1.1: Foco na Criação e Gerenciamento de Ativos:** O painel deve capacitar o usuário a criar e gerenciar os novos recursos de áudio com o mínimo de atrito.
+    *   **Diretriz 1.1.1:** O botão **"Generate Audio Manifest"** será mantido como a ação principal para sincronizar o projeto, acionando tanto a geração do manifesto v1 quanto a geração dos recursos de playlist v2.
+    *   **Diretriz 1.1.2:** O painel incluirá um botão **"New Audio Playlist"** para criar manualmente um novo recurso `AudioStreamPlaylist` (`.tres`).
+    *   **Diretriz 1.1.3:** Da mesma forma, um botão **"New Interactive Audio"** será adicionado para criar um novo recurso `AudioStreamInteractive`.
+    *   **Diretriz 1.1.4:** O painel proverá **ferramentas de conversão**, acessíveis através da aba "Audio Assets", para transformar `AudioStreamPlaylist`s gerados em recursos `AudioStreamInteractive` ou `AudioStreamSynchronized`, conforme a "Lei das Ferramentas de Conversão de Áudio".
 
 *   **Seção 1.2: Reestruturação das Abas:** A organização do painel será simplificada e tornada mais intuitiva.
     *   **Aba "Config":** As abas "Paths" e "Keys" serão fundidas em uma única aba "Config". Esta aba conterá as configurações globais: os caminhos de busca de áudio (`music_paths`, `sfx_paths`), os volumes globais e todas as chaves de SFX padrão para os nós de UI.
@@ -28,7 +29,7 @@ Com a evolução do AudioCafe para uma camada de workflow sobre os recursos nati
 
 Esta aba será a principal interface para interagir com todos os sons do projeto.
 
-*   **Seção 2.1: Visualização em Árvore Unificada:** A aba exibirá uma `Tree` que lista todas as chaves de áudio catalogadas no `AudioManifest`. A estrutura em árvore permitirá agrupar as chaves por tipo (SFX, Playlists, Interactive) ou por sua estrutura de pastas.
+*   **Seção 2.1: Visualização em Árvore Unificada:** A aba exibirá uma `Tree` que lista todas as chaves de áudio catalogadas. A lista será populada lendo as chaves do `AudioManifest.tres` (para SFX simples) e do dicionário `generated_playlists` no `AudioConfig.tres` (para os recursos de playlist). A estrutura em árvore permitirá agrupar os ativos por tipo.
 
 *   **Seção 2.2: Identificação Visual:** Cada item na árvore terá um ícone para identificar rapidamente seu tipo:
     *   **SFX Simples:** Um ícone de "nota musical".
@@ -39,6 +40,8 @@ Esta aba será a principal interface para interagir com todos os sons do projeto
     *   **"Copy Key":** Copia o nome da chave (ex: `sfx_ui_click`) para a área de transferência.
     *   **"Open Resource":** (Para Playlists e Interactive) Abre o arquivo `.tres` correspondente diretamente no Inspector do Godot.
     *   **"Show in FileSystem":** Revela o arquivo de áudio (`.ogg`) ou o recurso (`.tres`) no painel `FileSystem` do Godot.
+    *   **"Convert to Interactive Audio":** (Apenas para Playlists) Aciona a ferramenta de conversão para `AudioStreamInteractive`.
+    *   **"Convert to Synchronized Audio":** (Apenas para Playlists) Aciona a ferramenta de conversão para `AudioStreamSynchronized`.
 
 ---
 
