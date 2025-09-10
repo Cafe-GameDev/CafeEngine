@@ -5,17 +5,14 @@
 
 ---
 
-### **Artigo I: Propósito e Função**
+### **Artigo I: Princípio da Abstração**
 
-O `AudioManifest` (`AudioManifest.tres`) é o **catálogo central de ativos de áudio** do projeto. Sua função sagrada é desacoplar a lógica do jogo do sistema de arquivos, mapeando chaves de texto amigáveis para os identificadores de recursos internos e imutáveis do Godot (UIDs).
+O sistema de Manifesto deve servir como a camada de abstração que **desacopla a lógica do jogo da estrutura física dos arquivos**. O código do jogo deve referenciar ativos de áudio através de chaves de texto amigáveis, nunca através de caminhos de arquivo diretos (`res://...`).
 
-### **Artigo II: Estrutura de Dados**
+### **Artigo II: Princípio da Geração Automática**
 
-A estrutura do `AudioManifest` é inviolável e consiste em dois dicionários:
+As chaves de áudio devem ser, por padrão, **geradas automaticamente** a partir da estrutura de diretórios do projeto. Este princípio garante um fluxo de trabalho rápido onde a organização de pastas se traduz diretamente na organização do áudio no jogo.
 
-1.  **`music_data`**: Mapeia chaves de categorias de música para um `PackedStringArray` de UIDs de áudio.
-2.  **`sfx_data`**: Mapeia chaves de categorias de efeitos sonoros para um `PackedStringArray` de UIDs de áudio.
+### **Artigo III: Princípio da Otimização para Build**
 
-### **Artigo III: Geração de Chaves**
-
-A geração de chaves a partir da estrutura de diretórios é um pilar do fluxo de trabalho do AudioCafe. A regra é imutável: o caminho do subdiretório, relativo ao `path` base definido no `AudioConfig`, torna-se a chave, com as barras (`/`) sendo substituídas por underscores (`_`).
+O Manifesto deve, em sua forma final, mapear as chaves de texto para uma forma de referência de recurso que seja **robusta e otimizada para builds exportadas** (como os UIDs do Godot), garantindo que nenhuma referência de áudio seja perdida quando o jogo é compilado.

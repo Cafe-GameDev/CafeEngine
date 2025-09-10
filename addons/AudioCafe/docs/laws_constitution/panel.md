@@ -5,14 +5,18 @@
 
 ---
 
-### **Artigo I: Propósito e Função**
+### **Artigo I: Princípio da Interface Centralizada**
 
-O `AudioPanel` é a **interface primária e visual** entre o usuário e o sistema AudioCafe. Sua função é fornecer um ponto de acesso centralizado e intuitivo para todas as configurações e ações principais do plugin, diretamente no editor Godot.
+O `AudioPanel` deve ser a **interface visual primária e centralizada** para todas as configurações e ações de alto nível do plugin dentro do editor Godot.
 
-### **Artigo II: Funcionalidades Essenciais**
+### **Artigo II: Princípio da Configuração Acessível**
 
-O `AudioPanel` deve, no mínimo, prover as seguintes funcionalidades:
+O Painel deve expor de forma clara e intuitiva todas as propriedades do recurso `AudioConfig`, permitindo que o usuário configure o plugin sem a necessidade de editar arquivos diretamente.
 
-1.  **Gerenciamento de Configurações:** Expor de forma clara todas as propriedades do recurso `AudioConfig`, permitindo sua fácil modificação.
-2.  **Ação de Geração do Manifesto:** Conter o botão "Generate Audio Manifest", que serve como o gatilho manual para o processo de catalogação de áudio.
-3.  **Visualização de Ativos:** Exibir as chaves de áudio (`music` e `sfx`) que foram registradas no `AudioManifest`, dando ao usuário um feedback imediato do que está disponível para uso no projeto.
+### **Artigo III: Princípio da Ação Direta**
+
+O Painel deve prover botões e controles para acionar as principais ações do plugin, como a geração do manifesto de áudio, de forma direta e com feedback visual.
+
+### **Artigo IV: Princípio da Visualização de Ativos**
+
+O Painel deve oferecer uma forma clara de visualizar os ativos de áudio catalogados pelo sistema de manifesto, permitindo que o usuário confirme o que está disponível para uso no projeto.
