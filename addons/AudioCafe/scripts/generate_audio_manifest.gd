@@ -22,8 +22,6 @@ func _run():
 	for path in audio_config.music_paths:
 		_count_files_in_directory(path)
 
-	print("Generating AudioManifest v2.0 with properly populated playlists...")
-
 	var audio_manifest = AudioManifest.new()
 	var success = true
 	var message = ""
@@ -49,8 +47,6 @@ func _run():
 		if error != OK:
 			success = false
 			message = "Falha ao salvar AudioManifest.tres: %s" % error
-		else:
-			print("AudioManifest v2.0 gerado e salvo em: %s" % MANIFEST_SAVE_FILE)
 
 	emit_signal("generation_finished", success, message)
 
@@ -120,7 +116,6 @@ func _scan_and_create_playlist(current_path: String, library: Dictionary, audio_
 			else:
 				playlist = AudioStreamPlaylist.new()
 
-			# Adiciona stream corretamente usando stream_count e stream_0, stream_1...
 			var current_index = playlist.stream_count
 			playlist.set("stream_%d" % current_index, audio_stream)
 			playlist.stream_count = current_index + 1
@@ -130,8 +125,7 @@ func _scan_and_create_playlist(current_path: String, library: Dictionary, audio_
 				printerr("Falha ao salvar playlist %s: %s" % [playlist_file_path, err])
 
 			library[final_key] = playlist_file_path
-			print("  - Added %s audio to playlist '%s' at: %s" % [audio_type, final_key, playlist_file_path])
-
+			
 		file_or_dir_name = dir.get_next()
 
 	return true
