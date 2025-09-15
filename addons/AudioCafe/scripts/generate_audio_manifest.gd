@@ -1,9 +1,11 @@
 @tool
 extends EditorScript
+class_name GenerateAudioManifest
 signal progress_updated(current: int, total: int)
 signal generation_finished(success: bool, message: String)
 
-const MANIFEST_SAVE_PATH = "res://addons/AudioCafe/resources/audio_manifest.tres"
+const MANIFEST_SAVE_FILE = "res://addons/AudioCafe/resources/audio_manifest.tres"
+const DIST_SAVE_PATH = "res://addons/AudioCafe/dist/"
 
 var _total_files_to_scan = 0
 var _files_scanned = 0
@@ -14,7 +16,6 @@ func _run():
 	_total_files_to_scan = 0
 	_files_scanned = 0
 
-	# Primeiro, conta o total de arquivos para o progresso
 	for path in audio_config.sfx_paths:
 		_count_files_in_directory(path)
 	for path in audio_config.music_paths:
@@ -43,12 +44,12 @@ func _run():
 			break
 	
 	if success:
-		var error = ResourceSaver.save(audio_manifest, MANIFEST_SAVE_PATH)
+		var error = ResourceSaver.save(audio_manifest, MANIFEST_SAVE_FILE)
 		if error != OK:
 			success = false
 			message = "Falha ao salvar AudioManifest.tres: %s" % error
 		else:
-			print("AudioManifest generated and saved to: %s" % MANIFEST_SAVE_PATH)
+			print("AudioManifest generated and saved to: %s" % MANIFEST_SAVE_FILE)
 
 	emit_signal("generation_finished", success, message)
 
@@ -88,7 +89,6 @@ func _scan_and_populate_library(current_path: String, library: Dictionary, audio
 			if uid != -1:
 				var root_path_to_remove = ""
 				if audio_type == "sfx":
-					# Encontra o caminho raiz mais longo que corresponde
 					for p in audio_config.sfx_paths:
 						if resource_path.begins_with(p) and p.length() > root_path_to_remove.length():
 							root_path_to_remove = p
@@ -103,7 +103,7 @@ func _scan_and_populate_library(current_path: String, library: Dictionary, audio
 				if not relative_dir_path.is_empty():
 					final_key = relative_dir_path.replace("/", "_").to_lower()
 				else:
-					final_key = file_or_dir_name.get_basename().to_lower() # Fallback if no meaningful directory structure
+					final_key = file_or_dir_name.get_basename().to_lower()
 
 				if not library.has(final_key):
 					library[final_key] = []

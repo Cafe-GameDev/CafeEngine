@@ -1,0 +1,11 @@
+agora eu irei enviar o audio do editorplugin, audio config, audio panel, manager e o que gera o manifest - nosso objetivo agora é simples, mantendo a compatibilidade com a v1, iremos fazer a v1.1 - 
+nela, iremos substituir o conteudo das chaves do manifest, atualmente ele tem 2 dictionary, um para music e outro para sfx, e dentro deles, temos as chaves ex: ui_click, com os valores que atualmente são arrays armazenando diretamente os uids dos arquivos, e o manager interpleta isso como se  fosse uma playlist (não uma playlist nativa, mas sim usando uma func propria do plugin)
+
+Atualmente os dados são salvos de forma bruta, uids em um array, e tem toda uma func para transformar esses uids em AudioStream e encontrada
+Mudança proposta: o proprio gerador de manifest, ao invés de add ao manifest um valor que é um array com uids, ele vai primeiro pegar todos esses uids, transformar em AudioStream e em seguida juntar todos para um AudioStreamPlaylist, salvar essa playlist dentro de "res://addons/AudioCafe/dist/key_playlist.tres" e então no manifest vai ficar key = key.tres ex: ui_click = ui_click_playlist.tres
+
+Assim o manifest deixa de criar um array que simula uma playlist, para uma playlist nativa, removendo abstrações, deixando mais facil de usar no manager e tb para os proprios usuarios que n querem usar o manager e demais sistemas, mas apenas nosso gerador de manifest
+
+Não me forneça nenhum codigo ainda, pós como eu falei, irei enviar os scripts atuais do projeto para vc analisar sobre a otica do que precisa mudar em cada um deles
+Eu só quero a analise dps que eu te enviar o script principal da mudança, o de gerar manifest, que será o ultimo que eu enviarei
+Em seguida eu preciso de um documento de analise, e de um documento de projeto de lei / proposta de lei, enfatizando oq mudar em cada script
