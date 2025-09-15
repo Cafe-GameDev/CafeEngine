@@ -14,22 +14,7 @@ func _run():
 	_total_files_to_scan = 0
 	_files_scanned = 0
 
-	var audio_manifest: AudioManifest = ResourceLoader.load(MANIFEST_SAVE_PATH)
-	if not audio_manifest or not audio_manifest is AudioManifest:
-		print("AudioManifest.tres not found or is invalid. Creating a new one.")
-		audio_manifest = AudioManifest.new()
-		var dir_path = MANIFEST_SAVE_PATH.get_base_dir()
-		if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(dir_path)):
-			DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir_path))
-		var save_error = ResourceSaver.save(audio_manifest, MANIFEST_SAVE_PATH)
-		if save_error != OK:
-			printerr("Failed to create new AudioManifest.tres: %s" % save_error)
-			emit_signal("generation_finished", false, "Failed to create new AudioManifest.tres.")
-			return
-
-	audio_manifest.music_data.clear()
-	audio_manifest.sfx_data.clear()
-
+	# Primeiro, conta o total de arquivos para o progresso
 	for path in audio_config.sfx_paths:
 		_count_files_in_directory(path)
 	for path in audio_config.music_paths:
@@ -37,6 +22,7 @@ func _run():
 
 	print("Generating AudioManifest...")
 	
+	var audio_manifest = AudioManifest.new()
 	var success = true
 	var message = ""
 
@@ -69,7 +55,6 @@ func _run():
 func _count_files_in_directory(current_path: String):
 	var dir = DirAccess.open(current_path)
 	if not dir:
-		printerr("Failed to open directory for counting: %s" % current_path)
 		return
 
 	dir.list_dir_begin()
@@ -103,6 +88,7 @@ func _scan_and_populate_library(current_path: String, library: Dictionary, audio
 			if uid != -1:
 				var root_path_to_remove = ""
 				if audio_type == "sfx":
+					# Encontra o caminho raiz mais longo que corresponde
 					for p in audio_config.sfx_paths:
 						if resource_path.begins_with(p) and p.length() > root_path_to_remove.length():
 							root_path_to_remove = p
@@ -117,7 +103,7 @@ func _scan_and_populate_library(current_path: String, library: Dictionary, audio
 				if not relative_dir_path.is_empty():
 					final_key = relative_dir_path.replace("/", "_").to_lower()
 				else:
-					final_key = file_or_dir_name.get_basename().to_lower()
+					final_key = file_or_dir_name.get_basename().to_lower() # Fallback if no meaningful directory structure
 
 				if not library.has(final_key):
 					library[final_key] = []

@@ -24,7 +24,7 @@ const SFX_BUS_NAME = "SFX"
 const MUSIC_BUS_NAME = "Music"
 
 const audio_config : AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
-var audio_manifest: AudioManifest
+const audio_manifest: AudioManifest = preload("res://addons/AudioCafe/resources/audio_manifest.tres")
 
 var _sfx_library: Dictionary = {}
 var _music_library: Dictionary = {}
@@ -70,23 +70,9 @@ func _setup_audio_buses():
 	apply_volume_to_bus(SFX_BUS_NAME, audio_config.sfx_volume)
 	apply_volume_to_bus(MUSIC_BUS_NAME, audio_config.music_volume)
 
-const MANIFEST_SAVE_PATH = "res://addons/AudioCafe/resources/audio_manifest.tres"
-
 func _load_audio_from_manifest():
-	audio_manifest = ResourceLoader.load(MANIFEST_SAVE_PATH)
-	if not audio_manifest or not audio_manifest is AudioManifest:
-		printerr("CafeAudioManager: AudioManifest.tres not found or is invalid. Creating a new one.")
-		audio_manifest = AudioManifest.new()
-		var dir_path = MANIFEST_SAVE_PATH.get_base_dir()
-		if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(dir_path)):
-			DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir_path))
-		var save_error = ResourceSaver.save(audio_manifest, MANIFEST_SAVE_PATH)
-		if save_error != OK:
-			printerr("Failed to create new AudioManifest.tres: %s" % save_error)
-			return # Não retorna, continua com um manifest vazio para evitar mais erros.
-
-	if not audio_manifest: # Se a criação falhou, ainda pode ser nulo
-		printerr("CafeAudioManager: AudioManifest is still null after load/create attempt.")
+	if not audio_manifest:
+		printerr("CafeAudioManager: AudioManifest not assigned. Please generate it in the editor.")
 		return
 
 	_sfx_library = audio_manifest.sfx_data
