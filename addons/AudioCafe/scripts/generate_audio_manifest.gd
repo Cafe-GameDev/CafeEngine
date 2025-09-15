@@ -22,8 +22,8 @@ func _run():
 	for path in audio_config.music_paths:
 		_count_files_in_directory(path)
 
-	print("Generating AudioManifest v1.1 with native playlists...")
-	
+	print("Generating AudioManifest v2.0 with properly populated playlists...")
+
 	var audio_manifest = AudioManifest.new()
 	var success = true
 	var message = ""
@@ -33,12 +33,16 @@ func _run():
 			success = false
 			message = "Falha ao escanear caminhos SFX."
 			break
-	if success:
-		for path in audio_config.music_paths:
-			if not _scan_and_create_playlist(path, audio_manifest.music_data, "music"):
-				success = false
-				message = "Falha ao escanear caminhos de Música."
-				break
+		if not success:
+			break
+
+	for path in audio_config.music_paths:
+		if not _scan_and_create_playlist(path, audio_manifest.music_data, "music"):
+			success = false
+			message = "Falha ao escanear caminhos de Música."
+			break
+		if not success:
+			break
 	
 	if success:
 		var error = ResourceSaver.save(audio_manifest, MANIFEST_SAVE_FILE)
@@ -46,7 +50,7 @@ func _run():
 			success = false
 			message = "Falha ao salvar AudioManifest.tres: %s" % error
 		else:
-			print("AudioManifest v1.1 gerado e salvo em: %s" % MANIFEST_SAVE_FILE)
+			print("AudioManifest v2.0 gerado e salvo em: %s" % MANIFEST_SAVE_FILE)
 
 	emit_signal("generation_finished", success, message)
 
@@ -55,6 +59,7 @@ func _count_files_in_directory(current_path: String):
 	var dir = DirAccess.open(current_path)
 	if not dir:
 		return
+
 	dir.list_dir_begin()
 	var file_or_dir_name = dir.get_next()
 	while file_or_dir_name != "":
@@ -82,7 +87,7 @@ func _scan_and_create_playlist(current_path: String, library: Dictionary, audio_
 			emit_signal("progress_updated", _files_scanned, _total_files_to_scan)
 
 			var resource_path = current_path.path_join(file_or_dir_name)
-			var audio_stream: AudioStream = load(resource_path)
+			var audio_stream = load(resource_path)
 			if audio_stream == null:
 				printerr("Falha ao carregar AudioStream: %s" % resource_path)
 				file_or_dir_name = dir.get_next()
@@ -106,24 +111,27 @@ func _scan_and_create_playlist(current_path: String, library: Dictionary, audio_
 				final_key = file_or_dir_name.get_basename().to_lower()
 
 			var playlist_file_path = "%s%s_playlist.tres" % [DIST_SAVE_PATH, final_key]
+
 			var playlist: AudioStreamPlaylist
 			if FileAccess.file_exists(playlist_file_path):
 				playlist = load(playlist_file_path)
-				if not playlist:
+				if playlist == null:
 					playlist = AudioStreamPlaylist.new()
 			else:
 				playlist = AudioStreamPlaylist.new()
 
-			var streams_array = playlist.get("streams")
-			if streams_array == null:
-				streams_array = []
-			streams_array.append(audio_stream)
-			playlist.set("streams", streams_array)
+			# Adiciona stream corretamente usando stream_count e stream_0, stream_1...
+			var current_index = playlist.stream_count
+			playlist.set("stream_%d" % current_index, audio_stream)
+			playlist.stream_count = current_index + 1
 
-			if playlist_file_path != "":
-				ResourceSaver.save(playlist, playlist_file_path)
-				library[final_key] = playlist_file_path
-				print("  - Added %s audio to playlist '%s' at: %s" % [audio_type, final_key, playlist_file_path])
+			var err = ResourceSaver.save(playlist, playlist_file_path)
+			if err != OK:
+				printerr("Falha ao salvar playlist %s: %s" % [playlist_file_path, err])
+
+			library[final_key] = playlist_file_path
+			print("  - Added %s audio to playlist '%s' at: %s" % [audio_type, final_key, playlist_file_path])
+
 		file_or_dir_name = dir.get_next()
 
 	return true
