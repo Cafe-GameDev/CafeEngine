@@ -66,29 +66,31 @@ func _count_files_in_directory(current_path: String):
 			_total_files_to_scan += 1
 		file_or_dir_name = dir.get_next()
 
-func _scan_and_populate_library(current_path: String, library: Dictionary, audio_type: String) -> bool:
+const PLAYLIST_SAVE_DIR = "res://addons/AudioCafe/dist/"
+
+func _scan_and_populate_library(current_path: String, audio_manifest_data: Dictionary, audio_type: String) -> bool:
 	var dir = DirAccess.open(current_path)
 	if not dir:
 		printerr("GenerateAudioManifest: Failed to open directory: %s" % current_path)
 		return false
 	
+	var collected_paths_by_key: Dictionary = {}
+
 	dir.list_dir_begin()
 	var file_or_dir_name = dir.get_next()
 	while file_or_dir_name != "":
 		if dir.current_is_dir():
-			if not _scan_and_populate_library(current_path.path_join(file_or_dir_name), library, audio_type):
+			if not _scan_and_populate_library(current_path.path_join(file_or_dir_name), audio_manifest_data, audio_type):
 				return false
 		elif file_or_dir_name.ends_with(".ogg") or file_or_dir_name.ends_with(".wav"):
 			_files_scanned += 1
-			emit_signal("progress_updated", _files_scanned, _total_files_to_scan)
-
 			var resource_path = current_path.path_join(file_or_dir_name)
+			emit_signal("progress_updated", _files_scanned, _total_files_to_scan, resource_path)
+
 			var uid = ResourceLoader.get_resource_uid(resource_path)
-			print("  - Debug: Resource Path: %s, Raw UID: %s" % [resource_path, str(uid)])
 			if uid != -1:
 				var root_path_to_remove = ""
 				if audio_type == "sfx":
-					# Encontra o caminho raiz mais longo que corresponde
 					for p in audio_config.sfx_paths:
 						if resource_path.begins_with(p) and p.length() > root_path_to_remove.length():
 							root_path_to_remove = p
@@ -103,14 +105,37 @@ func _scan_and_populate_library(current_path: String, library: Dictionary, audio
 				if not relative_dir_path.is_empty():
 					final_key = relative_dir_path.replace("/", "_").to_lower()
 				else:
-					final_key = file_or_dir_name.get_basename().to_lower() # Fallback if no meaningful directory structure
+					final_key = file_or_dir_name.get_basename().to_lower()
 
-				if not library.has(final_key):
-					library[final_key] = []
-				library[final_key].append("%s" % str(uid))
-				print("  - Added %s audio to playlist '%s' with UID: %s" % [audio_type, final_key, str(uid)])
+				if not collected_paths_by_key.has(final_key):
+					collected_paths_by_key[final_key] = []
+				collected_paths_by_key[final_key].append(resource_path)
 		file_or_dir_name = dir.get_next()
+
+	for final_key in collected_paths_by_key.keys():
+		var playlist = AudioStreamPlaylist.new()
+		for path in collected_paths_by_key[final_key]:
+			var stream = load(path)
+			if stream:
+				playlist.add_stream(stream)
+		
+		var playlist_save_path = PLAYLIST_SAVE_DIR + final_key + ".tres"
+		var playlist_dir = playlist_save_path.get_base_dir()
+		if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(playlist_dir)):
+			DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(playlist_dir))
+		
+		var error = ResourceSaver.save(playlist, playlist_save_path)
+		if error != OK:
+			printerr("Failed to save AudioStreamPlaylist resource for key '%s': %s" % [final_key, error])
+			return false
+		
+		audio_manifest_data[final_key] = playlist_save_path
+		print("  - Added %s audio to playlist '%s' saved at: %s" % [audio_type, final_key, playlist_save_path])
+	
 	return true
 
 func _get_uid_from_import_file(import_file_path: String) -> String:
+	var config = ConfigFile.new()
+	if config.load(import_file_path) == OK:
+		return config.get_value("remap", "uid", "")
 	return ""
