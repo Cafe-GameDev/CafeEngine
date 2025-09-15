@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="PlayerSkillTreeData" load_steps=2 format=3]
-
-[ext_resource type="Script" path="res://resources/player/player_skill_tree_data.gd" id="1_placeholder_skill_tree_data"]
-
-[resource]
-script = ExtResource("1_placeholder_skill_tree_data")
-tree_name = "Player Skill Tree"
-skill_nodes = []

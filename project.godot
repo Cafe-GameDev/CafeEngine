@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="CafeEngine"
-run/main_scene="uid://bcyc2k7p66myt"
+run/main_scene="uid://dw4pta8sufueb"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
 [audio]
