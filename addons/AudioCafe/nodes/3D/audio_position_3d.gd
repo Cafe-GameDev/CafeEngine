@@ -3,7 +3,12 @@ extends AudioStreamPlayer3D
 
 @export var state_audio: Dictionary[String, PackedStringArray] = {}
 
-var _audio_manifest: AudioManifest = preload("res://addons/AudioCafe/resources/audio_manifest.tres")
+var _audio_manifest: AudioManifest
+
+func _ready():
+	_audio_manifest = ResourceLoader.load("res://addons/AudioCafe/resources/audio_manifest.tres")
+	if not _audio_manifest:
+		printerr("AudioPosition3D: AudioManifest not loaded. Some features may not work.")
 
 func set_state(state_key: String):
 	if not _audio_manifest:
