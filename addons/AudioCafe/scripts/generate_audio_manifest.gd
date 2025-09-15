@@ -117,31 +117,37 @@ func _scan_and_collect_resource_paths(current_path: String, resource_paths_by_ke
 	return true
 
 func _save_playlists(resource_paths_by_key: Dictionary, library_to_populate: Dictionary, audio_type: String) -> bool:
-	const PLAYLISTS_DIR = "res://addons/AudioCafe/playlists/"
+	const BASE_DIR = "res://addons/AudioCafe/playlists/"
+	var playlists_dir = "%s%s/" % [BASE_DIR, audio_type]
+	DirAccess.make_dir_recursive(playlists_dir)
+
 	var success = true
 
-	DirAccess.make_dir_recursive(PLAYLISTS_DIR) # Garante que o diretório exista
-
 	for final_key in resource_paths_by_key.keys():
-		var stream_paths = resource_paths_by_key[final_key]
+		var stream_paths: Array = resource_paths_by_key[final_key]
 		var playlist := AudioStreamPlaylist.new()
-		
+
 		for path in stream_paths:
-			var stream: AudioStream = load(path)
+			var stream: AudioStream = ResourceLoader.load(path, "AudioStream")
 			if stream:
 				playlist.add_stream(stream)
 			else:
 				printerr("Failed to load AudioStream from path: %s" % path)
 				success = false
-		
-		var save_path := "%s%s_playlist.tres" % [PLAYLISTS_DIR, final_key]
+
+		if playlist.get_stream_count() == 0:
+			continue # evita salvar playlist vazia
+
+		var save_path := "%s%s_%s_playlist.tres" % [playlists_dir, audio_type, final_key]
 		var error = ResourceSaver.save(playlist, save_path)
+
 		if error != OK:
 			printerr("Failed to save %s playlist %s: %s" % [audio_type, final_key, error])
 			success = false
 		else:
 			print("Saved %s playlist to: %s" % [audio_type, save_path])
-			library_to_populate[final_key] = load(save_path) # Armazena a referência ao recurso salvo
+			# salva só o caminho, para carregar depois
+			library_to_populate[final_key] = save_path
 	return success
 
 
