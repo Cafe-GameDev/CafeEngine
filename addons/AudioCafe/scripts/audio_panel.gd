@@ -1,5 +1,6 @@
 @tool
 extends VBoxContainer
+class_name AudioPanel
 
 @onready var audio_manifest: Button = $CollapsibleContent/HBoxContainer/AudioManifest
 
