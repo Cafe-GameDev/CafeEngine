@@ -53,8 +53,10 @@ func _run():
 	emit_signal("generation_finished", success, message)
 
 func _count_files_in_directory(current_path: String):
+	print("Counting files in: ", current_path)
 	var dir = DirAccess.open(current_path)
 	if not dir:
+		printerr("Failed to open directory for counting: %s" % current_path)
 		return
 
 	dir.list_dir_begin()
