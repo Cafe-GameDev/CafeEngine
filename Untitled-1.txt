@@ -31,3 +31,4 @@ AudioStreamPlaybackInteractive
 AudioStreamPlaybackPlaylist
 AudioStreamPlaybackSynchronized
 
+GoogleSearch Godot 4.5 Lançamento Oficial
