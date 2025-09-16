@@ -42,7 +42,6 @@ extends VBoxContainer
 @onready var music_keys_rich_text_label: RichTextLabel = tab_container.get_node("MusicList/MusicKeysRichTextLabel")
 @onready var sfx_keys_rich_text_label: RichTextLabel = tab_container.get_node("SFXList/SFXKeysRichTextLabel")
 
-@onready var manifest_progress_bar: ProgressBar = $CollapsibleContent/ManifestProgressBar
 @onready var manifest_status_label: Label = $CollapsibleContent/ManifestStatusLabel
 
 @export var audio_config: AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
@@ -383,8 +382,6 @@ func _update_audio_config_paths():
 
 func _on_audio_manifest_pressed() -> void:
 	if generate_manifest_script_instance:
-		manifest_progress_bar.value = 0
-		manifest_progress_bar.visible = true
 		manifest_status_label.text = "Generating Manifest..."
 		manifest_status_label.visible = true
 		audio_manifest.disabled = true
@@ -396,13 +393,8 @@ func _on_audio_manifest_pressed() -> void:
 	else:
 		push_error("generate_audio_manifest.gd script instance not available!")
 
-func _on_manifest_progress_updated(current: int, total: int):
-	manifest_progress_bar.max_value = total
-	manifest_progress_bar.value = current
-	manifest_status_label.text = "Generating Manifest... (%d/%d)" % [current, total]
 
 func _on_manifest_generation_finished(success: bool, message: String):
-	manifest_progress_bar.visible = false
 	audio_manifest.disabled = false
 
 	if success:
