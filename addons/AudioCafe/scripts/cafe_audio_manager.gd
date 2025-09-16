@@ -32,7 +32,7 @@ var _music_library: Dictionary = {}
 var _music_playlist_keys: Array = []
 var _current_playlist_key: String = ""
 
-@export var _sfx_player_count = 15
+@export var _sfx_player_count = 10
 var _sfx_players: Array[AudioStreamPlayer] = []
 @onready var _music_player: AudioStreamPlayer = $MusicPlayer
 @onready var _music_change_timer: Timer = $MusicChangeTimer
@@ -92,22 +92,29 @@ func _load_audio_from_manifest():
 		add_child(sfx_player_node)
 		print("CafeAudioManager: SFXPlayer Node not found in scene. Creating it.")
 
-	# Populate _sfx_players with existing children
+	# 1. Adicionar AudioStreamPlayers existentes ao array temporário
+	var existing_players_found: Array[AudioStreamPlayer] = []
 	for child in sfx_player_node.get_children():
 		if child is AudioStreamPlayer:
 			child.bus = SFX_BUS_NAME
 			child.finished.connect(Callable(self, "_on_sfx_player_finished").bind(child))
-			_sfx_players.append(child)
+			child.name = "SFXPlayer_%d" % existing_players_found.size() # Renomeia o existente
+			existing_players_found.append(child)
+	
+	_sfx_players = existing_players_found # Atribui a lista de existentes ao _sfx_players
 
-	var players_to_create = _sfx_player_count - _sfx_players.size()
+	var initial_sfx_players_size = _sfx_players.size() # Captura o tamanho inicial
+
+	# 2. Instanciar novos AudioStreamPlayers se a quantidade for menor que _sfx_player_count
+	var players_to_create = _sfx_player_count - initial_sfx_players_size
 	if players_to_create > 0:
 		print("CafeAudioManager: Creating %d additional AudioStreamPlayers dynamically." % players_to_create)
 		for i in range(players_to_create):
 			var sfx_player = AudioStreamPlayer.new()
-			sfx_player.name = "SFXPlayer_%d" % (_sfx_players.size() + i) # Ensure unique names
+			sfx_player.name = "SFXPlayer_%d" % (initial_sfx_players_size + i)
 			sfx_player.bus = SFX_BUS_NAME
 			sfx_player.finished.connect(Callable(self, "_on_sfx_player_finished").bind(sfx_player))
-			sfx_player_node.add_child(sfx_player) # Add as child of SFXPlayer node
+			sfx_player_node.add_child(sfx_player)
 			_sfx_players.append(sfx_player)
 	elif players_to_create < 0:
 		print("CafeAudioManager: More SFXPlayers exist than _sfx_player_count. Using existing ones.")

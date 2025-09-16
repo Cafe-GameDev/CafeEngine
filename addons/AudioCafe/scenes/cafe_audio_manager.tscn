@@ -21,7 +21,3 @@ wait_time = 300.0
 [node name="SFXPlayer_1" type="AudioStreamPlayer" parent="SFXPlayer"]
 
 [node name="SFXPlayer_2" type="AudioStreamPlayer" parent="SFXPlayer"]
-
-[node name="SFXPlayer_3" type="AudioStreamPlayer" parent="SFXPlayer"]
-
-[node name="SFXPlayer_4" type="AudioStreamPlayer" parent="SFXPlayer"]
