@@ -41,7 +41,7 @@ var _sfx_players: Array[AudioStreamPlayer] = []
 func _ready():
 	if Engine.is_editor_hint():
 		return
-
+	
 	_music_player.bus = MUSIC_BUS_NAME
 	_music_player.finished.connect(_on_music_finished)
 
