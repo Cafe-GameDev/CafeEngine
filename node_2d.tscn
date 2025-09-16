@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dw4pta8sufueb"]
 
-[ext_resource type="AudioStream" uid="uid://diyxdujbrkoly" path="res://addons/AudioCafe/dist/8-bit_jingles_playlist.tres" id="1_wtcfe"]
+[ext_resource type="AudioStream" uid="uid://bnft1qsog7352" path="res://addons/AudioCafe/dist/playlists/8-bit_jingles_playlist.tres" id="1_wtcfe"]
 
 [node name="Node2D" type="Node2D"]
 
