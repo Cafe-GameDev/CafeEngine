@@ -1,4 +1,4 @@
-[gd_resource type="AudioStreamPlaylist" load_steps=6 format=3 uid="uid://blw8dojktr8b6"]
+[gd_resource type="AudioStreamPlaylist" load_steps=6 format=3 uid="uid://4b7ymw82nlut"]
 
 [ext_resource type="AudioStream" uid="uid://bxynkxplxl70w" path="res://addons/AudioCafe/assets/sfx/interface/scratch/scratch_001.ogg" id="1_osyq2"]
 [ext_resource type="AudioStream" uid="uid://vjnhrux55we" path="res://addons/AudioCafe/assets/sfx/interface/scratch/scratch_002.ogg" id="2_p5kqc"]
@@ -7,6 +7,8 @@
 [ext_resource type="AudioStream" uid="uid://btbw3kncij88a" path="res://addons/AudioCafe/assets/sfx/interface/scratch/scratch_005.ogg" id="5_ttovk"]
 
 [resource]
+loop = false
+fade_time = 0.0
 stream_count = 5
 stream_0 = ExtResource("1_osyq2")
 stream_1 = ExtResource("2_p5kqc")

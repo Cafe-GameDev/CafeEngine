@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b2munlcwq4dyt"]
 
 [ext_resource type="Script" uid="uid://da7f82lyicmjt" path="res://addons/AudioCafe/scripts/cafe_audio_manager.gd" id="1_3sx8q"]
-[ext_resource type="AudioStream" uid="uid://bnft1qsog7352" path="res://addons/AudioCafe/dist/playlists/8-bit_jingles_playlist.tres" id="2_h62if"]
+[ext_resource type="AudioStream" uid="uid://bl81gqjl045np" path="res://addons/AudioCafe/dist/playlists/8-bit_jingles_playlist.tres" id="2_h62if"]
 
 [node name="CafeAudioManager" type="Node"]
 script = ExtResource("1_3sx8q")

@@ -108,13 +108,14 @@ func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager
 	var sfx_playlist_path = _sfx_library[sfx_key]
 	var sfx_playlist = load(sfx_playlist_path)
 
+	sfx_playlist.loop = loop
+	sfx_playlist.shuffle = shuffle
+	sfx_playlist.fade_time = fade_time
+	
 	if not sfx_playlist or not sfx_playlist is AudioStreamPlaylist:
 		printerr("CafeAudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [sfx_playlist_path, sfx_key])
 		return
 
-	sfx_playlist.loop = loop
-	sfx_playlist.shuffle = shuffle
-	sfx_playlist.fade_time = fade_time
 
 	for player in _sfx_players:
 		if not player.playing:

@@ -1,4 +1,4 @@
-[gd_resource type="AudioStreamPlaylist" load_steps=10 format=3 uid="uid://dd7vsk7262dsi"]
+[gd_resource type="AudioStreamPlaylist" load_steps=10 format=3 uid="uid://b3d7e22vixnxh"]
 
 [ext_resource type="AudioStream" uid="uid://bf8sr308sr7kd" path="res://addons/AudioCafe/assets/sfx/interface/minimize/minimize_001.ogg" id="1_52ulf"]
 [ext_resource type="AudioStream" uid="uid://befpbnr2rnr7u" path="res://addons/AudioCafe/assets/sfx/interface/minimize/minimize_002.ogg" id="2_18hto"]
@@ -11,6 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://citp1u85xocbl" path="res://addons/AudioCafe/assets/sfx/interface/minimize/minimize_009.ogg" id="9_cs7h4"]
 
 [resource]
+loop = false
+fade_time = 0.0
 stream_count = 9
 stream_0 = ExtResource("1_52ulf")
 stream_1 = ExtResource("2_18hto")
