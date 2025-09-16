@@ -11,12 +11,17 @@ const DIST_SAVE_PATH = "res://addons/AudioCafe/dist/playlists/"
 var _total_files_to_scan = 0
 var _files_scanned = 0
 
-@export var audio_config: AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
+var audio_config: AudioConfig
 
 func _run():
+	audio_config = ResourceLoader.load("res://addons/AudioCafe/resources/audio_config.tres")
+	if audio_config == null:
+			printerr("Falha ao carregar AudioConfig")
+			return
+			
 	_total_files_to_scan = 0
 	_files_scanned = 0
-
+	
 	# Step 1: Count files for progress bar
 	for path in audio_config.sfx_paths:
 		_count_files_in_directory(path)

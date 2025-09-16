@@ -136,29 +136,17 @@ func _on_play_music_requested(music_key: String, manager_node: Node = self):
 		printerr("CafeAudioManager: Music key not found in library: '%s'" % music_key)
 		return
 
-	var music_uids = _music_library[music_key]
-	if music_uids.is_empty():
-		printerr("CafeAudioManager: Music category '%s' is empty." % music_key)
+	var playlist_path = _music_library[music_key]
+	var music_playlist = load(playlist_path)
+
+	if not music_playlist or not music_playlist is AudioStreamPlaylist:
+		printerr("CafeAudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [playlist_path, music_key])
 		return
 
-	var random_uid_str = music_uids.pick_random()
-	var uid_int = random_uid_str.replace("uid://", "").to_int()
-	var resource_path = ResourceUID.get_id_path(uid_int)
-
-	if resource_path.is_empty():
-		printerr("CafeAudioManager: Failed to get resource path for UID: '%s'" % random_uid_str)
+	if _music_player.stream == music_playlist and _music_player.playing:
 		return
 
-	var music_stream = load(resource_path)
-
-	if music_stream == null:
-		printerr("CafeAudioManager: Failed to load music stream from path: '%s' (UID: '%s')" % [resource_path, random_uid_str])
-		return
-
-	if _music_player.stream == music_stream and _music_player.playing:
-		return
-
-	_music_player.stream = music_stream
+	_music_player.stream = music_playlist
 	_music_player.play()
 	music_track_changed.emit(music_key)
 
