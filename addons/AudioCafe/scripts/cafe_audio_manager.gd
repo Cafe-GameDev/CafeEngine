@@ -39,6 +39,9 @@ var _sfx_players: Array[AudioStreamPlayer] = []
 
 
 func _ready():
+	if Engine.is_editor_hint():
+		return
+
 	_music_player.bus = MUSIC_BUS_NAME
 	_music_player.finished.connect(_on_music_finished)
 
@@ -83,21 +86,31 @@ func _load_audio_from_manifest():
 	print("CafeAudioManager: SFX Library Keys: ", _sfx_library.keys())
 
 	var sfx_player_node = get_node_or_null("SFXPlayer")
-	if sfx_player_node:
-		for child in sfx_player_node.get_children():
-			if child is AudioStreamPlayer:
-				child.bus = SFX_BUS_NAME
-				child.finished.connect(Callable(self, "_on_sfx_player_finished").bind(child))
-				_sfx_players.append(child)
-	else:
-		print("CafeAudioManager: SFXPlayer Node not found in scene. Creating %d AudioStreamPlayers dynamically." % _sfx_player_count)
-		for i in range(_sfx_player_count):
+	if not sfx_player_node:
+		sfx_player_node = Node.new()
+		sfx_player_node.name = "SFXPlayer"
+		add_child(sfx_player_node)
+		print("CafeAudioManager: SFXPlayer Node not found in scene. Creating it.")
+
+	# Populate _sfx_players with existing children
+	for child in sfx_player_node.get_children():
+		if child is AudioStreamPlayer:
+			child.bus = SFX_BUS_NAME
+			child.finished.connect(Callable(self, "_on_sfx_player_finished").bind(child))
+			_sfx_players.append(child)
+
+	var players_to_create = _sfx_player_count - _sfx_players.size()
+	if players_to_create > 0:
+		print("CafeAudioManager: Creating %d additional AudioStreamPlayers dynamically." % players_to_create)
+		for i in range(players_to_create):
 			var sfx_player = AudioStreamPlayer.new()
-			sfx_player.name = "SFXPlayer_%d" % i
+			sfx_player.name = "SFXPlayer_%d" % (_sfx_players.size() + i) # Ensure unique names
 			sfx_player.bus = SFX_BUS_NAME
 			sfx_player.finished.connect(Callable(self, "_on_sfx_player_finished").bind(sfx_player))
-			add_child(sfx_player)
+			sfx_player_node.add_child(sfx_player) # Add as child of SFXPlayer node
 			_sfx_players.append(sfx_player)
+	elif players_to_create < 0:
+		print("CafeAudioManager: More SFXPlayers exist than _sfx_player_count. Using existing ones.")
 
 
 func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager_node: Node = self, loop: bool = false, shuffle: bool = false, fade_time: float = 0.3):
@@ -108,14 +121,13 @@ func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager
 	var sfx_playlist_path = _sfx_library[sfx_key]
 	var sfx_playlist = load(sfx_playlist_path)
 
-	sfx_playlist.loop = loop
-	sfx_playlist.shuffle = shuffle
-	sfx_playlist.fade_time = fade_time
-	
 	if not sfx_playlist or not sfx_playlist is AudioStreamPlaylist:
 		printerr("CafeAudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [sfx_playlist_path, sfx_key])
 		return
 
+	sfx_playlist.loop = loop
+	sfx_playlist.shuffle = shuffle
+	sfx_playlist.fade_time = fade_time
 
 	for player in _sfx_players:
 		if not player.playing:

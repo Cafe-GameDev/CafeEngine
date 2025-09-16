@@ -52,12 +52,15 @@ func _run():
 			var playlist_file_path = "%s%s_playlist.tres" % [DIST_SAVE_PATH, final_key]
 			
 			var playlist: AudioStreamPlaylist
+			var is_new_playlist = false
 			if FileAccess.file_exists(playlist_file_path):
 				playlist = load(playlist_file_path)
 				if playlist == null:
 					playlist = AudioStreamPlaylist.new()
+					is_new_playlist = true
 			else:
 				playlist = AudioStreamPlaylist.new()
+				is_new_playlist = true
 
 			# Clear existing streams in the playlist
 			for i in range(playlist.stream_count):
@@ -69,6 +72,12 @@ func _run():
 				var current_index = playlist.stream_count
 				playlist.set("stream_%d" % current_index, stream)
 				playlist.stream_count = current_index + 1
+			
+			if is_new_playlist:
+				# Set properties for NEW SFX playlists
+				playlist.loop = false
+				playlist.shuffle = false
+				playlist.fade_time = 0.0
 			
 			var err = ResourceSaver.save(playlist, playlist_file_path)
 			if err != OK:
@@ -88,12 +97,15 @@ func _run():
 			var playlist_file_path = "%s%s_playlist.tres" % [DIST_SAVE_PATH, final_key]
 			
 			var playlist: AudioStreamPlaylist
+			var is_new_playlist = false
 			if FileAccess.file_exists(playlist_file_path):
 				playlist = load(playlist_file_path)
 				if playlist == null:
 					playlist = AudioStreamPlaylist.new()
+					is_new_playlist = true
 			else:
 				playlist = AudioStreamPlaylist.new()
+				is_new_playlist = true
 
 			# Clear existing streams in the playlist
 			for i in range(playlist.stream_count):
@@ -105,6 +117,12 @@ func _run():
 				var current_index = playlist.stream_count
 				playlist.set("stream_%d" % current_index, stream)
 				playlist.stream_count = current_index + 1
+			
+			if is_new_playlist:
+				# Set properties for Music playlists
+				playlist.loop = true
+				playlist.shuffle = true
+				playlist.fade_time = 0.3
 			
 			var err = ResourceSaver.save(playlist, playlist_file_path)
 			if err != OK:
