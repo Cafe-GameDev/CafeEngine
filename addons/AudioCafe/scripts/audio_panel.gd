@@ -42,6 +42,7 @@ extends VBoxContainer
 @onready var music_keys_rich_text_label: RichTextLabel = tab_container.get_node("MusicList/MusicKeysRichTextLabel")
 @onready var sfx_keys_rich_text_label: RichTextLabel = tab_container.get_node("SFXList/SFXKeysRichTextLabel")
 
+@onready var manifest_progress_bar: ProgressBar = $CollapsibleContent/ManifestProgressBar
 @onready var manifest_status_label: Label = $CollapsibleContent/ManifestStatusLabel
 
 @export var audio_config: AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
@@ -197,11 +198,7 @@ func _load_config_to_ui():
 				var music_keys = loaded_manifest.music_data.keys()
 				music_keys.sort()
 				for key in music_keys:
-					var playlist_path = loaded_manifest.music_data[key]
-					var playlist_resource = ResourceLoader.load(playlist_path)
-					var count = 0
-					if playlist_resource and playlist_resource is AudioStreamPlaylist:
-						count = playlist_resource.stream_count
+					var count = loaded_manifest.music_data[key].size()
 					current_music_keys_rich_text_label.append_text(key + " [%d]" % count + "\n")
 			else:
 				push_error("current_music_keys_rich_text_label is null when trying to add item.")
@@ -211,11 +208,7 @@ func _load_config_to_ui():
 				var sfx_keys = loaded_manifest.sfx_data.keys()
 				sfx_keys.sort()
 				for key in sfx_keys:
-					var playlist_path = loaded_manifest.sfx_data[key]
-					var playlist_resource = ResourceLoader.load(playlist_path)
-					var count = 0
-					if playlist_resource and playlist_resource is AudioStreamPlaylist:
-						count = playlist_resource.stream_count
+					var count = loaded_manifest.sfx_data[key].size()
 					current_sfx_keys_rich_text_label.append_text(key + " [%d]" % count + "\n")
 			else:
 				push_error("current_sfx_keys_rich_text_label is null when trying to add item.")
@@ -382,6 +375,8 @@ func _update_audio_config_paths():
 
 func _on_audio_manifest_pressed() -> void:
 	if generate_manifest_script_instance:
+		manifest_progress_bar.value = 0
+		manifest_progress_bar.visible = true
 		manifest_status_label.text = "Generating Manifest..."
 		manifest_status_label.visible = true
 		audio_manifest.disabled = true
@@ -393,8 +388,13 @@ func _on_audio_manifest_pressed() -> void:
 	else:
 		push_error("generate_audio_manifest.gd script instance not available!")
 
+func _on_manifest_progress_updated(current: int, total: int):
+	manifest_progress_bar.max_value = total
+	manifest_progress_bar.value = current
+	manifest_status_label.text = "Generating Manifest... (%d/%d)" % [current, total]
 
 func _on_manifest_generation_finished(success: bool, message: String):
+	manifest_progress_bar.visible = false
 	audio_manifest.disabled = false
 
 	if success:
@@ -442,22 +442,14 @@ func _on_audio_config_updated(config: AudioConfig):
 		var music_keys = loaded_manifest.music_data.keys()
 		music_keys.sort()
 		for key in music_keys:
-			var playlist_path = loaded_manifest.music_data[key]
-			var playlist_resource = ResourceLoader.load(playlist_path)
-			var count = 0
-			if playlist_resource and playlist_resource is AudioStreamPlaylist:
-				count = playlist_resource.stream_count
+			var count = loaded_manifest.music_data[key].size()
 			music_keys_rich_text_label.append_text(key + " [%d]" % count + "\n")
 
 		print("DEBUG: _on_audio_config_updated - sfx_data keys from manifest: ", loaded_manifest.sfx_data.keys())
 		var sfx_keys = loaded_manifest.sfx_data.keys()
 		sfx_keys.sort()
 		for key in sfx_keys:
-			var playlist_path = loaded_manifest.sfx_data[key]
-			var playlist_resource = ResourceLoader.load(playlist_path)
-			var count = 0
-			if playlist_resource and playlist_resource is AudioStreamPlaylist:
-				count = playlist_resource.stream_count
+			var count = loaded_manifest.sfx_data[key].size()
 			sfx_keys_rich_text_label.append_text(key + " [%d]" % count + "\n")
 	else:
 		push_error("Falha ao carregar AudioManifest.tres em _on_audio_config_updated.")

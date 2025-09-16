@@ -4,10 +4,10 @@ extends Node
 signal audio_config_updated(config: AudioConfig)
 
 @warning_ignore("unused_signal")
-signal play_sfx_requested(sfx_key: String, bus: String, manager_node: Node, loop: bool, shuffle: bool, fade_time: float)
+signal play_sfx_requested(sfx_key: String, bus: String, manager_node: Node)
 
 @warning_ignore("unused_signal")
-signal play_music_requested(music_key: String, manager_node: Node, loop: bool, shuffle: bool, fade_time: float)
+signal play_music_requested(music_key: String, manager_node: Node)
 
 @warning_ignore("unused_signal")
 signal music_track_changed(music_key: String)
@@ -32,16 +32,13 @@ var _music_library: Dictionary = {}
 var _music_playlist_keys: Array = []
 var _current_playlist_key: String = ""
 
-@export var _sfx_player_count = 10
+@export var _sfx_player_count = 15
 var _sfx_players: Array[AudioStreamPlayer] = []
 @onready var _music_player: AudioStreamPlayer = $MusicPlayer
 @onready var _music_change_timer: Timer = $MusicChangeTimer
 
 
 func _ready():
-	if Engine.is_editor_hint():
-		return
-	
 	_music_player.bus = MUSIC_BUS_NAME
 	_music_player.finished.connect(_on_music_finished)
 
@@ -86,83 +83,82 @@ func _load_audio_from_manifest():
 	print("CafeAudioManager: SFX Library Keys: ", _sfx_library.keys())
 
 	var sfx_player_node = get_node_or_null("SFXPlayer")
-	if not sfx_player_node:
-		sfx_player_node = Node.new()
-		sfx_player_node.name = "SFXPlayer"
-		add_child(sfx_player_node)
-		print("CafeAudioManager: SFXPlayer Node not found in scene. Creating it.")
-
-	# 1. Adicionar AudioStreamPlayers existentes ao array temporário
-	var existing_players_found: Array[AudioStreamPlayer] = []
-	for child in sfx_player_node.get_children():
-		if child is AudioStreamPlayer:
-			child.bus = SFX_BUS_NAME
-			child.finished.connect(Callable(self, "_on_sfx_player_finished").bind(child))
-			child.name = "SFXPlayer_%d" % existing_players_found.size() # Renomeia o existente
-			existing_players_found.append(child)
-	
-	_sfx_players = existing_players_found # Atribui a lista de existentes ao _sfx_players
-
-	var initial_sfx_players_size = _sfx_players.size() # Captura o tamanho inicial
-
-	# 2. Instanciar novos AudioStreamPlayers se a quantidade for menor que _sfx_player_count
-	var players_to_create = _sfx_player_count - initial_sfx_players_size
-	if players_to_create > 0:
-		print("CafeAudioManager: Creating %d additional AudioStreamPlayers dynamically." % players_to_create)
-		for i in range(players_to_create):
+	if sfx_player_node:
+		for child in sfx_player_node.get_children():
+			if child is AudioStreamPlayer:
+				child.bus = SFX_BUS_NAME
+				child.finished.connect(Callable(self, "_on_sfx_player_finished").bind(child))
+				_sfx_players.append(child)
+	else:
+		print("CafeAudioManager: SFXPlayer Node not found in scene. Creating %d AudioStreamPlayers dynamically." % _sfx_player_count)
+		for i in range(_sfx_player_count):
 			var sfx_player = AudioStreamPlayer.new()
-			sfx_player.name = "SFXPlayer_%d" % (initial_sfx_players_size + i)
+			sfx_player.name = "SFXPlayer_%d" % i
 			sfx_player.bus = SFX_BUS_NAME
 			sfx_player.finished.connect(Callable(self, "_on_sfx_player_finished").bind(sfx_player))
-			sfx_player_node.add_child(sfx_player)
+			add_child(sfx_player)
 			_sfx_players.append(sfx_player)
-	elif players_to_create < 0:
-		print("CafeAudioManager: More SFXPlayers exist than _sfx_player_count. Using existing ones.")
 
 
-func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager_node: Node = self, loop: bool = false, shuffle: bool = false, fade_time: float = 0.3):
+func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager_node: Node = self):
 	if not _sfx_library.has(sfx_key):
 		printerr("CafeAudioManager: SFX key not found in library: '%s'" % sfx_key)
 		return
 
-	var sfx_playlist_path = _sfx_library[sfx_key]
-	var sfx_playlist = load(sfx_playlist_path)
+	var sfx_uids = _sfx_library[sfx_key]
+	if sfx_uids.is_empty():
+		printerr("CafeAudioManager: SFX category '%s' is empty." % sfx_key)
+		return
+	
+	var random_uid_str = sfx_uids.pick_random()
+	var uid_int = random_uid_str.replace("uid://", "").to_int()
+	var resource_path = ResourceUID.get_id_path(uid_int)
 
-	if not sfx_playlist or not sfx_playlist is AudioStreamPlaylist:
-		printerr("CafeAudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [sfx_playlist_path, sfx_key])
+	if resource_path.is_empty():
+		printerr("CafeAudioManager: Failed to get resource path for SFX UID: '%s'" % random_uid_str)
 		return
 
-	sfx_playlist.loop = loop
-	sfx_playlist.shuffle = shuffle
-	sfx_playlist.fade_time = fade_time
+	var sound_stream = load(resource_path)
+
+	if sound_stream == null:
+		printerr("CafeAudioManager: Failed to load SFX stream from path: '%s' (UID: '%s')" % [resource_path, random_uid_str])
+		return
 
 	for player in _sfx_players:
 		if not player.playing:
-			player.stream = sfx_playlist
+			player.stream = sound_stream
 			player.bus = bus
 			player.play()
 			return
 
-func _on_play_music_requested(music_key: String, manager_node: Node = self, loop: bool = true, shuffle: bool = true, fade_time: float = 0.0):
+func _on_play_music_requested(music_key: String, manager_node: Node = self):
 	if not _music_library.has(music_key):
 		printerr("CafeAudioManager: Music key not found in library: '%s'" % music_key)
 		return
 
-	var playlist_path = _music_library[music_key]
-	var music_playlist = load(playlist_path)
-
-	if not music_playlist or not music_playlist is AudioStreamPlaylist:
-		printerr("CafeAudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [playlist_path, music_key])
+	var music_uids = _music_library[music_key]
+	if music_uids.is_empty():
+		printerr("CafeAudioManager: Music category '%s' is empty." % music_key)
 		return
 
-	music_playlist.loop = loop
-	music_playlist.shuffle = shuffle
-	music_playlist.fade_time = fade_time
+	var random_uid_str = music_uids.pick_random()
+	var uid_int = random_uid_str.replace("uid://", "").to_int()
+	var resource_path = ResourceUID.get_id_path(uid_int)
 
-	if _music_player.stream == music_playlist and _music_player.playing:
+	if resource_path.is_empty():
+		printerr("CafeAudioManager: Failed to get resource path for UID: '%s'" % random_uid_str)
 		return
 
-	_music_player.stream = music_playlist
+	var music_stream = load(resource_path)
+
+	if music_stream == null:
+		printerr("CafeAudioManager: Failed to load music stream from path: '%s' (UID: '%s')" % [resource_path, random_uid_str])
+		return
+
+	if _music_player.stream == music_stream and _music_player.playing:
+		return
+
+	_music_player.stream = music_stream
 	_music_player.play()
 	music_track_changed.emit(music_key)
 
@@ -176,7 +172,7 @@ func _select_and_play_random_playlist():
 		return
 
 	_current_playlist_key = _music_playlist_keys.pick_random()
-	play_music_requested.emit(_current_playlist_key, self, true, true, 0.0)
+	play_music_requested.emit(_current_playlist_key)
 
 
 func apply_volume_to_bus(bus_name: String, linear_volume: float):

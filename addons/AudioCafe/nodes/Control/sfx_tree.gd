@@ -22,15 +22,15 @@ func _ready():
 
 func _on_item_selected():
 	if not item_selected_sfx_key.is_empty():
-		CafeAudioManager.play_sfx_requested.emit(item_selected_sfx_key, "SFX", self, false, false, 0.1) 
+		CafeAudioManager.play_sfx_requested.emit(item_selected_sfx_key, "SFX", self)
 
 func _on_item_toggle(item: TreeItem):
 	if not item_toggle_sfx_key.is_empty():
-		CafeAudioManager.play_sfx_requested.emit(item_toggle_sfx_key, "SFX", self, false, false, 0.1) 
+		CafeAudioManager.play_sfx_requested.emit(item_toggle_sfx_key, "SFX", self)
 
 func _on_mouse_entered():
 	if not hover_sfx_key.is_empty():
-		CafeAudioManager.play_sfx_requested.emit(hover_sfx_key, "SFX", self, false, false, 0.1) 
+		CafeAudioManager.play_sfx_requested.emit(hover_sfx_key, "SFX", self)
 
 func _on_mouse_exited():
 	pass

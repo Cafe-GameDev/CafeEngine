@@ -1,4 +1,4 @@
-[gd_resource type="AudioStreamPlaylist" load_steps=18 format=3 uid="uid://bb3ikwda2b6vn"]
+[gd_resource type="AudioStreamPlaylist" load_steps=18 format=3 uid="uid://ckhxyjh6cobdq"]
 
 [ext_resource type="AudioStream" uid="uid://b5lkibcl5l4n6" path="res://addons/AudioCafe/assets/music/Hit_jingles/jingles_hit_0.ogg" id="1_irpe2"]
 [ext_resource type="AudioStream" uid="uid://dm4yyqu7cvf1c" path="res://addons/AudioCafe/assets/music/Hit_jingles/jingles_hit_1.ogg" id="2_tg3ba"]
@@ -19,7 +19,6 @@
 [ext_resource type="AudioStream" uid="uid://bqjrrm5vdyt28" path="res://addons/AudioCafe/assets/music/Hit_jingles/jingles_hit_2.ogg" id="17_bwlxp"]
 
 [resource]
-shuffle = true
 stream_count = 17
 stream_0 = ExtResource("1_irpe2")
 stream_1 = ExtResource("2_tg3ba")
