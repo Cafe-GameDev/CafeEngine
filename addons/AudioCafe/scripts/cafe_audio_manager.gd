@@ -4,10 +4,10 @@ extends Node
 signal audio_config_updated(config: AudioConfig)
 
 @warning_ignore("unused_signal")
-signal play_sfx_requested(sfx_key: String, bus: String, manager_node: Node)
+signal play_sfx_requested(sfx_key: String, bus: String, manager_node: Node, loop: bool, shuffle: bool, fade_time: float)
 
 @warning_ignore("unused_signal")
-signal play_music_requested(music_key: String, manager_node: Node)
+signal play_music_requested(music_key: String, manager_node: Node, loop: bool, shuffle: bool, fade_time: float)
 
 @warning_ignore("unused_signal")
 signal music_track_changed(music_key: String)
@@ -100,7 +100,7 @@ func _load_audio_from_manifest():
 			_sfx_players.append(sfx_player)
 
 
-func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager_node: Node = self):
+func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager_node: Node = self, loop: bool = false, shuffle: bool = false, fade_time: float = 0.3):
 	if not _sfx_library.has(sfx_key):
 		printerr("CafeAudioManager: SFX key not found in library: '%s'" % sfx_key)
 		return
@@ -112,6 +112,10 @@ func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager
 		printerr("CafeAudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [sfx_playlist_path, sfx_key])
 		return
 
+	sfx_playlist.loop = loop
+	sfx_playlist.shuffle = shuffle
+	sfx_playlist.fade_time = fade_time
+
 	for player in _sfx_players:
 		if not player.playing:
 			player.stream = sfx_playlist
@@ -119,7 +123,7 @@ func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager
 			player.play()
 			return
 
-func _on_play_music_requested(music_key: String, manager_node: Node = self):
+func _on_play_music_requested(music_key: String, manager_node: Node = self, loop: bool = true, shuffle: bool = true, fade_time: float = 0.0):
 	if not _music_library.has(music_key):
 		printerr("CafeAudioManager: Music key not found in library: '%s'" % music_key)
 		return
@@ -130,6 +134,10 @@ func _on_play_music_requested(music_key: String, manager_node: Node = self):
 	if not music_playlist or not music_playlist is AudioStreamPlaylist:
 		printerr("CafeAudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [playlist_path, music_key])
 		return
+
+	music_playlist.loop = loop
+	music_playlist.shuffle = shuffle
+	music_playlist.fade_time = fade_time
 
 	if _music_player.stream == music_playlist and _music_player.playing:
 		return
@@ -148,7 +156,7 @@ func _select_and_play_random_playlist():
 		return
 
 	_current_playlist_key = _music_playlist_keys.pick_random()
-	play_music_requested.emit(_current_playlist_key)
+	play_music_requested.emit(_current_playlist_key, self, true, true, 0.0)
 
 
 func apply_volume_to_bus(bus_name: String, linear_volume: float):
