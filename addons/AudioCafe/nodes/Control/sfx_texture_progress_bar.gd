@@ -20,7 +20,7 @@ func _ready():
 
 func _on_value_changed(new_value: float):
 	if not value_changed_sfx_key.is_empty() and new_value != _previous_value:
-		CafeAudioManager.play_sfx_requested.emit(value_changed_sfx_key, "SFX", self)
+		CafeAudioManager.play_sfx_requested.emit(value_changed_sfx_key, "SFX", self, false, false, 0.1) 
 	_previous_value = new_value
 
 func _on_audio_config_updated(config: AudioConfig):

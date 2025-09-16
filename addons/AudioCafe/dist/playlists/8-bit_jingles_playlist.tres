@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://cfln33rkkd46m" path="res://addons/AudioCafe/assets/music/8-Bit_jingles/jingles_nes_2.ogg" id="17_4wun4"]
 
 [resource]
+shuffle = true
 stream_count = 17
 stream_0 = ExtResource("1_ospf4")
 stream_1 = ExtResource("2_mvgfg")
