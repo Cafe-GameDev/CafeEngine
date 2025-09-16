@@ -1,4 +1,4 @@
-[gd_resource type="AudioStreamPlaylist" load_steps=18 format=3 uid="uid://d0mucyk8bg7x4"]
+[gd_resource type="AudioStreamPlaylist" load_steps=18 format=3 uid="uid://c3jmtusp8h8k1"]
 
 [ext_resource type="AudioStream" uid="uid://b4oj0agoye7bk" path="res://addons/AudioCafe/assets/music/Sax_jingles/jingles_sax_0.ogg" id="1_ga2wk"]
 [ext_resource type="AudioStream" uid="uid://br2cxntr7iqjc" path="res://addons/AudioCafe/assets/music/Sax_jingles/jingles_sax_1.ogg" id="2_oaeyi"]

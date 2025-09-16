@@ -1,4 +1,4 @@
-[gd_resource type="AudioStreamPlaylist" load_steps=7 format=3 uid="uid://cyeyncc68dr5s"]
+[gd_resource type="AudioStreamPlaylist" load_steps=7 format=3 uid="uid://e1tcdoad1dhc"]
 
 [ext_resource type="AudioStream" uid="uid://bjxgcfsu4kui0" path="res://addons/AudioCafe/assets/sfx/ui/rollover/rollover1.ogg" id="1_7bj0b"]
 [ext_resource type="AudioStream" uid="uid://dkbdukvsw03em" path="res://addons/AudioCafe/assets/sfx/ui/rollover/rollover2.ogg" id="2_xgit0"]

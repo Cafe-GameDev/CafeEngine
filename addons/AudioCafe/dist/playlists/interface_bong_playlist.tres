@@ -1,4 +1,4 @@
-[gd_resource type="AudioStreamPlaylist" load_steps=2 format=3 uid="uid://chsux4fn5khx0"]
+[gd_resource type="AudioStreamPlaylist" load_steps=2 format=3 uid="uid://c27gk0lbxej0u"]
 
 [ext_resource type="AudioStream" uid="uid://cgeq1b7lq4jo7" path="res://addons/AudioCafe/assets/sfx/interface/bong/bong_001.ogg" id="1_ndrj8"]
 
