@@ -1,3 +1,5 @@
+# atualmente ele transforma tanto os sfx quanto os musics em playlists, eu quero mudar, sfx ele deve transformar em Randomize e music em playlist, eu preciso que vc adapte o script
+
 @tool
 extends EditorScript
 class_name GenerateAudioManifest
