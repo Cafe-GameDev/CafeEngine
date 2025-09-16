@@ -6,7 +6,8 @@ signal progress_updated(current: int, total: int)
 signal generation_finished(success: bool, message: String)
 
 const MANIFEST_SAVE_FILE = "res://addons/AudioCafe/resources/audio_manifest.tres"
-const DIST_SAVE_PATH = "res://addons/AudioCafe/dist/playlists/"
+const PLAYLIST_DIST_SAVE_PATH = "res://addons/AudioCafe/dist/playlists/"
+const RANDON_DIST_SAVE_PATH = "res://addons/AudioCafe/dist/randon/"
 
 var _total_files_to_scan = 0
 var _files_scanned = 0
@@ -39,17 +40,17 @@ func _run():
 	var overall_success = true
 	var message = ""
 
-	# Ensure DIST_SAVE_PATH exists
+	# Ensure PLAYLIST_DIST_SAVE_PATH exists
 	var dist_dir = DirAccess.open("res://")
-	if not dist_dir.dir_exists(DIST_SAVE_PATH.replace("res://", "")):
-		dist_dir.make_dir(DIST_SAVE_PATH.replace("res://", ""))
-		print("Created directory: %s" % DIST_SAVE_PATH)
+	if not dist_dir.dir_exists(PLAYLIST_DIST_SAVE_PATH.replace("res://", "")):
+		dist_dir.make_dir(PLAYLIST_DIST_SAVE_PATH.replace("res://", ""))
+		print("Created directory: %s" % PLAYLIST_DIST_SAVE_PATH)
 
 	# Step 3: Process collected SFX streams into playlists
 	if success_sfx:
 		for final_key in collected_sfx_streams.keys():
 			var streams_for_key = collected_sfx_streams[final_key]
-			var playlist_file_path = "%s%s_playlist.tres" % [DIST_SAVE_PATH, final_key]
+			var playlist_file_path = "%s%s_playlist.tres" % [PLAYLIST_DIST_SAVE_PATH, final_key]
 			
 			var playlist: AudioStreamPlaylist
 			var is_new_playlist = false
@@ -94,7 +95,7 @@ func _run():
 	if overall_success and success_music:
 		for final_key in collected_music_streams.keys():
 			var streams_for_key = collected_music_streams[final_key]
-			var playlist_file_path = "%s%s_playlist.tres" % [DIST_SAVE_PATH, final_key]
+			var playlist_file_path = "%s%s_playlist.tres" % [PLAYLIST_DIST_SAVE_PATH, final_key]
 			
 			var playlist: AudioStreamPlaylist
 			var is_new_playlist = false
