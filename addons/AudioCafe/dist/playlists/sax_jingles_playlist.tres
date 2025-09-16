@@ -1,4 +1,4 @@
-[gd_resource type="AudioStreamPlaylist" load_steps=18 format=3 uid="uid://tlwgjh4et6ql"]
+[gd_resource type="AudioStreamPlaylist" load_steps=18 format=3 uid="uid://bw6v87qdmaaau"]
 
 [ext_resource type="AudioStream" uid="uid://b4oj0agoye7bk" path="res://addons/AudioCafe/assets/music/Sax_jingles/jingles_sax_0.ogg" id="1_ga2wk"]
 [ext_resource type="AudioStream" uid="uid://br2cxntr7iqjc" path="res://addons/AudioCafe/assets/music/Sax_jingles/jingles_sax_1.ogg" id="2_oaeyi"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://dneqjigg68su2" path="res://addons/AudioCafe/assets/music/Sax_jingles/jingles_sax_2.ogg" id="17_f76pb"]
 
 [resource]
+shuffle = true
 stream_count = 17
 stream_0 = ExtResource("1_ga2wk")
 stream_1 = ExtResource("2_oaeyi")

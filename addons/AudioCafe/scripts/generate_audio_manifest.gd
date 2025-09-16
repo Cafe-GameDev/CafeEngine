@@ -6,14 +6,20 @@ signal progress_updated(current: int, total: int)
 signal generation_finished(success: bool, message: String)
 
 const MANIFEST_SAVE_FILE = "res://addons/AudioCafe/resources/audio_manifest.tres"
-const DIST_SAVE_PATH = "res://addons/AudioCafe/dist/playlists/"
+const PLAYLIST_DIST_SAVE_PATH = "res://addons/AudioCafe/dist/playlists/"
+const RANDOM_DIST_SAVE_PATH = "res://addons/AudioCafe/dist/random/"
 
 var _total_files_to_scan = 0
 var _files_scanned = 0
 
-@export var audio_config: AudioConfig = preload("res://addons/AudioCafe/resources/audio_config.tres")
+var audio_config: AudioConfig
 
 func _run():
+	audio_config = ResourceLoader.load("res://addons/AudioCafe/resources/audio_config.tres")
+	if audio_config == null:
+		printerr("Falha ao carregar AudioConfig")
+		return
+
 	_total_files_to_scan = 0
 	_files_scanned = 0
 
@@ -23,8 +29,8 @@ func _run():
 	for path in audio_config.music_paths:
 		_count_files_in_directory(path)
 
-	var collected_sfx_streams: Dictionary = {} # {final_key: [stream1, stream2, ...]}
-	var collected_music_streams: Dictionary = {} # {final_key: [stream1, stream2, ...]}
+	var collected_sfx_streams: Dictionary = {}
+	var collected_music_streams: Dictionary = {}
 
 	# Step 2: Collect all streams by their final_key
 	var success_sfx = _collect_streams_by_key(audio_config.sfx_paths, collected_sfx_streams, "sfx")
@@ -34,63 +40,71 @@ func _run():
 	var overall_success = true
 	var message = ""
 
-	# Ensure DIST_SAVE_PATH exists
-	var dist_dir = DirAccess.open("res://")
-	if not dist_dir.dir_exists(DIST_SAVE_PATH.replace("res://", "")):
-		dist_dir.make_dir(DIST_SAVE_PATH.replace("res://", ""))
-		print("Created directory: %s" % DIST_SAVE_PATH)
+	# Ensure directories exist
+	var dir = DirAccess.open("res://")
+	if not dir.dir_exists(PLAYLIST_DIST_SAVE_PATH.replace("res://", "")):
+		dir.make_dir(PLAYLIST_DIST_SAVE_PATH.replace("res://", ""))
+	if not dir.dir_exists(RANDOM_DIST_SAVE_PATH.replace("res://", "")):
+		dir.make_dir(RANDOM_DIST_SAVE_PATH.replace("res://", ""))
 
-	# Step 3: Process collected SFX streams into playlists
+	# Step 3: Process SFX into Randomizers
 	if success_sfx:
 		for final_key in collected_sfx_streams.keys():
 			var streams_for_key = collected_sfx_streams[final_key]
-			var playlist_file_path = "%s%s_playlist.tres" % [DIST_SAVE_PATH, final_key]
-			
-			var playlist: AudioStreamPlaylist
-			if FileAccess.file_exists(playlist_file_path):
-				playlist = load(playlist_file_path)
-				if playlist == null:
-					playlist = AudioStreamPlaylist.new()
-			else:
-				playlist = AudioStreamPlaylist.new()
+			var random_file_path = "%s%s_random.tres" % [RANDOM_DIST_SAVE_PATH, final_key]
 
-			# Clear existing streams in the playlist
-			for i in range(playlist.stream_count):
-				playlist.set("stream_%d" % i, null)
-			playlist.stream_count = 0
+			var randomizer: AudioStreamRandomizer
+			var is_new_randomizer = false
+			if FileAccess.file_exists(random_file_path):
+				randomizer = load(random_file_path)
+				if randomizer == null:
+					randomizer = AudioStreamRandomizer.new()
+					is_new_randomizer = true
+			else:
+				randomizer = AudioStreamRandomizer.new()
+				is_new_randomizer = true
+
+			# Clear existing streams
+			for i in range(randomizer.streams_count):
+				randomizer.set("stream_%d" % i, null)
+			randomizer.streams_count = 0
 
 			# Add new streams
 			for stream in streams_for_key:
-				var current_index = playlist.stream_count
-				playlist.set("stream_%d" % current_index, stream)
-				playlist.stream_count = current_index + 1
-			
-			var err = ResourceSaver.save(playlist, playlist_file_path)
+				var index = randomizer.streams_count
+				randomizer.set("stream_%d" % index, stream)
+				randomizer.streams_count = index + 1
+
+
+			var err = ResourceSaver.save(randomizer, random_file_path)
 			if err != OK:
-				printerr("Falha ao salvar playlist SFX %s: %s" % [playlist_file_path, err])
+				printerr("Falha ao salvar Randomizer SFX %s: %s" % [random_file_path, err])
 				overall_success = false
-				message = "Falha ao salvar playlists SFX."
+				message = "Falha ao salvar Randomizers SFX."
 				break
-			audio_manifest.sfx_data[final_key] = playlist_file_path
+			audio_manifest.sfx_data[final_key] = random_file_path
 	else:
 		overall_success = false
 		message = "Falha ao coletar streams SFX."
 
-	# Step 4: Process collected Music streams into playlists
+	# Step 4: Process Music into Playlists
 	if overall_success and success_music:
 		for final_key in collected_music_streams.keys():
 			var streams_for_key = collected_music_streams[final_key]
-			var playlist_file_path = "%s%s_playlist.tres" % [DIST_SAVE_PATH, final_key]
-			
+			var playlist_file_path = "%s%s_playlist.tres" % [PLAYLIST_DIST_SAVE_PATH, final_key]
+
 			var playlist: AudioStreamPlaylist
+			var is_new_playlist = false
 			if FileAccess.file_exists(playlist_file_path):
 				playlist = load(playlist_file_path)
 				if playlist == null:
 					playlist = AudioStreamPlaylist.new()
+					is_new_playlist = true
 			else:
 				playlist = AudioStreamPlaylist.new()
+				is_new_playlist = true
 
-			# Clear existing streams in the playlist
+			# Clear existing streams
 			for i in range(playlist.stream_count):
 				playlist.set("stream_%d" % i, null)
 			playlist.stream_count = 0
@@ -100,7 +114,12 @@ func _run():
 				var current_index = playlist.stream_count
 				playlist.set("stream_%d" % current_index, stream)
 				playlist.stream_count = current_index + 1
-			
+
+			if is_new_playlist:
+				playlist.loop = true
+				playlist.shuffle = true
+				playlist.fade_time = 0.3
+
 			var err = ResourceSaver.save(playlist, playlist_file_path)
 			if err != OK:
 				printerr("Falha ao salvar playlist Música %s: %s" % [playlist_file_path, err])
@@ -108,11 +127,11 @@ func _run():
 				message = "Falha ao salvar playlists Música."
 				break
 			audio_manifest.music_data[final_key] = playlist_file_path
-	elif overall_success: # Only set message if previous steps were successful
+	elif overall_success:
 		overall_success = false
 		message = "Falha ao coletar streams Música."
 
-	# Step 5: Save the main AudioManifest
+	# Step 5: Save AudioManifest
 	if overall_success:
 		var err = ResourceSaver.save(audio_manifest, MANIFEST_SAVE_FILE)
 		if err != OK:
@@ -122,6 +141,9 @@ func _run():
 			print("AudioManifest gerado e salvo em: %s" % MANIFEST_SAVE_FILE)
 
 	emit_signal("generation_finished", overall_success, message)
+
+
+# ===================== FUNÇÕES AUXILIARES =====================
 
 func _count_files_in_directory(current_path: String):
 	var dir = DirAccess.open(current_path)

@@ -20,11 +20,11 @@ func _ready():
 
 func _on_toggled(button_pressed: bool):
 	if not pressed_sfx_key.is_empty():
-		CafeAudioManager.play_sfx_requested.emit(pressed_sfx_key, "SFX", self)
+		CafeAudioManager.play_sfx_requested.emit(pressed_sfx_key, "SFX", self, false, true, 0.0)
 
 func _on_mouse_entered():
 	if not hover_sfx_key.is_empty():
-		CafeAudioManager.play_sfx_requested.emit(hover_sfx_key, "SFX", self)
+		CafeAudioManager.play_sfx_requested.emit(hover_sfx_key, "SFX", self, false, true, 0.0)
 
 func _on_mouse_exited():
 	pass
