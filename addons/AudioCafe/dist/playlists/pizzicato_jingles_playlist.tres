@@ -1,4 +1,4 @@
-[gd_resource type="AudioStreamPlaylist" load_steps=18 format=3 uid="uid://bckmps47b1lis"]
+[gd_resource type="AudioStreamPlaylist" load_steps=18 format=3 uid="uid://cj5h6xin1u6ew"]
 
 [ext_resource type="AudioStream" uid="uid://7iy4e2y7t5jo" path="res://addons/AudioCafe/assets/music/Pizzicato_jingles/jingles_pizzi_0.ogg" id="1_u1kxr"]
 [ext_resource type="AudioStream" uid="uid://1j37sgqqv6t3" path="res://addons/AudioCafe/assets/music/Pizzicato_jingles/jingles_pizzi_1.ogg" id="2_64eg1"]
@@ -19,7 +19,6 @@
 [ext_resource type="AudioStream" uid="uid://cyepplcgmqo5f" path="res://addons/AudioCafe/assets/music/Pizzicato_jingles/jingles_pizzi_2.ogg" id="17_cj37k"]
 
 [resource]
-shuffle = true
 stream_count = 17
 stream_0 = ExtResource("1_u1kxr")
 stream_1 = ExtResource("2_64eg1")
