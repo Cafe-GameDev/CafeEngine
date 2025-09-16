@@ -7,6 +7,7 @@ signal generation_finished(success: bool, message: String)
 
 const MANIFEST_SAVE_FILE = "res://addons/AudioCafe/resources/audio_manifest.tres"
 const PLAYLIST_DIST_SAVE_PATH = "res://addons/AudioCafe/dist/playlist/"
+const RANDOM_DIST_SAVE_PATH = "res://addons/AudioCafe/dist/random/"
 
 var _total_files_to_scan = 0
 var _files_scanned = 0
