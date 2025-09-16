@@ -105,28 +105,16 @@ func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager
 		printerr("CafeAudioManager: SFX key not found in library: '%s'" % sfx_key)
 		return
 
-	var sfx_uids = _sfx_library[sfx_key]
-	if sfx_uids.is_empty():
-		printerr("CafeAudioManager: SFX category '%s' is empty." % sfx_key)
-		return
-	
-	var random_uid_str = sfx_uids.pick_random()
-	var uid_int = random_uid_str.replace("uid://", "").to_int()
-	var resource_path = ResourceUID.get_id_path(uid_int)
+	var sfx_playlist_path = _sfx_library[sfx_key]
+	var sfx_playlist = load(sfx_playlist_path)
 
-	if resource_path.is_empty():
-		printerr("CafeAudioManager: Failed to get resource path for SFX UID: '%s'" % random_uid_str)
-		return
-
-	var sound_stream = load(resource_path)
-
-	if sound_stream == null:
-		printerr("CafeAudioManager: Failed to load SFX stream from path: '%s' (UID: '%s')" % [resource_path, random_uid_str])
+	if not sfx_playlist or not sfx_playlist is AudioStreamPlaylist:
+		printerr("CafeAudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [sfx_playlist_path, sfx_key])
 		return
 
 	for player in _sfx_players:
 		if not player.playing:
-			player.stream = sound_stream
+			player.stream = sfx_playlist
 			player.bus = bus
 			player.play()
 			return
