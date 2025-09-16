@@ -6,7 +6,7 @@ signal progress_updated(current: int, total: int)
 signal generation_finished(success: bool, message: String)
 
 const MANIFEST_SAVE_FILE = "res://addons/AudioCafe/resources/audio_manifest.tres"
-const DIST_SAVE_PATH = "res://addons/AudioCafe/dist/"
+const DIST_SAVE_PATH = "res://addons/AudioCafe/dist/playlists/"
 
 var _total_files_to_scan = 0
 var _files_scanned = 0
