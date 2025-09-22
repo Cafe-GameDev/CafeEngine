@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://h4aimi8s8hvw"]
+
+[ext_resource type="Script" uid="uid://lkbcm7q3a51d" path="res://addons/AudioCafe/components/audio_manager.gd" id="1_46mvi"]
+
+[node name="AudioManager" type="Node2D"]
+script = ExtResource("1_46mvi")
+
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+mix_target = 1
+
+[node name="MusicChangeTimer" type="Timer" parent="."]
+wait_time = 300.0
+
+[node name="SFXPlayer" type="Node" parent="."]
+
+[node name="SFXPlayer_0" type="AudioStreamPlayer" parent="SFXPlayer"]
+
+[node name="SFXPlayer_1" type="AudioStreamPlayer" parent="SFXPlayer"]
+
+[node name="SFXPlayer_2" type="AudioStreamPlayer" parent="SFXPlayer"]
+
+[node name="SFXPlayer_3" type="AudioStreamPlayer" parent="SFXPlayer"]
+
+[node name="SFXPlayer_4" type="AudioStreamPlayer" parent="SFXPlayer"]
+
+[node name="SFXPlayer_5" type="AudioStreamPlayer" parent="SFXPlayer"]
+
+[node name="SFXPlayer_6" type="AudioStreamPlayer" parent="SFXPlayer"]
+
+[node name="SFXPlayer_7" type="AudioStreamPlayer" parent="SFXPlayer"]
+
+[node name="SFXPlayer_8" type="AudioStreamPlayer" parent="SFXPlayer"]
+
+[node name="SFXPlayer_9" type="AudioStreamPlayer" parent="SFXPlayer"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0kp7rnsg2l8y"
-path="res://.godot/imported/arrow-big-up-dash.svg-782562388688d2e992a1794a2b0cb329.ctex"
+uid="uid://dyalvtx8j4x03"
+path="res://.godot/imported/clapperboard.svg-ee3426fda22054b210f010a72e29b1ad.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/AudioCafe/icons/arrow-big-up-dash.svg"
-dest_files=["res://.godot/imported/arrow-big-up-dash.svg-782562388688d2e992a1794a2b0cb329.ctex"]
+source_file="res://addons/AudioCafe/icons/clapperboard.svg"
+dest_files=["res://.godot/imported/clapperboard.svg-ee3426fda22054b210f010a72e29b1ad.ctex"]
 
 [params]
 
