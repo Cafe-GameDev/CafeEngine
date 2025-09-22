@@ -1,16 +1,3 @@
-[gd_scene load_steps=2 format=3 uid="uid://dw4pta8sufueb"]
-
-[ext_resource type="Script" uid="uid://j45ycnrailx7" path="res://addons/AudioCafe/nodes/Control/sfx_button.gd" id="2_0e48y"]
+[gd_scene format=3 uid="uid://dw4pta8sufueb"]
 
 [node name="Node2D" type="Node2D"]
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-
-[node name="SFXButton" type="Button" parent="."]
-offset_left = 324.0
-offset_top = 185.0
-offset_right = 332.0
-offset_bottom = 193.0
-text = "SAAS"
-script = ExtResource("2_0e48y")
-metadata/_custom_type_script = "uid://j45ycnrailx7"

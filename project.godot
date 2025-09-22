@@ -20,7 +20,7 @@ buses/default_bus_layout=""
 
 [autoload]
 
-CafeAudioManager="*res://addons/AudioCafe/scenes/cafe_audio_manager.tscn"
+AudioManager="*res://addons/AudioCafe/components/audio_manager.tscn"
 
 [editor_plugins]
 
