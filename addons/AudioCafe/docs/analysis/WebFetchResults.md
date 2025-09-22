@@ -29,9 +29,10 @@ Este documento resume as principais funcionalidades e mudanças relacionadas ao 
 
 *   **Carregamento de Arquivos WAV em Tempo de Execução:** Capacidade de carregar arquivos WAV dinamicamente durante o tempo de execução, complementando a funcionalidade existente para OGG.
 
-## Godot 4.5 (Release Candidates)
+## Godot 4.5 (Lançamento Oficial)
 
-*   Foco principal em correções de bugs e melhorias de estabilidade. Nenhuma nova funcionalidade de áudio foi detalhada explicitamente nos RCs fornecidos.
+*   **Foco em Acessibilidade, Desempenho e Estabilidade:** A versão 4.5 concentra-se em aprimorar a acessibilidade (suporte a stencil buffer, leitor de tela para nós Control), o desempenho (shader baker, servidor de navegação 2D dedicado) e a estabilidade (interpolação de física 3D, WebAssembly SIMD, driver de gamepad SDL3).
+*   **Sem Novas Funcionalidades de Áudio:** Não foram detalhadas novas funcionalidades de áudio específicas. O foco para o áudio permanece na estabilidade e no refinamento dos sistemas existentes.
 
 ---
 
