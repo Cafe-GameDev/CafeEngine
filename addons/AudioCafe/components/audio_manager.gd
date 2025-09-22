@@ -59,14 +59,14 @@ func _setup_audio_buses():
 		var music_bus_idx = AudioServer.get_bus_count() - 1 # Get the index of the newly added bus
 		AudioServer.set_bus_name(music_bus_idx, MUSIC_BUS_NAME)
 		AudioServer.set_bus_send(music_bus_idx, "Master")
-		print("CafeAudioManager: Created Music audio bus.")
+		print("AudioManager: Created Music audio bus.")
 	
 	if AudioServer.get_bus_index(SFX_BUS_NAME) == -1:
 		AudioServer.add_bus(AudioServer.get_bus_count())
 		var sfx_bus_idx = AudioServer.get_bus_count() - 1 # Get the index of the newly added bus
 		AudioServer.set_bus_name(sfx_bus_idx, SFX_BUS_NAME)
 		AudioServer.set_bus_send(sfx_bus_idx, "Master")
-		print("CafeAudioManager: Created SFX audio bus.")
+		print("AudioManager: Created SFX audio bus.")
 
 	# Apply initial volumes from audio_config
 	apply_volume_to_bus("Master", audio_config.master_volume)
@@ -75,22 +75,22 @@ func _setup_audio_buses():
 
 func _load_audio_from_manifest():
 	if not audio_manifest:
-		printerr("CafeAudioManager: AudioManifest not assigned. Please generate it in the editor.")
+		printerr("AudioManager: AudioManifest not assigned. Please generate it in the editor.")
 		return
 
 	_sfx_library = audio_manifest.sfx_data
 	_music_library = audio_manifest.music_data
 	_music_playlist_keys = _music_library.keys()
 	
-	print("CafeAudioManager: Loaded audio from manifest. %d music playlists and %d SFX categories found." % [_music_playlist_keys.size(), _sfx_library.size()])
-	print("CafeAudioManager: SFX Library Keys: ", _sfx_library.keys())
+	print("AudioManager: Loaded audio from manifest. %d music playlists and %d SFX categories found." % [_music_playlist_keys.size(), _sfx_library.size()])
+	print("AudioManager: SFX Library Keys: ", _sfx_library.keys())
 
 	var sfx_player_node = get_node_or_null("SFXPlayer")
 	if not sfx_player_node:
 		sfx_player_node = Node.new()
 		sfx_player_node.name = "SFXPlayer"
 		add_child(sfx_player_node)
-		print("CafeAudioManager: SFXPlayer Node not found in scene. Creating it.")
+		print("AudioManager: SFXPlayer Node not found in scene. Creating it.")
 
 	# 1. Adicionar AudioStreamPlayers existentes ao array temporário
 	var existing_players_found: Array[AudioStreamPlayer] = []
@@ -108,7 +108,7 @@ func _load_audio_from_manifest():
 	# 2. Instanciar novos AudioStreamPlayers se a quantidade for menor que _sfx_player_count
 	var players_to_create = _sfx_player_count - initial_sfx_players_size
 	if players_to_create > 0:
-		print("CafeAudioManager: Creating %d additional AudioStreamPlayers dynamically." % players_to_create)
+		print("AudioManager: Creating %d additional AudioStreamPlayers dynamically." % players_to_create)
 		for i in range(players_to_create):
 			var sfx_player = AudioStreamPlayer.new()
 			sfx_player.name = "SFXPlayer_%d" % (initial_sfx_players_size + i)
@@ -117,19 +117,19 @@ func _load_audio_from_manifest():
 			sfx_player_node.add_child(sfx_player)
 			_sfx_players.append(sfx_player)
 	elif players_to_create < 0:
-		print("CafeAudioManager: More SFXPlayers exist than _sfx_player_count. Using existing ones.")
+		print("AudioManager: More SFXPlayers exist than _sfx_player_count. Using existing ones.")
 
 
 func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager_node: Node = self, loop: bool = false, shuffle: bool = false, fade_time: float = 0.3):
 	if not _sfx_library.has(sfx_key):
-		printerr("CafeAudioManager: SFX key not found in library: '%s'" % sfx_key)
+		printerr("AudioManager: SFX key not found in library: '%s'" % sfx_key)
 		return
 
 	var sfx_playlist_path = _sfx_library[sfx_key]
 	var sfx_playlist = load(sfx_playlist_path)
 
 	if not sfx_playlist or not sfx_playlist is AudioStreamPlaylist:
-		printerr("CafeAudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [sfx_playlist_path, sfx_key])
+		printerr("AudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [sfx_playlist_path, sfx_key])
 		return
 
 	sfx_playlist.loop = loop
@@ -145,14 +145,14 @@ func _on_play_sfx_requested(sfx_key: String, bus: String = SFX_BUS_NAME, manager
 
 func _on_play_music_requested(music_key: String, manager_node: Node = self, loop: bool = true, shuffle: bool = true, fade_time: float = 0.0):
 	if not _music_library.has(music_key):
-		printerr("CafeAudioManager: Music key not found in library: '%s'" % music_key)
+		printerr("AudioManager: Music key not found in library: '%s'" % music_key)
 		return
 
 	var playlist_path = _music_library[music_key]
 	var music_playlist = load(playlist_path)
 
 	if not music_playlist or not music_playlist is AudioStreamPlaylist:
-		printerr("CafeAudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [playlist_path, music_key])
+		printerr("AudioManager: Failed to load AudioStreamPlaylist from path: '%s' for key '%s'" % [playlist_path, music_key])
 		return
 
 	music_playlist.loop = loop
@@ -172,7 +172,7 @@ func stop_music():
 
 func _select_and_play_random_playlist():
 	if _music_playlist_keys.is_empty():
-		printerr("CafeAudioManager: No music playlists found to play.")
+		printerr("AudioManager: No music playlists found to play.")
 		return
 
 	_current_playlist_key = _music_playlist_keys.pick_random()
@@ -186,7 +186,7 @@ func apply_volume_to_bus(bus_name: String, linear_volume: float):
 		AudioServer.set_bus_volume_db(bus_index, db_volume)
 		volume_changed.emit(bus_name, linear_volume)
 	else:
-		printerr("CafeAudioManager: Audio bus '%s' not found." % bus_name)
+		printerr("AudioManager: Audio bus '%s' not found." % bus_name)
 
 
 func _on_music_finished():
@@ -206,8 +206,8 @@ func register_audio_zone(audio_zone_node: Node):
 	if audio_zone_node.has_signal("zone_event_triggered"):
 		audio_zone_node.zone_event_triggered.connect(Callable(self, "_on_audio_zone_event_triggered"))
 	else:
-		printerr("CafeAudioManager: Node '%s' does not have 'zone_event_triggered' signal." % audio_zone_node.name)
+		printerr("AudioManager: Node '%s' does not have 'zone_event_triggered' signal." % audio_zone_node.name)
 
 func _on_audio_zone_event_triggered(zone_name: String, event_type: String, body: Node):
 	zone_event_triggered.emit(zone_name, event_type, body)
-	print("CafeAudioManager: Zone event triggered: %s - %s by %s" % [zone_name, event_type, body.name])
+	print("AudioManager: Zone event triggered: %s - %s by %s" % [zone_name, event_type, body.name])
