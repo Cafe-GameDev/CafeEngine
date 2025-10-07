@@ -1,3 +1,0 @@
-Plugin Name: SaveCafe
-Description: Sistema de persistência geral para o estado dinâmico do jogo, incluindo dados do jogador, configurações do usuário, progresso de diálogo, estado de cenas visitadas e condições de mobs.
-Version: 0.0.1

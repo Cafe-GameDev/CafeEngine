@@ -1,3 +1,0 @@
-Plugin Name: DialogueCafe
-Description: Um sistema completo e flexível para a criação e gerenciamento de diálogos interativos, narrativas ramificadas e conversas com personagens não-jogáveis (NPCs).
-Version: 0.0.1

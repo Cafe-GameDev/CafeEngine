@@ -1,3 +1,0 @@
-Plugin Name: MobileCafe
-Description: Oferecerá suporte abrangente para controles e elementos de UI otimizados para dispositivos móveis, com detecção inteligente de plataforma e interação.
-Version: 0.0.1

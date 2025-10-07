@@ -1,3 +1,0 @@
-Plugin Name: ConsoleCafe
-Description: Um console de depuração em jogo (in-game console) essencial para desenvolvedores, atuando como uma ferramenta de monitoramento e controle abrangente.
-Version: 0.0.1

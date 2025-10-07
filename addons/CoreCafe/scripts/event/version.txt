@@ -1,3 +1,0 @@
-Plugin Name: EventCafe
-Description: Um sistema flexível para o gerenciamento de eventos de jogo, permitindo a criação de eventos dinâmicos, agendamento de ocorrências e a definição de gatilhos e ações.
-Version: 0.0.1

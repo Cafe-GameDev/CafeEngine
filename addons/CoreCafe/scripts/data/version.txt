@@ -1,3 +1,0 @@
-Plugin Name: DataCafe
-Description: Gerenciamento de dados estáticos e de configuração do jogo (como definições de itens, estatísticas de inimigos, estruturas de níveis).
-Version: 0.0.1
