@@ -1,6 +1,6 @@
-# Generate Audio Manifest
+# Generate Albuns
 
-The `GenerateAudioManifest` script (`generate_audio_manifest.gd`) is an `EditorScript` responsible for the core logic of scanning audio files, generating various `AudioStream` resources, and compiling them into the `AudioManifest`.
+The `GenerateAlbuns` script (`generate_albuns.gd`) is an `EditorScript` responsible for the core logic of scanning audio files, generating various `AudioStream` resources, and compiling them into the `AudioManifest`.
 
 ## Key Responsibilities
 

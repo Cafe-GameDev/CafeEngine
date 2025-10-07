@@ -359,7 +359,7 @@ func _on_generate_albuns_pressed():
 	gen_status_label.visible = true
 	gen_status_label.text = "Generating albuns..."
 
-	var generator = GenerateAudioManifest.new()
+	var generator = GenerateAlbuns.new()
 	generator.audio_config = audio_config
 	generator.connect("generation_finished", Callable(self, "_on_albuns_generation_finished"))
 	generator._run()

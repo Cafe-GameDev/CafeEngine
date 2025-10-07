@@ -1,6 +1,6 @@
 @tool
 extends EditorScript
-class_name GenerateAudioManifest
+class_name GenerateAlbuns
 
 signal progress_updated(current: int, total: int)
 signal generation_finished(success: bool, message: String)
