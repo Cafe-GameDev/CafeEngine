@@ -19,6 +19,12 @@ O **StateCafe** é um framework avançado para Godot Engine 4.x, projetado para 
 -   **Design Visual e Reativo:** A lógica deve ser tão visual quanto possível, e o sistema deve ser reativo a eventos, integrando-se perfeitamente ao sistema de sinais e nós do Godot.
 -   **`Resource` como Objeto Ativo:** Nossos `StateBehavior`s não são meros contêineres de dados. Eles são objetos inteligentes com sua própria lógica, estado interno e capacidade de emitir sinais para comunicar suas intenções.
 
+### 1.3. Política de Versão e Compatibilidade
+
+-   **Versão Alvo:** O StateCafe tem como alvo inicial o **Godot 4.5**.
+-   **Compatibilidade Futura:** O projeto será ativamente mantido para garantir compatibilidade com versões futuras do Godot 4.x.
+-   **Retrocompatibilidade:** Não haverá suporte para versões anteriores ao Godot 4.5, a fim de aproveitar os recursos mais recentes da engine e manter uma base de código limpa e moderna.
+
 ---
 
 ## 2. Arquitetura Principal

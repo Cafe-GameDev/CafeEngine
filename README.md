@@ -15,7 +15,13 @@ Cansado de máquinas de estado monolíticas e difíceis de gerenciar? O StateCaf
 -   **Comportamentos baseados em `Resource`:** Crie, configure e reutilize lógicas de estado (como `Patrulha`, `Pulo`, `Diálogo`) diretamente do FileSystem e do Inspector.
 -   **Arquitetura Reativa:** Use o poder dos sinais do Godot para transições de estado e para que os estados comuniquem suas necessidades (tocar um som, instanciar um efeito) de forma desacoplada.
 -   **Gerenciamento Global e Local:** Controle tanto o fluxo de cenas do seu jogo (nível macro) quanto a IA de um inimigo específico (nível micro) usando o mesmo sistema unificado.
--   **Editor Visual (Planejado):** Uma futura interface de grafos permitirá criar, conectar e depurar suas máquinas de estado de forma totalmente visual.
+-   Editor Visual (Planejado): Uma futura interface de grafos permitirá criar, conectar e depurar suas máquinas de estado de forma totalmente visual.
+
+---
+
+## Compatibilidade
+
+Este plugin foi projetado especificamente para **Godot 4.5** e versões futuras. O projeto será mantido para acompanhar as novas atualizações da engine, mas não há planos de oferecer retrocompatibilidade com versões anteriores.
 
 ---
 
