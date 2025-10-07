@@ -20,7 +20,7 @@ buses/default_bus_layout="uid://iqdcw3igji8l"
 [autoload]
 
 AudioManager="*res://addons/audiocafe/components/audio_manager.tscn"
-StateManager="*res://addons/statecafe/components/state_manager.tscn"
+StateMachine="*res://addons/statecafe/components/state_machine.gd"
 
 [editor_plugins]
 

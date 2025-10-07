@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bmb3ia3xlj3uy"]
 
 [ext_resource type="Script" uid="uid://cti2knpv118e2" path="res://addons/statecafe/panel/state_panel.gd" id="1_scaffold_gd"]
-[ext_resource type="Texture2D" uid="uid://db5257d01rp3u" path="res://addons/statecafe/icons/arrow-big-down-dash.svg" id="2_ck88h"]
+[ext_resource type="Texture2D" uid="uid://dd2o48oqvi2og" path="res://addons/statecafe/icons/arrow-big-up-dash.svg" id="2_ck88h"]
 [ext_resource type="Texture2D" uid="uid://df2ofr4sabd76" path="res://addons/statecafe/icons/book-open-text.svg" id="4_u21qr"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_2no5w"]
@@ -28,7 +28,6 @@ alignment = 0
 icon_alignment = 2
 
 [node name="CollapsibleContent" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CollapsibleContent"]

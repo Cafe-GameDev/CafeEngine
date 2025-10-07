@@ -1,8 +1,8 @@
 @tool
 extends EditorPlugin
 
-const AUTOLOAD_NAME = "StateManager"
-const AUTOLOAD_PATH = "res://addons/statecafe/components/state_manager.tscn"
+const AUTOLOAD_NAME = "StateMachine"
+const AUTOLOAD_PATH = "res://addons/statecafe/components/state_machine.gd"
 const GROUP_SCENE_PATH = "res://addons/statecafe/panel/state_panel.tscn"
 
 var plugin_panel: ScrollContainer
