@@ -3,7 +3,7 @@ extends VBoxContainer
 class_name AudioPanel
 
 @onready var header_button: Button = $HeaderButton
-@onready var generate_playlists: Button = $CollapsibleContent/HBoxContainer/GeneratePlaylists
+@onready var generate_albuns: Button = $CollapsibleContent/HBoxContainer/GenerateAlbuns
 @onready var docs_button: Button = $CollapsibleContent/HBoxContainer/DocsButton
 @onready var gen_status_label: Label = $CollapsibleContent/GenStatusLabel
 
@@ -13,8 +13,8 @@ class_name AudioPanel
 @onready var add_assets_path_button: Button = $CollapsibleContent/TabContainer/Settings/AssetsPathsSection/AddAssetsPathButton
 @onready var add_dist_path_button: Button = $CollapsibleContent/TabContainer/Settings/DistPathSection/AddDistPathButton
 
-@onready var playlists_vbox_container: VBoxContainer = $CollapsibleContent/TabContainer/Playlists
-@onready var playlist_rich_text_label: RichTextLabel = $CollapsibleContent/TabContainer/Playlists/PlaylistRichTextLabel
+@onready var albuns_vbox_container: VBoxContainer = $CollapsibleContent/TabContainer/Albuns
+@onready var albuns_rich_text_label: RichTextLabel = $CollapsibleContent/TabContainer/Albuns/AlbunsRichTextLabel
 
 @onready var interactive_vbox_container: VBoxContainer = $CollapsibleContent/TabContainer/Interactive
 @onready var interactive_rich_text_label: RichTextLabel = $CollapsibleContent/TabContainer/Interactive/InteractiveRichTextLabel
@@ -120,23 +120,23 @@ func _load_config_to_ui():
 			child.queue_free()
 		_create_path_entry(audio_config.dist_path, true)
 
-	_load_playlists_to_ui()
+	_load_albuns_to_ui()
 	_load_interactive_streams_to_ui()
 
-func _load_playlists_to_ui():
+func _load_albuns_to_ui():
 	if not audio_manifest:
 		push_error("AudioManifest not found at: " + AUDIO_MANIFEST_PATH)
 		return
 
-	var playlists_text = ""
+	var albuns_text = ""
 	if not audio_manifest.playlists.is_empty():
 		for key in audio_manifest.playlists.keys():
-			playlists_text += "%s (%s)\n" % [key, audio_manifest.playlists[key][1]]
+			albuns_text += "%s (%s)\n" % [key, audio_manifest.playlists[key][1]]
 
-	if playlists_text.is_empty():
-		playlists_text = "No playlists found."
+	if albuns_text.is_empty():
+		albuns_text = "No playlists found."
 
-	playlist_rich_text_label.bbcode_text = playlists_text
+	albuns_rich_text_label.bbcode_text = albuns_text
 
 func _on_config_text_changed(new_text: String, config_property: String):
 	if audio_config:
@@ -353,23 +353,23 @@ func _on_header_button_pressed():
 func _on_docs_button_pressed() -> void:
 	OS.shell_open(DOCS)
 
-func _on_generate_playlists_pressed():
+func _on_generate_albuns_pressed():
 	if not audio_config: return
 
 	gen_status_label.visible = true
-	gen_status_label.text = "Generating playlists..."
+	gen_status_label.text = "Generating albuns..."
 
 	var generator = GenerateAudioManifest.new()
 	generator.audio_config = audio_config
-	generator.connect("generation_finished", Callable(self, "_on_playlists_generation_finished"))
+	generator.connect("generation_finished", Callable(self, "_on_albuns_generation_finished"))
 	generator._run()
 
-func _on_playlists_generation_finished(success: bool, message: String):
+func _on_albuns_generation_finished(success: bool, message: String):
 	if success:
-		gen_status_label.text = "Playlists generated successfully!"
+		gen_status_label.text = "Albuns generated successfully!"
 		_load_config_to_ui()
 		_load_interactive_streams_to_ui()
 	else:
-		gen_status_label.text = "Error generating playlists: %s" % message
+		gen_status_label.text = "Error generating albuns: %s" % message
 
 	save_feedback_timer.start()

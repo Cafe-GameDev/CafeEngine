@@ -6,7 +6,7 @@ The `AudioPanel` is the core graphical user interface (GUI) component of the Aud
 
 *   **Configuration**: Allows users to define asset paths (where raw audio files are located) and distribution paths (where generated audio resources will be saved).
 *   **Generation Trigger**: Contains a button to initiate the generation of `AudioStreamPlaylist`, `AudioStreamRandomizer`, and `AudioStreamSynchronized` resources.
-*   **Visualization**: Displays lists of generated playlists and collected interactive audio streams.
+*   **Visualization**: Displays lists of generated albuns and collected interactive audio streams.
 *   **State Management**: Persists its expanded/collapsed state using the `AudioConfig` resource.
 *   **User Feedback**: Provides visual feedback for save operations and generation status.
 

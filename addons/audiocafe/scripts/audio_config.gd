@@ -40,7 +40,7 @@ signal config_changed
 			dist_path = value
 			_save_and_emit_changed()
 
-func get_playlist_save_path() -> String:
+func get_albuns_save_path() -> String:
 	return dist_path.trim_suffix("/") + "/playlist/"
 
 func get_randomized_save_path() -> String:

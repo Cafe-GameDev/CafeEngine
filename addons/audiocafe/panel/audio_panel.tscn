@@ -32,12 +32,12 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="GeneratePlaylists" type="Button" parent="CollapsibleContent/HBoxContainer"]
+[node name="GenerateAlbuns" type="Button" parent="CollapsibleContent/HBoxContainer"]
 custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Generates the key_playlist.tres file."
-text = "Generate Playlists"
+text = "Generate Albuns"
 icon = ExtResource("4_tsgsf")
 autowrap_mode = 3
 
@@ -88,7 +88,7 @@ layout_mode = 2
 
 [node name="DistPathLabel" type="Label" parent="CollapsibleContent/TabContainer/Settings/DistPathSection"]
 layout_mode = 2
-text = "Dist / Playlists Path:"
+text = "Dist / Albuns Path:"
 
 [node name="DistPathGridContainer" type="GridContainer" parent="CollapsibleContent/TabContainer/Settings/DistPathSection"]
 layout_mode = 2
@@ -97,15 +97,15 @@ layout_mode = 2
 layout_mode = 2
 text = "Add Dist Path"
 
-[node name="Playlists" type="VBoxContainer" parent="CollapsibleContent/TabContainer"]
+[node name="Albuns" type="VBoxContainer" parent="CollapsibleContent/TabContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 metadata/_tab_index = 1
 
-[node name="PlaylistRichTextLabel" type="RichTextLabel" parent="CollapsibleContent/TabContainer/Playlists"]
+[node name="AlbunsRichTextLabel" type="RichTextLabel" parent="CollapsibleContent/TabContainer/Albuns"]
 layout_mode = 2
-text = "No playlists found."
+text = "No albuns found."
 fit_content = true
 
 [node name="Interactive" type="VBoxContainer" parent="CollapsibleContent/TabContainer"]
@@ -144,7 +144,7 @@ wait_time = 1.5
 one_shot = true
 
 [connection signal="pressed" from="HeaderButton" to="." method="_on_header_button_pressed"]
-[connection signal="pressed" from="CollapsibleContent/HBoxContainer/GeneratePlaylists" to="." method="_on_generate_playlists_pressed"]
+[connection signal="pressed" from="CollapsibleContent/HBoxContainer/GenerateAlbuns" to="." method="_on_generate_albuns_pressed"]
 [connection signal="pressed" from="CollapsibleContent/HBoxContainer/DocsButton" to="." method="_on_docs_button_pressed"]
 [connection signal="pressed" from="CollapsibleContent/TabContainer/Settings/AssetsPathsSection/AddAssetsPathButton" to="." method="_on_add_assets_path_button_pressed"]
 [connection signal="pressed" from="CollapsibleContent/TabContainer/Settings/DistPathSection/AddDistPathButton" to="." method="_on_add_dist_path_button_pressed"]

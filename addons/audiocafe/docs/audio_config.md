@@ -14,5 +14,5 @@ The `AudioConfig` is a `Resource` (`.tres` file) that serves as the central conf
 ## Functionality
 
 *   **Persistence**: Automatically saves its state to `audio_config.tres` whenever a property changes, ensuring settings are retained.
-*   **Path Management**: Provides helper functions (`get_playlist_save_path`, `get_randomized_save_path`, etc.) to construct full save paths for different types of generated audio resources.
+*   **Path Management**: Provides helper functions (`get_albuns_save_path`, `get_randomized_save_path`, etc.) to construct full save paths for different types of generated audio resources.
 *   **Signal Emission**: Emits a `config_changed` signal whenever a property is modified, allowing other parts of the plugin (like the `AudioPanel`) to react to changes.

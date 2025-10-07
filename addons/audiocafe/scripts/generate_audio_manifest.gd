@@ -27,7 +27,7 @@ func _run():
 	var overall_success = true
 	var message = ""
 
-	var playlist_dist_save_path = audio_config.get_playlist_save_path()
+	var albuns_dist_save_path = audio_config.get_albuns_save_path()
 	var randomizer_dist_save_path = audio_config.get_randomized_save_path()
 	var interactive_dist_save_path = audio_config.get_interactive_save_path()
 	var synchronized_dist_save_path = audio_config.get_synchronized_save_path()
@@ -38,7 +38,7 @@ func _run():
 		emit_signal("generation_finished", false, "Failed to access the project's base directory.")
 		return
 
-	for path_to_create in [playlist_dist_save_path, randomizer_dist_save_path, interactive_dist_save_path, synchronized_dist_save_path]:
+	for path_to_create in [albuns_dist_save_path, randomizer_dist_save_path, interactive_dist_save_path, synchronized_dist_save_path]:
 		var relative_path = path_to_create.replace("res://", "")
 		if not dist_dir_access.dir_exists(relative_path):
 			var error = dist_dir_access.make_dir_recursive(relative_path)
@@ -55,7 +55,7 @@ func _run():
 		return
 
 	if audio_config.gen_playlist:
-		var result = generate_playlist(audio_manifest, collected_streams, playlist_dist_save_path, overall_success, message)
+		var result = generate_playlist(audio_manifest, collected_streams, albuns_dist_save_path, overall_success, message)
 		overall_success = result[0]
 		message += result[1]
 		
@@ -110,14 +110,14 @@ func _add_uids_to_category(category_dict: Dictionary):
 				printerr("Failed to get UID for resource: %s" % resource_path)
 
 
-func generate_playlist(audio_manifest: AudioManifest, collected_streams: Dictionary, playlist_dist_save_path: String, overall_success: bool, message: String) -> Array:
+func generate_playlist(audio_manifest: AudioManifest, collected_streams: Dictionary, albuns_dist_save_path: String, overall_success: bool, message: String) -> Array:
 	for final_key in collected_streams.keys():
 		var streams_for_key = collected_streams[final_key]
-		var playlist_file_path = "%s%s_playlist.tres" % [playlist_dist_save_path, final_key]
+		var albuns_file_path = "%s%s_playlist.tres" % [albuns_dist_save_path, final_key]
 		
 		var playlist: AudioStreamPlaylist
-		if FileAccess.file_exists(playlist_file_path):
-			playlist = load(playlist_file_path)
+		if FileAccess.file_exists(albuns_file_path):
+			playlist = load(albuns_file_path)
 			if playlist == null:
 				playlist = AudioStreamPlaylist.new()
 		else:
@@ -132,14 +132,14 @@ func generate_playlist(audio_manifest: AudioManifest, collected_streams: Diction
 			playlist.set("stream_%d" % current_index, stream)
 			playlist.stream_count = current_index + 1
 		
-		var err = ResourceSaver.save(playlist, playlist_file_path)
+		var err = ResourceSaver.save(playlist, albuns_file_path)
 		if err != OK:
-			printerr("Failed to save playlist %s: %s" % [playlist_file_path, err])
+			printerr("Failed to save playlist %s: %s" % [albuns_file_path, err])
 			overall_success = false
 			message = "Failed to save playlists."
 			break
 		
-		audio_manifest.playlists[final_key] = [playlist_file_path, str(playlist.stream_count)]
+		audio_manifest.playlists[final_key] = [albuns_file_path, str(playlist.stream_count)]
 
 	return [overall_success, message]
 
