@@ -14,6 +14,14 @@ config/name="CafeEngine"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+AudioManager="*res://addons/audiocafe/components/audio_manager.tscn"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/audiocafe/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
