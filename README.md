@@ -19,6 +19,14 @@ Cansado de máquinas de estado monolíticas e difíceis de gerenciar? O StateCaf
 
 ---
 
+## Documentação
+
+A documentação completa, com guias detalhados, tutoriais e a referência da API, pode ser encontrada no nosso site oficial:
+
+[https://www.cafegame.dev/cafeengine/statecafe](https://www.cafegame.dev/cafeengine/statecafe)
+
+---
+
 ## Compatibilidade
 
 Este plugin foi projetado especificamente para **Godot 4.5** e versões futuras. O projeto será mantido para acompanhar as novas atualizações da engine, mas não há planos de oferecer retrocompatibilidade com versões anteriores.
