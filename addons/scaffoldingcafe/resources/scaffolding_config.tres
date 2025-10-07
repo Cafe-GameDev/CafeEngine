@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource("1_scaffold_cfg")
+is_panel_expanded = false

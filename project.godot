@@ -21,10 +21,11 @@ buses/default_bus_layout="uid://iqdcw3igji8l"
 
 AudioManager="*res://addons/audiocafe/components/audio_manager.tscn"
 ScaffoldingManager="*res://addons/scaffoldingcafe/components/scaffolding_manager.tscn"
+StateManager="*res://addons/statecafe/components/state_manager.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/audiocafe/plugin.cfg", "res://addons/scaffoldingcafe/plugin.cfg")
+enabled=PackedStringArray("res://addons/audiocafe/plugin.cfg", "res://addons/scaffoldingcafe/plugin.cfg", "res://addons/statecafe/plugin.cfg")
 
 [rendering]
 
