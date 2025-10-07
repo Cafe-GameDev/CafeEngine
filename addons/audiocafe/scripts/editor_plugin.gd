@@ -1,7 +1,6 @@
 @tool
 extends EditorPlugin
 
-
 const AUTOLOAD_NAME = "AudioManager"
 const AUTOLOAD_PATH = "res://addons/audiocafe/components/audio_manager.tscn"
 const GROUP_SCENE_PATH = "res://addons/audiocafe/panel/audio_panel.tscn"
@@ -56,7 +55,6 @@ func _create_plugin_panel():
 	add_control_to_dock(DOCK_SLOT_RIGHT_UL, plugin_panel)
 	_ensure_group("AudioCafe")
 
-
 func _ensure_group(group_name: String) -> VBoxContainer:
 	if not plugin_panel:
 		push_error("Main panel 'CafeEngine' reference not found.")
@@ -108,7 +106,6 @@ func _ensure_group(group_name: String) -> VBoxContainer:
 	
 	push_error("Could not load group scene: " + group_name)
 	return null
-
 
 func _register_custom_types():
 	add_custom_type("AudioPosition2D", "AudioStreamPlayer2D", preload("res://addons/audiocafe/components/audio_position_2d.gd"), null)

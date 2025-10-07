@@ -109,7 +109,6 @@ func _add_uids_to_category(category_dict: Dictionary):
 			else:
 				printerr("Failed to get UID for resource: %s" % resource_path)
 
-
 func generate_playlist(audio_manifest: AudioManifest, collected_streams: Dictionary, albuns_dist_save_path: String, overall_success: bool, message: String) -> Array:
 	for final_key in collected_streams.keys():
 		var streams_for_key = collected_streams[final_key]
@@ -230,7 +229,6 @@ func generate_synchronized(audio_manifest: AudioManifest, collected_streams: Dic
 		]
 
 	return [true, ""]
-
 
 func _count_files_in_directory(current_path: String):
 	var dir = DirAccess.open(current_path)

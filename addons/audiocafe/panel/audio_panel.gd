@@ -101,7 +101,6 @@ func _initialize_panel_state():
 		collapsible_content_node.custom_minimum_size.y = 0
 		header_button_node.icon = ARROW_BIG_DOWN_DASH
 
-
 func _load_config_to_ui():
 	if not audio_config: return
 
@@ -217,7 +216,6 @@ func _on_browse_button_pressed(line_edit: LineEdit, is_dist_path: bool):
 		assets_folder_dialog.popup_centered()
 		assets_folder_dialog.set_meta("target_line_edit", line_edit)
 
-
 func _on_assets_folder_dialog_dir_selected(dir: String):
 	var target_line_edit: LineEdit = assets_folder_dialog.get_meta("target_line_edit")
 	if target_line_edit:
@@ -282,8 +280,6 @@ func _update_audio_config_paths():
 
 
 
-
-
 func _on_save_feedback_timer_timeout():
 	save_feedback_label.visible = false
 
@@ -303,7 +299,6 @@ func _load_interactive_streams_to_ui():
 		interactive_text = "No interactive streams found."
 
 	interactive_rich_text_label.bbcode_text = interactive_text
-
 
 
 
