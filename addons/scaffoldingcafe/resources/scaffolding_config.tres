@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="ScaffoldingConfig" load_steps=2 format=3 uid="uid://bklv4y65psrfp"]
+
+[ext_resource type="Script" uid="uid://cy20bue2rfhdp" path="res://addons/scaffoldingcafe/scripts/scaffolding_config.gd" id="1_scaffold_cfg"]
+
+[resource]
+script = ExtResource("1_scaffold_cfg")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm6p1nymu5s0k"]
+
+[ext_resource type="Script" path="res://addons/scaffoldingcafe/components/scaffolding_manager.gd" id="1_0u6w8"]
+
+[node name="ScaffoldingManager" type="Node"]
+script = ExtResource("1_0u6w8")

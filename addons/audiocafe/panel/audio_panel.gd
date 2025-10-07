@@ -57,11 +57,9 @@ func _ready():
 	if not is_node_ready():
 		await ready
 
-	
-	
 	if Engine.is_editor_hint():
 		_load_config_to_ui()
-		call_deferred("_initialize_panel_state")
+		_initialize_panel_state()
 		
 		
 		if not add_assets_path_button.pressed.is_connected(Callable(self, "_on_add_assets_path_button_pressed")):
@@ -91,15 +89,15 @@ func _initialize_panel_state():
 		collapsible_content_node.visible = _is_expanded
 		if _is_expanded:
 			collapsible_content_node.custom_minimum_size.y = _expanded_height
-			header_button_node.icon = ARROW_BIG_UP_DASH
+			header_button_node.icon = ARROW_BIG_DOWN_DASH
 		else:
 			collapsible_content_node.custom_minimum_size.y = 0
-			header_button_node.icon = ARROW_BIG_DOWN_DASH
+			header_button_node.icon = ARROW_BIG_UP_DASH
 	else:
 		_is_expanded = false
 		collapsible_content_node.visible = false
 		collapsible_content_node.custom_minimum_size.y = 0
-		header_button_node.icon = ARROW_BIG_DOWN_DASH
+		header_button_node.icon = ARROW_BIG_UP_DASH
 
 func _load_config_to_ui():
 	if not audio_config: return
@@ -339,11 +337,11 @@ func _on_header_button_pressed():
 	if _is_expanded:
 		collapsible_content_node.visible = true
 		tween.tween_property(collapsible_content_node, "custom_minimum_size:y", _expanded_height, 0.3)
-		header_button_node.icon = ARROW_BIG_UP_DASH
+		header_button_node.icon = ARROW_BIG_DOWN_DASH
 	else:
 		tween.tween_property(collapsible_content_node, "custom_minimum_size:y", 0, 0.3)
 		tween.tween_callback(Callable(collapsible_content_node, "set_visible").bind(false))
-		header_button_node.icon = ARROW_BIG_DOWN_DASH
+		header_button_node.icon = ARROW_BIG_UP_DASH
 
 func _on_docs_button_pressed() -> void:
 	OS.shell_open(DOCS)

@@ -1,9 +1,9 @@
 @tool
 extends EditorPlugin
 
-const AUTOLOAD_NAME = "AudioManager"
-const AUTOLOAD_PATH = "res://addons/audiocafe/components/audio_manager.tscn"
-const GROUP_SCENE_PATH = "res://addons/audiocafe/panel/audio_panel.tscn"
+const AUTOLOAD_NAME = "ScaffoldingManager"
+const AUTOLOAD_PATH = "res://addons/scaffoldingcafe/components/scaffolding_manager.tscn"
+const GROUP_SCENE_PATH = "res://addons/scaffoldingcafe/panel/scaffolding_panel.tscn"
 
 var plugin_panel: ScrollContainer
 var group_panel: VBoxContainer
@@ -34,7 +34,7 @@ func _exit_tree():
 func _create_plugin_panel():
 	plugin_panel = get_editor_interface().get_base_control().find_child("CafeEngine", true, false)
 	if plugin_panel:
-		_ensure_group("AudioCafe")
+		_ensure_group("ScaffoldingCafe")
 		return
 
 	plugin_panel = ScrollContainer.new()
@@ -54,7 +54,7 @@ func _create_plugin_panel():
 	plugin_panel.add_child(vbox_container)
 
 	add_control_to_dock(DOCK_SLOT_RIGHT_UL, plugin_panel)
-	_ensure_group("AudioCafe")
+	_ensure_group("ScaffoldingCafe")
 
 func _ensure_group(group_name: String) -> VBoxContainer:
 	if not plugin_panel:
@@ -68,18 +68,18 @@ func _ensure_group(group_name: String) -> VBoxContainer:
 
 	group_panel = content_container.find_child(group_name, false)
 	if group_panel:
-		const AUDIO_CONFIG_PATH = "res://addons/audiocafe/resources/audio_config.tres"
-		var audio_config_res = ResourceLoader.load(AUDIO_CONFIG_PATH)
-		if not audio_config_res:
-			audio_config_res = preload("res://addons/audiocafe/scripts/audio_config.gd").new()
-			var dir = AUDIO_CONFIG_PATH.get_base_dir()
+		const SCAFFOLDING_CONFIG_PATH = "res://addons/scaffoldingcafe/resources/scaffolding_config.tres"
+		var scaffolding_config_res = ResourceLoader.load(SCAFFOLDING_CONFIG_PATH)
+		if not scaffolding_config_res:
+			scaffolding_config_res = preload("res://addons/scaffoldingcafe/scripts/scaffolding_config.gd").new()
+			var dir = SCAFFOLDING_CONFIG_PATH.get_base_dir()
 			if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(dir)):
 				DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
 			
-			var error = ResourceSaver.save(audio_config_res, AUDIO_CONFIG_PATH)
+			var error = ResourceSaver.save(scaffolding_config_res, SCAFFOLDING_CONFIG_PATH)
 			if error != OK:
-				push_error("Failed to create and save a new AudioConfig resource: %s" % error)
-		group_panel.set_audio_config(audio_config_res)
+				push_error("Failed to create and save a new ScaffoldingConfig resource: %s" % error)
+		group_panel.set_scaffolding_config(scaffolding_config_res)
 		return group_panel
 
 	var group_scene = load(GROUP_SCENE_PATH)
@@ -88,20 +88,20 @@ func _ensure_group(group_name: String) -> VBoxContainer:
 		content_container.add_child(group_panel)
 		group_panel.name = group_name
 
-		const AUDIO_CONFIG_PATH = "res://addons/audiocafe/resources/audio_config.tres"
-		var audio_config_res = ResourceLoader.load(AUDIO_CONFIG_PATH)
+		const SCAFFOLDING_CONFIG_PATH = "res://addons/scaffoldingcafe/resources/scaffolding_config.tres"
+		var scaffolding_config_res = ResourceLoader.load(SCAFFOLDING_CONFIG_PATH)
 
-		if not audio_config_res:
-			audio_config_res = preload("res://addons/audiocafe/scripts/audio_config.gd").new()
-			var dir = AUDIO_CONFIG_PATH.get_base_dir()
+		if not scaffolding_config_res:
+			scaffolding_config_res = preload("res://addons/scaffoldingcafe/scripts/scaffolding_config.gd").new()
+			var dir = SCAFFOLDING_CONFIG_PATH.get_base_dir()
 			if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(dir)):
 				DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
 			
-			var error = ResourceSaver.save(audio_config_res, AUDIO_CONFIG_PATH)
+			var error = ResourceSaver.save(scaffolding_config_res, SCAFFOLDING_CONFIG_PATH)
 			if error != OK:
-				push_error("Failed to create and save a new AudioConfig resource: %s" % error)
+				push_error("Failed to create and save a new ScaffoldingConfig resource: %s" % error)
 		
-		group_panel.set_audio_config(audio_config_res)
+		group_panel.set_scaffolding_config(scaffolding_config_res)
 
 		return group_panel
 	
@@ -109,9 +109,7 @@ func _ensure_group(group_name: String) -> VBoxContainer:
 	return null
 
 func _register_custom_types():
-	add_custom_type("AudioPosition2D", "AudioStreamPlayer2D", preload("res://addons/audiocafe/components/audio_position_2d.gd"), null)
-	add_custom_type("AudioPosition3D", "AudioStreamPlayer3D", preload("res://addons/audiocafe/components/audio_position_3d.gd"), null)
+	pass
 
 func _unregister_custom_types():
-	remove_custom_type("AudioPosition2D")
-	remove_custom_type("AudioPosition3D")
+	pass
