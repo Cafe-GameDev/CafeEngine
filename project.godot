@@ -21,7 +21,7 @@ buses/default_bus_layout="uid://iqdcw3igji8l"
 
 AudioManager="*res://addons/audiocafe/components/audio_manager.tscn"
 StateMachine="*res://addons/statecafe/components/state_machine.gd"
-DataPoll="*res://addons/datacafe/components/data_manager.tscn"
+DataPoll="*res://addons/datacafe/components/data_poll.gd"
 
 [editor_plugins]
 
