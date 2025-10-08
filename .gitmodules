@@ -4,3 +4,6 @@
 [submodule "addons/statecafe"]
 	path = addons/statecafe
 	url = https://github.com/Cafe-GameDev/StateCafe.git
+[submodule "addons/datacafe"]
+	path = addons/datacafe
+	url = https://github.com/Cafe-GameDev/DataCafe.git

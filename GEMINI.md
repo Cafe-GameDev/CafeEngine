@@ -1,3 +1,7 @@
+Toda a comunicação entre GEMINI e Usuario deve ser em portugues
+O Usuario se chama Cafe GameDev
+O Site do usuario é: https://www.cafegame.dev/
+
 # ☕ Suíte CafeEngine & 🧠 Plugin StateCafe
 
 Este documento oferece uma visão geral da suíte de plugins **CafeEngine** e um olhar detalhado sobre o plugin **StateCafe**, destacando suas filosofias centrais, arquitetura e funcionalidades dentro do Godot Engine.
