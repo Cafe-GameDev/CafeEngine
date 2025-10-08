@@ -11,7 +11,9 @@
 
 Acreditamos que o sistema de `Resource` do Godot é uma de suas ferramentas mais poderosas, e muitas vezes subutilizada. A filosofia por trás de todos os plugins da CafeEngine é tratar `Resources` não como meros contêineres de dados, mas como **objetos de comportamento ativos e inteligentes**.
 
-Isso significa que:
+Para uma compreensão mais aprofundada da nossa filosofia de design, consulte o documento completo sobre [Programação Orientada a Resources (ROP)](ROP.md).
+
+Em resumo, isso significa que:
 
 -   **Lógica é Encapsulada:** Em vez de scripts monolíticos, a lógica de um comportamento (seja um estado de IA, um álbum de música ou um padrão de ataque) é autocontida dentro de um `Resource`.
 -   **Reutilização Máxima:** Um mesmo `Resource` de comportamento pode ser configurado de maneiras diferentes no Inspector e reutilizado por múltiplos personagens e sistemas, sem duplicação de código.
@@ -45,6 +47,8 @@ Um plugin para Godot 4.x, parte da suíte CafeEngine, focado em gerenciar e estr
 ## Contribuição
 
 Este é um projeto open-source e contribuições são muito bem-vindas. Para saber como ajudar, por favor, leia nosso [guia de contribuição](CONTRIBUTING.md).
+
+Para ter uma visão geral do futuro da suíte e dos planos de desenvolvimento, consulte nosso [Roadmap](roadmap.md).
 
 ## Licença
 
