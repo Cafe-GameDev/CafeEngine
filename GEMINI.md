@@ -1,68 +1,68 @@
-# ☕ CafeEngine Suite & 🧠 StateCafe Plugin
+# ☕ Suíte CafeEngine & 🧠 Plugin StateCafe
 
-This document provides an overview of the **CafeEngine** plugin suite and a detailed look into the **StateCafe** plugin, highlighting their core philosophies, architecture, and functionalities within the Godot Engine.
-
----
-
-## ☕ CafeEngine Suite: Programming Oriented to Resources (ROP)
-
-**CafeEngine** is a collection of plugins for Godot 4, built upon the philosophy of **Resource-Oriented Programming (ROP)**. This approach aims to create modular, reusable tools deeply integrated with the Godot editor.
-
-### Core Philosophy:
-
-The central idea is to treat Godot's `Resource` system not merely as data containers, but as **active and intelligent behavior objects**. This means:
-
--   **Encapsulated Logic:** Behavior logic (e.g., AI states, music albums, attack patterns) is self-contained within a `Resource`, moving away from monolithic scripts.
--   **Maximum Reusability:** A single behavior `Resource` can be configured differently in the Inspector and reused across multiple characters and systems without code duplication.
--   **Data-Oriented Design:** The "what" (logic and data within the `Resource`) is separated from the "how" (the `Node` in the scene executing the behavior). This fosters flexible and easily modifiable systems.
--   **"Godot-Native" Workflow:** All configuration and management are performed directly through the Godot FileSystem and Inspector, making the plugins intuitive for any Godot developer.
-
-### Plugins in the Suite:
-
--   **🎵 AudioCafe:** A robust audio management system that automates the creation of `AudioStreamPlaylist`s, `AudioStreamRandomizer`s, and other dynamic audio `Resource`s from raw audio files.
--   **🧠 StateCafe:** A Layered and Parallel State Machine framework for building complex AI, character, and game flow logic in a modular and visual way using `StateBehavior` resources.
+Este documento oferece uma visão geral da suíte de plugins **CafeEngine** e um olhar detalhado sobre o plugin **StateCafe**, destacando suas filosofias centrais, arquitetura e funcionalidades dentro do Godot Engine.
 
 ---
 
-## 🧠 StateCafe Plugin: Layered and Parallel State Machines
+## ☕ Suíte CafeEngine: Programação Orientada a Resources (ROP)
 
-**StateCafe** is an advanced framework for Godot Engine 4.x, designed to simplify and enhance the creation of complex behavior logic. It implements a **Layered and Parallel State Machine architecture**, where behaviors are encapsulated in reusable `Resource`s.
+**CafeEngine** é uma coleção de plugins para Godot 4, construída sobre a filosofia da **Programação Orientada a Resources (ROP)**. Essa abordagem visa criar ferramentas modulares, reutilizáveis e profundamente integradas ao editor do Godot.
 
-### Key Features:
+### Filosofia Central:
 
--   **Parallel State Machines:** Execute multiple behaviors (e.g., Movement and Attack) simultaneously and synchronously, avoiding complex states for every combination.
--   **Resource-Based Behaviors:** Create, configure, and reuse state logic (e.g., Patrol, Jump, Dialogue) directly from the FileSystem and Inspector.
--   **Reactive Architecture:** Utilizes Godot's signal system for state transitions and for states to communicate their needs (e.g., play a sound, spawn an effect) in a decoupled manner.
--   **Global and Local Management:** Control both the game's scene flow (macro-level) and specific enemy AI (micro-level) using the same unified system.
--   **Visual Editor (Planned):** A future graph interface will allow for visual creation, connection, and debugging of state machines.
+A ideia central é tratar o sistema `Resource` do Godot não apenas como contêineres de dados, mas como **objetos de comportamento ativos e inteligentes**. Isso significa:
 
-### Core Architecture:
+-   **Lógica Encapsulada:** A lógica de comportamento (por exemplo, estados de IA, álbuns de música, padrões de ataque) é autocontida dentro de um `Resource`, afastando-se de scripts monolíticos.
+-   **Máxima Reutilização:** Um mesmo `Resource` de comportamento pode ser configurado de diferentes maneiras no Inspector e reutilizado em múltiplos personagens e sistemas sem duplicação de código.
+-   **Design Orientado a Dados:** O "o quê" (lógica e dados dentro do `Resource`) é separado do "como" (o `Node` na cena que executa o comportamento). Isso promove sistemas flexíveis e facilmente modificáveis.
+-   **Fluxo de Trabalho "Godot-Native":** Toda a configuração e gerenciamento são realizados diretamente através do FileSystem e do Inspector do Godot, tornando os plugins intuitivos para qualquer desenvolvedor Godot.
 
-StateCafe is built around three central components:
+### Plugins da Suíte:
 
-1.  **`StateComponent` (The Behavior Manager):**
-    -   A `Node` that acts as the execution engine within a scene. It manages a set of active `StateBehavior`s simultaneously, organized into "layers" or "domains" (e.g., "movement", "action").
-    -   It handles safe state transitions, propagates external events to active behaviors, and emits signals for state changes.
-
-2.  **`StateBehavior` (The Sub-Machine / Functional Domain):**
-    -   A `Resource` that encapsulates the complete logic of a functional domain (Movement, Combat, AI). It acts as a self-contained state machine managing its own internal micro-states.
-    -   Communicates its intention to transition via a `transition_requested` signal and can react to external events through a `handle_event` method.
-
-3.  **`StateMachine` (The Autoload Singleton):**
-    -   A global `Node` that serves as a high-level orchestrator.
-    -   **Role 1 (Entity Observer):** Keeps a registry of all active `StateComponent`s for debugging via the `StatePanel`.
-    -   **Role 2 (Global State Executor):** Manages the overall game flow (menus, levels, pause) using high-level `StateBehavior`s like `GameStateScene`.
-
-### Development Philosophy: `Resource` as an Active Object
-
-The StateCafe architecture emphasizes that `StateBehavior` resources are not just data containers. They are intelligent objects with their own logic, internal state, and the ability to emit signals to communicate their intentions. This means states decide *when* to transition, rather than being constantly polled by an external manager.
-
-### Compatibility:
-
--   Targeted for **Godot 4.5** and future versions. No backward compatibility with older Godot versions is planned.
+-   **🎵 AudioCafe:** Um sistema robusto de gerenciamento de áudio que automatiza a criação de `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resource`s de áudio dinâmicos a partir de arquivos de áudio brutos.
+-   **🧠 StateCafe:** Um framework de Máquina de Estados Paralela e em Camadas que permite construir lógicas complexas de IA, personagens e fluxo de jogo de forma modular e visual, utilizando `StateBehavior` resources.
 
 ---
 
-## Contribution & License
+## 🧠 Plugin StateCafe: Máquinas de Estado Paralelas e em Camadas
 
-Both CafeEngine and StateCafe are open-source projects. Contributions are welcome. The projects are distributed under the MIT License.
+**StateCafe** é um framework avançado para Godot Engine 4.x, projetado para simplificar e aprimorar a criação de lógicas de comportamento complexas. Ele implementa uma arquitetura de **Máquina de Estados Paralela e em Camadas**, onde os comportamentos são encapsulados em `Resource`s reutilizáveis.
+
+### Principais Funcionalidades:
+
+-   **Máquinas de Estado Paralelas:** Execute múltiplos comportamentos (por exemplo, Movimento e Ataque) simultaneamente e em sincronia, evitando estados complexos para cada combinação.
+-   **Comportamentos Baseados em `Resource`:** Crie, configure e reutilize a lógica de estado (por exemplo, Patrulha, Pulo, Diálogo) diretamente do FileSystem e do Inspector.
+-   **Arquitetura Reativa:** Utiliza o sistema de sinais do Godot para transições de estado e para que os estados comuniquem suas necessidades (por exemplo, tocar um som, instanciar um efeito) de forma desacoplada.
+-   **Gerenciamento Global e Local:** Controle tanto o fluxo de cenas do jogo (nível macro) quanto a IA específica de inimigos (nível micro) usando o mesmo sistema unificado.
+-   **Editor Visual (Planejado):** Uma futura interface de grafo permitirá a criação, conexão e depuração visual de máquinas de estado.
+
+### Arquitetura Central:
+
+O StateCafe é construído em torno de três componentes centrais que trabalham em conjunto para criar um sistema de comportamento em camadas:
+
+1.  **`StateComponent` (O Gerenciador de Comportamentos):**
+    -   Um `Node` que atua como o motor de execução dentro de uma cena. Ele gerencia um conjunto de `StateBehavior`s ativos simultaneamente, organizados em "camadas" ou "domínios" (por exemplo, "movimento", "ação").
+    -   Ele lida com transições de estado seguras, propaga eventos externos para comportamentos ativos e emite sinais para mudanças de estado.
+
+2.  **`StateBehavior` (A Sub-Máquina / Domínio Funcional):**
+    -   Um `Resource` que encapsula a lógica completa de um domínio funcional (Movimento, Combate, IA). Atua como uma máquina de estados autocontida que gerencia seus próprios micro-estados internos.
+    -   Comunica sua intenção de transição através de um sinal `transition_requested` e pode reagir a eventos externos por meio de um método `handle_event`.
+
+3.  **`StateMachine` (O Singleton Autoload):**
+    -   Um `Node` global que serve como um orquestrador de alto nível.
+    -   **Função 1 (Observador de Entidades):** Mantém um registro de todos os `StateComponent`s ativos na cena para depuração através do `StatePanel`.
+    -   **Função 2 (Executor de Estados Globais):** Gerencia o fluxo geral do jogo (menus, níveis, pausa) usando `StateBehavior`s de alto nível, como `GameStateScene`.
+
+### Filosofia de Desenvolvimento: `Resource` como Objeto Ativo
+
+A arquitetura do StateCafe enfatiza que os recursos `StateBehavior` não são apenas contêineres de dados. Eles são objetos inteligentes com sua própria lógica, estado interno e a capacidade de emitir sinais para comunicar suas intenções. Isso significa que os estados decidem *quando* fazer a transição, em vez de serem constantemente consultados por um gerenciador externo.
+
+### Compatibilidade:
+
+-   Destinado ao **Godot 4.5** e versões futuras. Nenhuma compatibilidade retroativa com versões anteriores do Godot está planejada.
+
+---
+
+## Contribuição e Licença
+
+Tanto o CafeEngine quanto o StateCafe são projetos de código aberto. Contribuições são bem-vindas. Os projetos são distribuídos sob a Licença MIT.
