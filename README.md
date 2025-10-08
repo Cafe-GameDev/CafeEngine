@@ -34,6 +34,12 @@ Um framework de Máquina de Estados Paralela e em Camadas que permite construir 
 
 > [Saiba mais sobre o StateCafe...](addons/statecafe/README.md)
 
+### 📊 DataCafe
+
+Um plugin para Godot 4.x, parte da suíte CafeEngine, focado em gerenciar e estruturar dados de jogo de forma modular e reutilizável através de Resources.
+
+> [Saiba mais sobre o DataCafe...](addons/datacafe/README.md)
+
 ---
 
 ## Contribuição
