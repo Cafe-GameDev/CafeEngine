@@ -1,0 +1,6 @@
+[submodule "addons/audiocafe"]
+	path = addons/audiocafe
+	url = https://github.com/Cafe-GameDev/AudioCafe.git
+[submodule "addons/statecafe"]
+	path = addons/statecafe
+	url = https://github.com/Cafe-GameDev/StateCafe.git
