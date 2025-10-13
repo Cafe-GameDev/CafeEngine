@@ -31,7 +31,7 @@ Em resumo, isso significa que:
 
 Nucleo do CafeEngine
 
-> [Saiba mais sobre o AudioManager...](addons/core_engine/README.md)
+> [Saiba mais sobre o CoreEngine...](addons/core_engine/README.md)
 
 ### 🎵 AudioManager
 
