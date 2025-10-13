@@ -24,6 +24,15 @@ Em resumo, isso significa que:
 
 ## Plugins da Suíte
 
+### ⚙️ CoreEngine
+
+[![Godot Asset Library](https://img.shields.io/badge/Godot_Asset_Library-CoreEngine-478cbf?style=for-the-badge&logo=godot-engine)](https://godotengine.org/asset-library/asset/link-to-asset) <!-- Placeholder -->
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
+Nucleo do CafeEngine
+
+> [Saiba mais sobre o AudioManager...](addons/core_engine/README.md)
+
 ### 🎵 AudioManager
 
 [![Godot Asset Library](https://img.shields.io/badge/Godot_Asset_Library-AudioManager-478cbf?style=for-the-badge&logo=godot-engine)](https://godotengine.org/asset-library/asset/link-to-asset) <!-- Placeholder -->
@@ -31,7 +40,7 @@ Em resumo, isso significa que:
 
 Um sistema de gerenciamento de áudio robusto que transforma pastas de arquivos de som em `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resource`s de áudio dinâmicos, prontos para uso e exportação.
 
-> [Saiba mais sobre o AudioManager...](addons/audiocafe/README.md)
+> [Saiba mais sobre o AudioManager...](addons/audio_manager/README.md)
 
 ### 🧠 StateMachine
 
@@ -40,7 +49,7 @@ Um sistema de gerenciamento de áudio robusto que transforma pastas de arquivos 
 
 Um framework de Máquina de Estados Paralela e em Camadas que permite construir lógicas complexas de IA, personagens e fluxo de jogo de forma modular e visual, utilizando `StateBehavior` resources.
 
-> [Saiba mais sobre o StateMachine...](addons/statecafe/README.md)
+> [Saiba mais sobre o StateMachine...](addons/state_machine/README.md)
 
 ### 📊 DataBehavior
 
@@ -49,7 +58,7 @@ Um framework de Máquina de Estados Paralela e em Camadas que permite construir 
 
 Um plugin para Godot 4.x, parte da suíte CafeEngine, focado em gerenciar e estruturar dados de jogo de forma modular e reutilizável através de Resources.
 
-> [Saiba mais sobre o DataBehavior...](addons/datacafe/README.md)
+> [Saiba mais sobre o DataBehavior...](addons/data_behavior/README.md)
 
 ---
 
