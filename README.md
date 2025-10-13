@@ -26,17 +26,26 @@ Em resumo, isso significa que:
 
 ### 🎵 AudioManager
 
+[![Godot Asset Library](https://img.shields.io/badge/Godot_Asset_Library-AudioManager-478cbf?style=for-the-badge&logo=godot-engine)](https://godotengine.org/asset-library/asset/link-to-asset) <!-- Placeholder -->
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
 Um sistema de gerenciamento de áudio robusto que transforma pastas de arquivos de som em `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resource`s de áudio dinâmicos, prontos para uso e exportação.
 
 > [Saiba mais sobre o AudioManager...](addons/audiocafe/README.md)
 
 ### 🧠 StateMachine
 
+[![Godot Asset Library](https://img.shields.io/badge/Godot_Asset_Library-StateMachine-478cbf?style=for-the-badge&logo=godot-engine)](https://godotengine.org/asset-library/asset/link-to-asset) <!-- Placeholder -->
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
 Um framework de Máquina de Estados Paralela e em Camadas que permite construir lógicas complexas de IA, personagens e fluxo de jogo de forma modular e visual, utilizando `StateBehavior` resources.
 
 > [Saiba mais sobre o StateMachine...](addons/statecafe/README.md)
 
 ### 📊 DataBehavior
+
+[![Godot Asset Library](https://img.shields.io/badge/Godot_Asset_Library-DataBehavior-478cbf?style=for-the-badge&logo=godot-engine)](https://godotengine.org/asset-library/asset/link-to-asset) <!-- Placeholder -->
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 Um plugin para Godot 4.x, parte da suíte CafeEngine, focado em gerenciar e estruturar dados de jogo de forma modular e reutilizável através de Resources.
 
