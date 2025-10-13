@@ -1,12 +1,12 @@
-[submodule "addons/audio_manager"]
-	path = addons/audio_manager
-	url = https://github.com/Cafe-GameDev/AudioCafe.git
-[submodule "addons/state_machine"]
-	path = addons/state_machine
-	url = https://github.com/Cafe-GameDev/StateCafe.git
-[submodule "addons/data_behavior"]
-	path = addons/data_behavior
-	url = https://github.com/Cafe-GameDev/DataCafe.git
 [submodule "addons/core_engine"]
 	path = addons/core_engine
 	url = https://github.com/Cafe-GameDev/CoreEngine.git
+[submodule "addons/audio_manager"]
+	path = addons/audio_manager
+	url = https://github.com/Cafe-GameDev/AudioManager.git
+[submodule "addons/state_machine"]
+	path = addons/state_machine
+	url = https://github.com/Cafe-GameDev/StateMachine.git
+[submodule "addons/data_behavior"]
+	path = addons/data_behavior
+	url = https://github.com/Cafe-GameDev/DataBehavior.git
