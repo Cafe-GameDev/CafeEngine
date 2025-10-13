@@ -82,15 +82,15 @@ addons/[plugin_name]/
 
 ---
 
-## 4. CoreCafe (Núcleo da Suíte)
+## 4. CoreEngine (Núcleo da Suíte)
 
 ### 4.1. Objetivo
 
-O **CoreCafe** é o módulo central compartilhado por todos os plugins da CafeEngine. Ele fornece classes e funções de suporte para registro, comunicação e gerenciamento.
+O **CoreEngine** é o módulo central compartilhado por todos os plugins da CafeEngine. Ele fornece classes e funções de suporte para registro, comunicação e gerenciamento.
 
 ### 4.2. Componentes Principais
 
-* **`CoreCafe` (Singleton):** Gerencia plugins ativos e dependências.
+* **`CoreEngine` (Singleton):** Gerencia plugins ativos e dependências.
 * **`CafeResource` (Base Class):** Resource padrão com integração automática de sinais e callbacks.
 * **`CafePanelHost`:** Controla a adição/remoção dinâmica de painéis no editor.
 
@@ -109,7 +109,7 @@ O **CoreCafe** é o módulo central compartilhado por todos os plugins da CafeEn
 ## 6. Dependências e Integração
 
 * Plugins devem declarar dependências opcionais em `plugin.cfg`.
-* O `CoreCafe` verifica compatibilidade de versão em runtime.
+* O `CoreEngine` verifica compatibilidade de versão em runtime.
 * Nenhum plugin deve depender rigidamente de outro para funcionar.
 
 ---
@@ -123,7 +123,7 @@ uses → [StateBehaviorMove] (Resource)
    ↓
 emits → signal state_changed
    ↓
-captured by → [StateCafeManager] (Autoload)
+captured by → [StateMachineManager] (Autoload)
    ↓
 updates → Editor UI / Debug Panel
 ```
@@ -153,7 +153,7 @@ updates → Editor UI / Debug Panel
 
 ## 10. Considerações Futuras
 
-* Integração cruzada entre plugins (ex: StateCafe ↔ DataCafe).
+* Integração cruzada entre plugins (ex: StateMachine ↔ DataBehavior).
 * Editor visual unificado (gráfico de estados, eventos e diálogos).
 * Geração automática de Resources e código base.
 * Pooling, carregamento assíncrono e otimizações de performance.

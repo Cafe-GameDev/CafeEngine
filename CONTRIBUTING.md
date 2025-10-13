@@ -15,7 +15,7 @@ Para entender a base conceitual por trás da CafeEngine, recomendamos a leitura 
 * **Verifique se o bug já não foi reportado:** Pesquise na seção de "Issues" do nosso repositório no GitHub.
 * **Seja claro e descritivo:** No seu relatório, inclua:
 
-  * A versão do Godot e do plugin **CafeEngine** que você está usando (ex: StateCafe v1.0, AudioCafe v1.1).
+  * A versão do Godot e do plugin **CafeEngine** que você está usando (ex: StateMachine v1.0, AudioManager v1.1).
   * Passos exatos para reproduzir o bug.
   * O que você esperava que acontecesse.
   * O que de fato aconteceu (incluindo mensagens de erro, screenshots, etc.).

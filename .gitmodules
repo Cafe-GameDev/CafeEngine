@@ -7,3 +7,6 @@
 [submodule "addons/data_behavior"]
 	path = addons/data_behavior
 	url = https://github.com/Cafe-GameDev/DataCafe.git
+[submodule "addons/core_engine"]
+	path = addons/core_engine
+	url = https://github.com/Cafe-GameDev/CoreEngine.git

@@ -22,9 +22,9 @@ O sistema de colisão da Godot, além dos nós (`CollisionShape2D` / `CollisionS
 
 Esses `Resources` (ex: `RectangleShape2D`, `CircleShape2D`, etc.) possuem métodos internos que detectam quando algo entra ou sai da área e emitem sinais com essas informações para o nó pai (como `Area2D` ou `PhysicsBody2D`). Isso demonstra que, mesmo sendo um dado, ele possui comportamento e integração lógica.
 
-### 🔹 Exemplo de Resource Modular: `AudioConfig` (do plugin AudioCafe)
+### 🔹 Exemplo de Resource Modular: `AudioConfig` (do plugin AudioManager)
 
-No plugin AudioCafe, o `AudioConfig` é um Resource customizado que armazena as configurações do plugin. Ele emite um sinal toda vez que é modificado, informando que a interface do plugin precisa ser atualizada. Isso permite que o editor reaja automaticamente às mudanças do usuário, sem precisar reiniciar o plugin ou recarregar o editor, sendo um excelente exemplo de Resource reativo e integrado ao editor via `EditorPlugin`.
+No plugin AudioManager, o `AudioConfig` é um Resource customizado que armazena as configurações do plugin. Ele emite um sinal toda vez que é modificado, informando que a interface do plugin precisa ser atualizada. Isso permite que o editor reaja automaticamente às mudanças do usuário, sem precisar reiniciar o plugin ou recarregar o editor, sendo um excelente exemplo de Resource reativo e integrado ao editor via `EditorPlugin`.
 
 ---
 

@@ -24,23 +24,23 @@ Em resumo, isso significa que:
 
 ## Plugins da Suíte
 
-### 🎵 AudioCafe
+### 🎵 AudioManager
 
 Um sistema de gerenciamento de áudio robusto que transforma pastas de arquivos de som em `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resource`s de áudio dinâmicos, prontos para uso e exportação.
 
-> [Saiba mais sobre o AudioCafe...](addons/audiocafe/README.md)
+> [Saiba mais sobre o AudioManager...](addons/audiocafe/README.md)
 
-### 🧠 StateCafe
+### 🧠 StateMachine
 
 Um framework de Máquina de Estados Paralela e em Camadas que permite construir lógicas complexas de IA, personagens e fluxo de jogo de forma modular e visual, utilizando `StateBehavior` resources.
 
-> [Saiba mais sobre o StateCafe...](addons/statecafe/README.md)
+> [Saiba mais sobre o StateMachine...](addons/statecafe/README.md)
 
-### 📊 DataCafe
+### 📊 DataBehavior
 
 Um plugin para Godot 4.x, parte da suíte CafeEngine, focado em gerenciar e estruturar dados de jogo de forma modular e reutilizável através de Resources.
 
-> [Saiba mais sobre o DataCafe...](addons/datacafe/README.md)
+> [Saiba mais sobre o DataBehavior...](addons/datacafe/README.md)
 
 ---
 

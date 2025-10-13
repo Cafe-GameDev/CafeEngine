@@ -15,7 +15,7 @@ A CafeEngine é construída sobre a ideia de tratar o sistema `Resource` do Godo
 
 ---
 
-## 🧠 Plugin StateCafe: Máquinas de Estado Paralelas e em Camadas
+## 🧠 Plugin StateMachine: Máquinas de Estado Paralelas e em Camadas
 
 **Objetivo:** Simplificar e aprimorar a criação de lógicas de comportamento complexas.
 
@@ -68,7 +68,7 @@ A CafeEngine é construída sobre a ideia de tratar o sistema `Resource` do Godo
 
 ---
 
-## 🎵 AudioCafe: Sistema de Gerenciamento de Áudio
+## 🎵 AudioManager: Sistema de Gerenciamento de Áudio
 
 **Objetivo:** Simplificar o gerenciamento de áudio, automatizando a criação de `AudioStreamPlaylist`, `AudioStreamRandomizer` e `AudioStreamSynchronized`.
 
@@ -112,7 +112,7 @@ A CafeEngine é construída sobre a ideia de tratar o sistema `Resource` do Godo
 
 ---
 
-## 📊 DataCafe: Gerenciamento e Estruturação de Dados de Jogo
+## 📊 DataBehavior: Gerenciamento e Estruturação de Dados de Jogo
 
 **Objetivo:** Gerenciar e estruturar dados de jogo de forma modular e reutilizável através de Resources.
 
@@ -196,7 +196,7 @@ A CafeEngine é construída sobre a ideia de tratar o sistema `Resource` do Godo
 
 #### Considerações Futuras (Pós-MVP):
 
--   Editor Visual de Comportamentos, Presets de Câmera, Integração com `StateCafe`.
+-   Editor Visual de Comportamentos, Presets de Câmera, Integração com `StateMachine`.
 
 ---
 

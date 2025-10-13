@@ -2,9 +2,9 @@ Toda a comunicação entre GEMINI e Usuario deve ser em portugues
 O Usuario se chama Café GameDev
 O Site do usuario é: https://www.cafegame.dev/
 
-# ☕ Suíte CafeEngine & 🧠 Plugin StateCafe
+# ☕ Suíte CafeEngine & 🧠 Plugin StateMachine
 
-Este documento oferece uma visão geral da suíte de plugins **CafeEngine** e um olhar detalhado sobre o plugin **StateCafe**, destacando suas filosofias centrais, arquitetura e funcionalidades dentro do Godot Engine.
+Este documento oferece uma visão geral da suíte de plugins **CafeEngine** e um olhar detalhado sobre o plugin **StateMachine**, destacando suas filosofias centrais, arquitetura e funcionalidades dentro do Godot Engine.
 
 ---
 
@@ -23,14 +23,14 @@ A ideia central é tratar o sistema `Resource` do Godot não apenas como contêi
 
 ### Plugins da Suíte:
 
--   **🎵 AudioCafe:** Um sistema robusto de gerenciamento de áudio que automatiza a criação de `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resource`s de áudio dinâmicos a partir de arquivos de áudio brutos.
--   **🧠 StateCafe:** Um framework de Máquina de Estados Paralela e em Camadas que permite construir lógicas complexas de IA, personagens e fluxo de jogo de forma modular e visual, utilizando `StateBehavior` resources.
+-   **🎵 AudioManager:** Um sistema robusto de gerenciamento de áudio que automatiza a criação de `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resource`s de áudio dinâmicos a partir de arquivos de áudio brutos.
+-   **🧠 StateMachine:** Um framework de Máquina de Estados Paralela e em Camadas que permite construir lógicas complexas de IA, personagens e fluxo de jogo de forma modular e visual, utilizando `StateBehavior` resources.
 
 ---
 
-## 🧠 Plugin StateCafe: Máquinas de Estado Paralelas e em Camadas
+## 🧠 Plugin StateMachine: Máquinas de Estado Paralelas e em Camadas
 
-**StateCafe** é um framework avançado para Godot Engine 4.x, projetado para simplificar e aprimorar a criação de lógicas de comportamento complexas. Ele implementa uma arquitetura de **Máquina de Estados Paralela e em Camadas**, onde os comportamentos são encapsulados em `Resource`s reutilizáveis.
+**StateMachine** é um framework avançado para Godot Engine 4.x, projetado para simplificar e aprimorar a criação de lógicas de comportamento complexas. Ele implementa uma arquitetura de **Máquina de Estados Paralela e em Camadas**, onde os comportamentos são encapsulados em `Resource`s reutilizáveis.
 
 ### Principais Funcionalidades:
 
@@ -42,7 +42,7 @@ A ideia central é tratar o sistema `Resource` do Godot não apenas como contêi
 
 ### Arquitetura Central:
 
-O StateCafe é construído em torno de três componentes centrais que trabalham em conjunto para criar um sistema de comportamento em camadas:
+O StateMachine é construído em torno de três componentes centrais que trabalham em conjunto para criar um sistema de comportamento em camadas:
 
 1.  **`StateComponent` (O Gerenciador de Comportamentos):**
     -   Um `Node` que atua como o motor de execução dentro de uma cena. Ele gerencia um conjunto de `StateBehavior`s ativos simultaneamente, organizados em "camadas" ou "domínios" (por exemplo, "movimento", "ação").
@@ -59,7 +59,7 @@ O StateCafe é construído em torno de três componentes centrais que trabalham 
 
 ### Filosofia de Desenvolvimento: `Resource` como Objeto Ativo
 
-A arquitetura do StateCafe enfatiza que os recursos `StateBehavior` não são apenas contêineres de dados. Eles são objetos inteligentes com sua própria lógica, estado interno e a capacidade de emitir sinais para comunicar suas intenções. Isso significa que os estados decidem *quando* fazer a transição, em vez de serem constantemente consultados por um gerenciador externo.
+A arquitetura do StateMachine enfatiza que os recursos `StateBehavior` não são apenas contêineres de dados. Eles são objetos inteligentes com sua própria lógica, estado interno e a capacidade de emitir sinais para comunicar suas intenções. Isso significa que os estados decidem *quando* fazer a transição, em vez de serem constantemente consultados por um gerenciador externo.
 
 ### Compatibilidade:
 
@@ -69,4 +69,4 @@ A arquitetura do StateCafe enfatiza que os recursos `StateBehavior` não são ap
 
 ## Contribuição e Licença
 
-Tanto o CafeEngine quanto o StateCafe são projetos de código aberto. Contribuições são bem-vindas. Os projetos são distribuídos sob a Licença MIT.
+Tanto o CafeEngine quanto o StateMachine são projetos de código aberto. Contribuições são bem-vindas. Os projetos são distribuídos sob a Licença MIT.

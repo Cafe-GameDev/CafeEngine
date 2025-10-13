@@ -22,7 +22,7 @@ Se aplicável, adicione screenshots para ajudar a explicar seu problema.
 
 **Contexto:**
  - Versão do Godot: [ex. 4.5]
- - Versão do CafeEngine (Plugin): [ex. StateCafe v1.0]
+ - Versão do CafeEngine (Plugin): [ex. StateMachine v1.0]
  - OS: [ex. Windows, Linux, macOS]
 
 **Informações Adicionais**
