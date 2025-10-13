@@ -20,10 +20,13 @@ buses/default_bus_layout="uid://iqdcw3igji8l"
 [autoload]
 
 AudioManager="*res://addons/audio_manager/components/audio_manager.tscn"
+DataPoll="*res://addons/data_behavior/components/data_poll.gd"
+StateMachine="*res://addons/state_machine/components/state_machine.gd"
+CoreEngine="*res://addons/core_engine/utils/core_engine.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/audio_manager/plugin.cfg", "res://addons/core_engine/plugin.cfg", "res://addons/data_behavior/plugin.cfg", "res://addons/state_machine/plugin.cfg")
 
 [rendering]
 
