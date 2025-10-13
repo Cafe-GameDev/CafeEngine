@@ -1,5 +1,5 @@
 Toda a comunicação entre GEMINI e Usuario deve ser em portugues
-O Usuario se chama Cafe GameDev
+O Usuario se chama Café GameDev
 O Site do usuario é: https://www.cafegame.dev/
 
 # ☕ Suíte CafeEngine & 🧠 Plugin StateCafe

@@ -2,7 +2,7 @@
 
 **Versão do Documento:** 1.1
 **Data:** 2025-10-13
-**Autor:** Gemini (em colaboração com Cafe GameDev)
+**Autor:** Café GameDev
 
 ---
 
@@ -82,15 +82,15 @@ addons/[plugin_name]/
 
 ---
 
-## 4. CafeCore (Núcleo da Suíte)
+## 4. CoreCafe (Núcleo da Suíte)
 
 ### 4.1. Objetivo
 
-O **CafeCore** é o módulo central compartilhado por todos os plugins da CafeEngine. Ele fornece classes e funções de suporte para registro, comunicação e gerenciamento.
+O **CoreCafe** é o módulo central compartilhado por todos os plugins da CafeEngine. Ele fornece classes e funções de suporte para registro, comunicação e gerenciamento.
 
 ### 4.2. Componentes Principais
 
-* **`CafeCore` (Singleton):** Gerencia plugins ativos e dependências.
+* **`CoreCafe` (Singleton):** Gerencia plugins ativos e dependências.
 * **`CafeResource` (Base Class):** Resource padrão com integração automática de sinais e callbacks.
 * **`CafePanelHost`:** Controla a adição/remoção dinâmica de painéis no editor.
 
@@ -109,7 +109,7 @@ O **CafeCore** é o módulo central compartilhado por todos os plugins da CafeEn
 ## 6. Dependências e Integração
 
 * Plugins devem declarar dependências opcionais em `plugin.cfg`.
-* O `CafeCore` verifica compatibilidade de versão em runtime.
+* O `CoreCafe` verifica compatibilidade de versão em runtime.
 * Nenhum plugin deve depender rigidamente de outro para funcionar.
 
 ---
