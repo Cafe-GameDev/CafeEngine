@@ -2,10 +2,6 @@
 
 Primeiramente, obrigado pelo seu interesse em contribuir para o **CafeEngine**! Toda ajuda é bem-vinda para tornar esta suíte de plugins uma ferramenta ainda melhor para a comunidade Godot.
 
-## Roadmap de Desenvolvimento
-
-Antes de contribuir, é uma boa ideia se familiarizar com nosso [Roadmap Geral da Suíte CafeEngine](roadmap.md) e com o plano de desenvolvimento para cada plugin. Você pode encontrar os documentos de design nas respectivas pastas `docs/` de cada addon (ex: `addons/statecafe/docs/plugin_design_document.md`).
-
 ## Nossa Filosofia de Design
 
 Para entender a base conceitual por trás da CafeEngine, recomendamos a leitura do nosso documento sobre [Programação Orientada a Resources (ROP)](ROP.md).
