@@ -28,7 +28,6 @@ Em resumo, isso significa que:
 
 [![CoreEngine](https://img.shields.io/badge/Godot_Asset_Library-CoreEngine-478cbf?style=for-the-badge&logo=godot-engine)](https://godotengine.org/asset-library/asset/link-to-asset)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[Saiba mais](addons/core_engine/README.md)
 
 Nucleo do CafeEngine
 
@@ -38,7 +37,6 @@ Nucleo do CafeEngine
 
 [![AudioManager](https://img.shields.io/badge/Godot_Asset_Library-AudioManager-478cbf?style=for-the-badge&logo=godot-engine)](https://godotengine.org/asset-library/asset/link-to-asset)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[Saiba mais](addons/audio_manager/README.md)
 
 Um sistema de gerenciamento de áudio robusto que transforma pastas de arquivos de som em `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resource`s de áudio dinâmicos, prontos para uso e exportação.
 
@@ -48,7 +46,6 @@ Um sistema de gerenciamento de áudio robusto que transforma pastas de arquivos 
 
 [![StateMachine](https://img.shields.io/badge/Godot_Asset_Library-StateMachine-478cbf?style=for-the-badge&logo=godot-engine)](https://godotengine.org/asset-library/asset/link-to-asset)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[Saiba mais](addons/state_machine/README.md)
 
 Um framework de Máquina de Estados Paralela e em Camadas que permite construir lógicas complexas de IA, personagens e fluxo de jogo de forma modular e visual, utilizando `StateBehavior` resources.
 
@@ -58,7 +55,6 @@ Um framework de Máquina de Estados Paralela e em Camadas que permite construir 
 
 [![DataBehavior](https://img.shields.io/badge/Godot_Asset_Library-DataBehavior-478cbf?style=for-the-badge&logo=godot-engine)](https://godotengine.org/asset-library/asset/link-to-asset)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[Saiba mais](addons/data_behavior/README.md)
 
 Um plugin para Godot 4.x, parte da suíte CafeEngine, focado em gerenciar e estruturar dados de jogo de forma modular e reutilizável através de Resources.
 
