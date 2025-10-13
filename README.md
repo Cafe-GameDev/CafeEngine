@@ -40,9 +40,9 @@ Nucleo do CafeEngine
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 ![Version](https://img.shields.io/badge/Version-v1.0.0-blue)
 
-[![AudioManager](https://img.shields.io/badge/AudioManager-v1.0.0-478cbf?style=flat)](https://godotengine.org/asset-library/asset/link-to-asset)
-[![License](https://img.shields.io/badge/License-MIT-f1c40f?style=flat)](https://opensource.org/licenses/MIT)
-![Version](https://img.shields.io/badge/Version-v1.0.0-blue?style=flat)
+[![AudioManager](https://img.shields.io/badge/AudioManager-v1.0.0-478cbf?style=for-the-badge)](https://godotengine.org/asset-library/asset/link-to-asset)
+[![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
+![Version](https://img.shields.io/badge/Version-v1.0.0-blue?style=for-the-badge)
 
 Um sistema de gerenciamento de áudio robusto que transforma pastas de arquivos de som em `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resource`s de áudio dinâmicos, prontos para uso e exportação.
 
