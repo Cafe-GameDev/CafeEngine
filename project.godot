@@ -23,11 +23,10 @@ AudioManager="*res://addons/audio_manager/components/audio_manager.tscn"
 DataBehavior="*res://addons/data_behavior/components/data_behavior.gd"
 StateMachine="*res://addons/state_machine/components/state_machine.gd"
 CoreEngine="*res://addons/core_engine/utils/core_engine.gd"
-ScaffoldingManager="*res://addons/scaffoldingcafe/components/scaffolding_manager.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/audio_manager/plugin.cfg", "res://addons/core_engine/plugin.cfg", "res://addons/data_behavior/plugin.cfg", "res://addons/scaffoldingcafe/plugin.cfg", "res://addons/state_machine/plugin.cfg")
+enabled=PackedStringArray("res://addons/audio_manager/plugin.cfg", "res://addons/core_engine/plugin.cfg", "res://addons/data_behavior/plugin.cfg", "res://addons/state_machine/plugin.cfg")
 
 [rendering]
 
