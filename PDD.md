@@ -119,13 +119,13 @@ O **CoreEngine** é o módulo central compartilhado por todos os plugins da Cafe
 ```text
 [Node Player]
    ↓
-uses → [StateBehaviorMove] (Resource)
+uses -> [StateBehaviorMove] (Resource)
    ↓
-emits → signal state_changed
+emits -> signal state_changed
    ↓
-captured by → [StateMachineManager] (Autoload)
+captured by -> [StateMachineManager] (Autoload)
    ↓
-updates → Editor UI / Debug Panel
+updates -> Editor UI / Debug Panel
 ```
 
 ---
@@ -153,7 +153,7 @@ updates → Editor UI / Debug Panel
 
 ## 10. Considerações Futuras
 
-* Integração cruzada entre plugins (ex: StateMachine ↔ DataBehavior).
+* Integração cruzada entre plugins (ex: StateMachine <-> DataBehavior).
 * Editor visual unificado (gráfico de estados, eventos e diálogos).
 * Geração automática de Resources e código base.
 * Pooling, carregamento assíncrono e otimizações de performance.
@@ -162,9 +162,9 @@ updates → Editor UI / Debug Panel
 
 ## 11. Estrutura de Documentação Sugerida
 
-* `pdd_core.md` → Filosofia e arquitetura da suíte.
-* `pdd_[plugin].md` → Documento de design individual de cada plugin.
-* `pdd_suite_overview.md` → Roadmap geral, versões e integrações planejadas.
+* `pdd_core.md` -> Filosofia e arquitetura da suíte.
+* `pdd_[plugin].md` -> Documento de design individual de cada plugin.
+* `pdd_suite_overview.md` -> Roadmap geral, versões e integrações planejadas.
 
 ---
 
