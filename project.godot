@@ -20,9 +20,9 @@ buses/default_bus_layout="uid://iqdcw3igji8l"
 [autoload]
 
 CoreEngine="*res://addons/core_engine/utils/core_engine.gd"
-AudioManager="*res://addons/audio_manager/components/audio_manager.tscn"
 DataBehavior="*res://addons/data_behavior/components/data_behavior.gd"
 StateMachine="*res://addons/state_machine/components/state_machine.gd"
+AudioManager="*res://addons/audio_manager/components/audio_manager.tscn"
 
 [editor_plugins]
 
