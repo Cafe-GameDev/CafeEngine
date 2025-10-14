@@ -6,19 +6,31 @@
 **CafeEngine** é uma suíte de plugins para Godot 4, construída com uma filosofia de **Programação Orientada a Resources** para criar ferramentas modulares, reutilizáveis e profundamente integradas ao editor.
 
 ---
+## WorkFlow
 
-## Nossa Filosofia: Programação Orientada a Resources (ROP)
+O principal objetivo da CafeEngine não é adicionar funcionalidades impossíveis de se criar no Godot, mas sim **otimizar radicalmente o fluxo de trabalho (workflow)** do desenvolvedor. Tudo o que nossos plugins oferecem poderia ser feito manualmente, mas exigiria tempo, código repetitivo e organização manual.
 
-Acreditamos que o sistema de `Resource` do Godot é uma de suas ferramentas mais poderosas, e muitas vezes subutilizada. A filosofia por trás de todos os plugins da CafeEngine é tratar `Resources` não como meros contêineres de dados, mas como **objetos de comportamento ativos e inteligentes**.
+Nossa filosofia é fornecer uma **camada de qualidade de vida** sobre a engine, oferecendo um caminho estruturado, visual e produtivo para tarefas comuns. A CafeEngine se baseia na sinergia de cinco pilares que, juntos, permitem que você se concentre no design do seu jogo, e não na configuração.
 
-Para uma compreensão mais aprofundada da nossa filosofia de design, consulte o documento completo sobre [Programação Orientada a Resources (ROP)](ROP.md).
+### 1. Programação Orientada a Resources (ROP)
 
-Em resumo, isso significa que:
+Este é o coração da nossa filosofia. Tratamos `Resources` não como meros contêineres de dados, mas como **objetos de comportamento ativos e inteligentes**. A lógica de um comportamento (um estado de IA, um padrão de ataque, um perfil de áudio) é encapsulada diretamente no `Resource`, tornando-o reutilizável e configurável pelo Inspector.
 
--   **Lógica é Encapsulada:** Em vez de scripts monolíticos, a lógica de um comportamento (seja um estado de IA, um álbum de música ou um padrão de ataque) é autocontida dentro de um `Resource`.
--   **Reutilização Máxima:** Um mesmo `Resource` de comportamento pode ser configurado de maneiras diferentes no Inspector e reutilizado por múltiplos personagens e sistemas, sem duplicação de código.
--   **Design Orientado a Dados:** Separamos o **"o quê"** (a lógica e os dados dentro do `Resource`) do **"como"** (o `Node` na cena que executa aquele comportamento). Isso torna os sistemas incrivelmente flexíveis e fáceis de modificar.
--   **Fluxo de Trabalho "Godot-Native":** Toda a configuração e gerenciamento são feitos através do FileSystem e do Inspector, tornando o uso dos plugins intuitivo para qualquer desenvolvedor Godot.
+> Para uma imersão profunda, leia nosso manifesto sobre [Programação Orientada a Resources (ROP)](ROP.md).
+
+### 2. Blueprints
+
+No ecossistema CafeEngine, os `Resources` atuam como **Blueprints**. Um `StateBehavior`, por exemplo, não é apenas um estado, mas um modelo de comportamento que pode ser instanciado e configurado de inúmeras maneiras. Um `WeaponData` é um blueprint para uma arma, contendo todos os seus atributos. Isso permite que desenvolvedores e designers criem variações complexas sem escrever uma linha de código.
+
+### 3. Autoloads / Custom Types (Nodes)
+
+Se os `Resources` (Blueprints) definem **"o quê"** fazer, os `Nodes` definem **"como"** e **"onde"** fazer.
+-   **Autoloads (Managers):** São os orquestradores globais. O `StateMachine` gerencia o fluxo do jogo, enquanto o `AudioManager` controla o áudio. Eles são o cérebro central que coordena os sistemas.
+-   **Custom Types (Components):** São os executores na cena. Um `StateComponent` é um `Node` que você adiciona a um personagem para rodar a lógica definida nos `StateBehavior`s. Eles são a ponte entre a cena e os Blueprints.
+
+### 4. Panels / Editors
+
+São as **ferramentas visuais** que unem tudo. Em vez de configurar sistemas complexos via código, você usa painéis integrados ao editor do Godot. O `CafePanel` é o nosso dock unificado, onde você pode gerenciar áudio, criar máquinas de estado, e visualizar dados de forma intuitiva. Eles são a interface que torna o poder dos outros pilares acessível e fácil de usar.
 
 ---
 
