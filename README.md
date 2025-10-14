@@ -37,6 +37,9 @@ A CafeEngine organiza suas ferramentas visuais em quatro tipos de painéis, cada
 *   **BottomPanel:** Painéis ancorados na parte inferior, usados para gerenciamento contextual e listas, como o `DataBottomPanel` e o `StateBottomPanel`.
 *   **ModalPanel:** Janelas pop-up que facilitam a edição detalhada e a criação de novos Resources em um ambiente focado, como o `DataModalPanel` e o `StateModalPanel`.
 
+### 5. Integração Cross-Plugin
+A CafeEngine é projetada para que seus plugins trabalhem em conjunto, permitindo a criação de sistemas complexos através da comunicação e colaboração. Para entender como os plugins se relacionam e como desenvolver features que abrangem múltiplos módulos, consulte [CrossPlugin.md](CrossPlugin.md).
+
 ---
 
 ## Plugins da Suíte
