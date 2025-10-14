@@ -8,6 +8,7 @@ Este documento contém configurações e memórias específicas para o agente Ge
 -   O usuario odeia Emojis.
 -   O usuário se chama Café GameDev.
 -   O site do usuário é: https://www.cafegame.dev/
+-   Sempre que receber uma url, faça webfetch nela
 
 ## Metodologia de Trabalho
 
