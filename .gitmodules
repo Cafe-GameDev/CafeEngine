@@ -10,3 +10,6 @@
 [submodule "addons/data_behavior"]
 	path = addons/data_behavior
 	url = https://github.com/Cafe-GameDev/DataBehavior.git
+[submodule "addons/blueprint_editor"]
+	path = addons/blueprint_editor
+	url = https://github.com/Cafe-GameDev/BlueprintEditor.git
