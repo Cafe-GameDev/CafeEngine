@@ -32,6 +32,35 @@ A ideia central é tratar o sistema `Resource` do Godot não apenas como contêi
 -   **Design Orientado a Dados:** O "o quê" (lógica e dados dentro do `Resource`) é separado do "como" (o `Node` na cena que executa o comportamento). Isso promove sistemas flexíveis e facilmente modificáveis.
 -   **Fluxo de Trabalho "Godot-Native":** Toda a configuração e gerenciamento são realizados diretamente através do FileSystem e do Inspector do Godot, tornando os plugins intuitivos para qualquer desenvolvedor Godot.
 
+### Metodologia de Plugin Design Document (PDD)
+
+A CafeEngine adota uma metodologia de Plugin Design Document (PDD) para garantir a consistência, modularidade e interoperabilidade entre todos os plugins da suíte. Cada PDD detalha a visão, filosofia, arquitetura, estrutura de arquivos, plano de desenvolvimento em fases, padrões de qualidade de código e considerações futuras para um plugin específico.
+
+-   **Visão Geral e Filosofia:** Define o conceito e os princípios fundamentais do plugin.
+-   **Arquitetura Central:** Descreve os componentes principais e como eles interagem.
+-   **Estrutura de Arquivos Padrão:** Garante consistência e facilita a navegação.
+-   **Plano de Desenvolvimento em Fases:** Detalha os objetivos e resultados de cada fase.
+-   **Padrões de Qualidade de Código:** Assegura a legibilidade e manutenibilidade.
+
+### Tipos de Painéis no Editor Godot
+
+A interação com o editor Godot na CafeEngine é aprimorada através de diferentes tipos de painéis, cada um com um propósito e nível de intrusividade específicos:
+
+-   **SidePanel:** Painéis não intrusivos, compactos e laterais, ideais para configurações rápidas, exibição de status concisos ou acionamento de funções auxiliares. O `CorePanel` é o host unificado para todos os SidePanels dos plugins da CafeEngine.
+-   **TopPanel:** Painéis de alto nível que ocupam uma aba principal do editor (similar a "2D", "3D", "Script"), destinados a funcionalidades que exigem uma área de trabalho dedicada e ampla. Ex: `CoreTopPanel` (Editor de Resources).
+-   **BottomPanel:** Painéis que se ancoram na parte inferior do editor, geralmente usados para exibir logs, listas de itens ou ferramentas de gerenciamento que podem ser expandidas/colapsadas. Ex: `DataBottomPanel`, `StateBottomPanel`.
+-   **ModalPanel:** Janelas pop-up que bloqueiam a interação com o restante do editor até serem fechadas, usadas para tarefas que exigem atenção total do usuário ou para coletar informações específicas. Ex: `DataModalPanel`, `StateModalPanel`.
+
+### Integração e Features Cross-Plugin
+
+A força da CafeEngine reside na sua capacidade de orquestrar múltiplos plugins de forma coesa, permitindo que eles se relacionem e colaborem para criar sistemas de jogo complexos. A integração entre plugins é guiada pelos princípios de desacoplamento, reatividade e orientação a Resources (ROP).
+
+-   **Mecanismos de Comunicação:**
+    -   **Sinais (Signals):** Principal mecanismo para comunicação reativa, onde um plugin emite um sinal e outros podem se conectar para reagir.
+    -   **Autoloads (Singletons Globais):** Plugins como `StateMachine` e `AudioManager` são Autoloads, tornando-os acessíveis globalmente para interações de alto nível.
+    -   **Resources Compartilhados:** Resources definidos por um plugin podem ser referenciados e utilizados por outro, atuando como "contratos" de dados e comportamento.
+-   **Diretrizes:** Definir contratos claros, documentar a integração, evitar acoplamento forte e usar o `CoreEngine` como mediador.
+
 ### Plugins da Suíte CafeEngine:
 
 -   **AudioManager:** Um sistema robusto de gerenciamento de áudio.
