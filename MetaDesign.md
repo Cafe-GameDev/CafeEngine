@@ -70,9 +70,9 @@ A CafeEngine transforma o Godot em um ambiente visual de alta produtividade, com
 *   `EventCafe` -> editor visual de triggers e lógica reativa.
 *   `QuestCafe`, `DialogCafe`, `AudioManager` -> ferramentas visuais específicas de domínio.
 
-Tudo integrado ao **`CafePanel`**, um dock unificado no editor Godot que centraliza todos os sistemas da suíte.
+Tudo integrado ao **`CorePanel`**, um dock unificado no editor Godot que centraliza os **SidePanels** de todos os sistemas da suíte.
 
-> Cada painel se comporta como uma aba da engine, garantindo consistência e familiaridade.
+> Cada SidePanel se comporta como uma aba da engine, garantindo consistência e familiaridade.
 
 ---
 

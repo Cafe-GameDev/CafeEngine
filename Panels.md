@@ -4,7 +4,7 @@ Na CafeEngine, a interação com o editor Godot é aprimorada através de difere
 
 ## 1. SidePanel
 
-*   **Propósito:** Painéis não intrusivos, compactos e laterais, projetados para configurações rápidas, exibição de status concisos ou acionamento de funções auxiliares.
+*   **Propósito:** Painéis não intrusivos, compactos e laterais, projetados para configurações rápidas, exibição de status concisos ou acionamento de funções auxiliares. O `CorePanel` é o host unificado para todos os SidePanels dos plugins da CafeEngine.
 *   **Intrusividade:** Baixa. Ocupa pouco espaço e não interfere significativamente na área de trabalho principal.
 *   **Funcionalidade:** Focada em ações pontuais ou ajustes de parâmetros de plugins. Não é ideal para edições complexas ou visualizações extensas.
 *   **Exemplos:** O `AudioPanel` do AudioManager, `StateSidePanel` do StateMachine.

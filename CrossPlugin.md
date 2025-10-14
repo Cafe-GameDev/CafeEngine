@@ -56,7 +56,7 @@ Ao desenvolver funcionalidades que envolvem múltiplos plugins, considere o segu
     *   `StateBehaviorMove` usa um `MoveData` (do DataBehavior) para configurar sua velocidade e aceleração.
     *   `StateBehaviorAttack` usa um `WeaponData` (do DataBehavior) para determinar o dano e tipo de ataque.
 *   **CoreEngine + Todos os Plugins:**
-    *   O `CoreEngine` gerencia o `CafePanel`, onde todos os painéis de editor dos plugins são adicionados, criando uma interface unificada.
+    *   O `CoreEngine` gerencia o `CorePanel`, onde os **SidePanels** de editor dos plugins são adicionados, criando uma interface unificada para esses painéis.
     *   O `CoreEngine` pode fornecer utilitários globais que todos os plugins podem usar.
 
 A colaboração entre os plugins da CafeEngine é o que a torna uma suíte poderosa e flexível, permitindo a construção de jogos modulares e escaláveis.
