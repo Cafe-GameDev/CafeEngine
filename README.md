@@ -30,7 +30,12 @@ A CafeEngine utiliza `Autoloads` para gerenciamento global e `Custom Types` para
 -   **Custom Types (Components):** Executores adicionados às cenas que aplicam a lógica definida nos Blueprints. Ex.: `StateComponent` conecta a cena à lógica de `StateBehavior`.
 
 ### 4. Painéis e Editores
-Painéis e ferramentas visuais integrados ao editor do Godot permitem gerenciar sistemas complexos sem escrever código manual. O `CafePanel` unifica gerenciamento de áudio, máquinas de estado e visualização de dados.
+A CafeEngine organiza suas ferramentas visuais em quatro tipos de painéis, cada um com um propósito e nível de intrusividade específicos, garantindo um fluxo de trabalho otimizado no editor Godot. Para mais detalhes sobre cada tipo, consulte [Panels.md](Panels.md).
+
+*   **TopPanel:** Painéis de alto nível que ocupam uma aba principal do editor, como o `CoreTopPanel`, que oferece um editor de texto universal para Resources.
+*   **SidePanel:** Painéis laterais não intrusivos, ideais para configurações rápidas e acionamento de funções, como o `AudioPanel` do AudioManager.
+*   **BottomPanel:** Painéis ancorados na parte inferior, usados para gerenciamento contextual e listas, como o `DataBottomPanel` e o `StateBottomPanel`.
+*   **ModalPanel:** Janelas pop-up que facilitam a edição detalhada e a criação de novos Resources em um ambiente focado, como o `DataModalPanel` e o `StateModalPanel`.
 
 ---
 
@@ -42,7 +47,7 @@ A suíte CafeEngine é composta por diversos plugins, cada um focado em um domí
 [![CoreEngine](https://img.shields.io/badge/CoreEngine-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Núcleo da CafeEngine, fornecendo as bases para todos os outros plugins.  
+Núcleo da CafeEngine, fornecendo as bases para todos os outros plugins. Inclui o **CoreTopPanel**, um editor de texto universal para `Resources`, permitindo a visualização e edição direta de arquivos `.tres`.
 
 > [Mais sobre o CoreEngine](addons/core_engine/README.md)
 
@@ -50,7 +55,7 @@ Núcleo da CafeEngine, fornecendo as bases para todos os outros plugins.
 [![AudioManager](https://img.shields.io/badge/AudioManager-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Gerencia áudio de forma robusta, transformando pastas de arquivos em `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resources` prontos para uso.  
+Gerencia áudio de forma robusta, transformando pastas de arquivos em `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resources` prontos para uso. O **AudioPanel** (painel lateral) oferece uma interface intuitiva para configurar caminhos, gerar manifestos e gerenciar recursos de áudio.
 
 > [Mais sobre o AudioManager](addons/audio_manager/README.md)
 
@@ -58,7 +63,7 @@ Gerencia áudio de forma robusta, transformando pastas de arquivos em `AudioStre
 [![StateMachine](https://img.shields.io/badge/StateMachine-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Framework de Máquina de Estados paralela e em camadas para IA, personagens e fluxo de jogo, utilizando `StateBehavior` resources.  
+Framework de Máquina de Estados paralela e em camadas para IA, personagens e fluxo de jogo, utilizando `StateBehavior` resources. O **StateBottomPanel** permite a criação e edição de `StateBehavior`s e scripts, e o **StateModalPanel** facilita a edição detalhada de recursos de estado, oferecendo um espaço amplo para o trabalho.
 
 > [Mais sobre o StateMachine](addons/state_machine/README.md)
 
@@ -66,7 +71,7 @@ Framework de Máquina de Estados paralela e em camadas para IA, personagens e fl
 [![DataBehavior](https://img.shields.io/badge/DataBehavior-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Gerencia e estrutura dados de jogo de forma modular e reutilizável através de Resources.  
+Gerencia e estrutura dados de jogo de forma modular e reutilizável através de Resources. O **DataBottomPanel** oferece uma interface para gerenciar e criar `DataResource`s e seus scripts associados, enquanto o **DataModalPanel** permite a edição detalhada e visual de `DataResource`s em uma janela modal, ideal para configurações complexas que demandam mais espaço.
 
 > [Mais sobre o DataBehavior](addons/data_behavior/README.md)
 
