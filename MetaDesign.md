@@ -1,4 +1,4 @@
-# ☕ CafeEngine - Documento de MetaDesign
+# CafeEngine - Documento de MetaDesign
 
 ## 1. Visão Geral
 
@@ -10,13 +10,13 @@ O objetivo não é alterar o core da engine, mas **expandir sua ergonomia e prod
 
 ## 2. Propósito da CafeEngine
 
-### ❌ O que não é
+### O que não é
 
 * Não é um fork da Godot Engine.
 * Não busca competir com Unreal Engine ou Unity em termos gráficos, de física ou renderização.
 * Não altera o GDScript nem o sistema interno da engine.
 
-### ✅ O que é
+### O que é
 
 * Uma **camada profissional de desenvolvimento** sobre o Godot.
 * Um **ecossistema de ferramentas modulares** (plugins) que se comportam como sistemas nativos.
@@ -28,7 +28,7 @@ O objetivo não é alterar o core da engine, mas **expandir sua ergonomia e prod
 
 ## 3. Pilares de MetaDesign
 
-### 🧱 1. Ergonomia de Desenvolvimento
+### 1. Ergonomia de Desenvolvimento
 
 O foco central é eliminar atritos comuns do workflow. O desenvolvedor deve poder **criar sistemas complexos sem precisar escrever código imediatamente**.
 
@@ -42,7 +42,7 @@ O foco central é eliminar atritos comuns do workflow. O desenvolvedor deve pode
 
 ---
 
-### ⚙️ 2. Modularidade e Reuso
+### 2. Modularidade e Reuso
 
 Cada plugin da CafeEngine é uma peça independente e interoperável.
 
@@ -56,15 +56,15 @@ Um mesmo `Resource` pode ser usado em múltiplas cenas, personagens ou sistemas 
 
 ---
 
-### 🧩 3. Visualização e Ferramentas Internas
+### 3. Visualização e Ferramentas Internas
 
 A CafeEngine transforma o Godot em um ambiente visual de alta produtividade.
 
 **Exemplos:**
 
-* `StateMachine` → editor visual de fluxos de estados (blueprint-style).
-* `EventCafe` → editor visual de triggers e lógica reativa.
-* `QuestCafe`, `DialogCafe`, `AudioManager` → ferramentas visuais específicas de domínio.
+* `StateMachine` -> editor visual de fluxos de estados (blueprint-style).
+* `EventCafe` -> editor visual de triggers e lógica reativa.
+* `QuestCafe`, `DialogCafe`, `AudioManager` -> ferramentas visuais específicas de domínio.
 
 Tudo integrado ao **`CafePanel`**, um dock unificado no editor Godot que centraliza todos os sistemas da suíte.
 
@@ -72,7 +72,7 @@ Tudo integrado ao **`CafePanel`**, um dock unificado no editor Godot que central
 
 ---
 
-### 🧠 4. Programação Orientada a Resources (ROP)
+### 4. Programação Orientada a Resources (ROP)
 
 A ROP é o coração técnico da CafeEngine.
 
@@ -87,11 +87,11 @@ Isso cria uma camada de desenvolvimento **data-driven e reativa**, sem acoplamen
 
 ---
 
-### 🔄 5. Integração e Sinergia
+### 5. Integração e Sinergia
 
 A força da CafeEngine vem da comunicação entre plugins:
 
-* `StateMachine` aciona `EventCafe` → `AudioManager` responde com efeitos sonoros → `DialogCafe` exibe mensagens → `DataBehavior` atualiza status do personagem.
+* `StateMachine` aciona `EventCafe` -> `AudioManager` responde com efeitos sonoros -> `DialogCafe` exibe mensagens -> `DataBehavior` atualiza status do personagem.
 
 > Cada sistema se conecta naturalmente, formando um **ecossistema coeso e expansível**.
 
