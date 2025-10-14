@@ -15,6 +15,6 @@ Na arquitetura da CafeEngine, um **SidePanel** é um tipo de painel de interface
 ## Exemplos de Uso na CafeEngine
 
 *   **AudioManager:** O `AudioPanel` é um exemplo perfeito de SidePanel, permitindo configurar caminhos de assets, gerar manifestos de áudio e acessar a documentação, tudo de forma compacta e acessível.
-*   **StateMachine / DataBehavior:** Painéis laterais para configurações rápidas ou atalhos para a criação de Resources.
+*   **StateMachine / DataBehavior:** Painéis laterais para configurações rápidas ou atalhos.
 
 Em resumo, o SidePanel é a escolha ideal quando a funcionalidade precisa estar sempre à mão, mas sem sobrecarregar a interface do editor ou desviar a atenção do desenvolvedor de sua tarefa principal.
