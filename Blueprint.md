@@ -21,7 +21,7 @@ A estrutura de um Blueprint é composta por três elementos principais:
     -   **Vantagem:** Mantém a cena limpa. Em vez de um script gigante no seu personagem, você tem apenas um `StateComponent` que gerencia todos os seus comportamentos.
 
 3.  **`StateMachine` (O Orquestrador - Autoload):**
-    -   **O que é:** Um `Node` singleton (Autoload) que gerencia o fluxo de alto nível do jogo.
+    -   **O que é:** Um `Node` singleton (Autoload) que serve como um orquestrador de alto nível.
     -   **Função:** Utiliza `StateBehavior`s especiais (como `GameStateScene`) para controlar transições entre cenas inteiras (ex: do `MainMenu` para o `Level1`). Também serve como um ponto central para depuração.
     -   **Vantagem:** Permite que você visualize e gerencie o fluxo do seu jogo da mesma forma que gerencia o comportamento de um personagem.
 
@@ -36,7 +36,7 @@ A "programação visual" na CafeEngine acontece em múltiplos níveis, cada um c
 A forma mais fundamental de programação visual na CafeEngine é através do **Inspector da Godot**. Como toda a lógica de comportamento é baseada em `Resources` (`StateBehavior`), você pode:
 
 -   **Ajustar propriedades em tempo real:** Mude a `velocidade` de um `StateBehaviorMove` ou o `dano` de um `StateBehaviorAttack` diretamente no Inspector.
--   **Conectar estados:** Arraste e solte um `Resource` de estado no campo de outro para definir transições (ex: conectar o `idle_state` no `move_state`).
+-   **Conectar estados:** Arraste e solte um `Resource` de comportamento no campo de outro para definir transições (ex: conectar o `idle_state` no `move_state`).
 
 Isso já reduz drasticamente a necessidade de codificar valores diretamente nos scripts.
 
@@ -54,7 +54,7 @@ Isso transforma a lógica abstrata de uma máquina de estados em um diagrama int
 
 ## Vantagens da Abordagem Blueprint da CafeEngine
 
--   **Modularidade Real:** Cada `StateBehavior` é um arquivo `.tres` independente. Você pode criar uma biblioteca de comportamentos e reutilizá-los em diferentes projetos.
+-   **Modularidade Real:** Cada `StateBehavior` é um arquivo `.tres` independente. Você pode criar uma biblioteca de comportamentos e reutilizá-los em diferentes personagens e sistemas.
 -   **Colaboração Amigável:** Designers podem ajustar parâmetros de IA, movimento e ataques diretamente no Inspector, sem precisar tocar no código.
 -   **Depuração Simplificada:** Com o editor de grafos, você pode ver visualmente qual estado está ativo e como o fluxo está progredindo, facilitando a identificação de bugs.
 -   **"Godot-Native":** A abordagem utiliza os sistemas que a Godot já oferece (`Resources`, `Nodes`, `EditorPlugin`), garantindo performance e integração perfeitas.

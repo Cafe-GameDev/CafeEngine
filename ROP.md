@@ -2,7 +2,7 @@
 
 A Programação Orientada a Resources (ROP) na Godot Engine é uma filosofia de design que eleva os `Resources` de meros contêineres de dados a entidades ativas e modulares, profundamente integradas ao editor e ao ciclo de vida do jogo. Diferente da Programação Orientada a Objetos tradicional, a ROP foca na gestão de dados e comportamentos de forma desacoplada e reutilizável.
 
-## A Essência dos Resources
+## 1. A Essência dos Resources
 
 Na Godot, um `Resource` é uma instância de `RefCounted` que pode ser serializada. Isso significa que, além de armazenar dados, ele pode conter:
 
@@ -14,27 +14,29 @@ Essa combinação transforma o Resource em uma "entidade reativa e modular", que
 
 ---
 
-## Exemplos de Resources Nativos e Modulares
+## 2. Exemplos de Resources Nativos e Modulares
 
-### 🔹 Exemplo de Resource Nativo: `CollisionShape`
+Para ilustrar o poder da ROP, vejamos alguns exemplos de como os Resources podem ser utilizados.
+
+### 2.1. Exemplo de Resource Nativo: `CollisionShape`
 
 O sistema de colisão da Godot, além dos nós (`CollisionShape2D` / `CollisionShape3D`), utiliza `Resources` para definir o formato e o tamanho das colisões.
 
 Esses `Resources` (ex: `RectangleShape2D`, `CircleShape2D`, etc.) possuem métodos internos que detectam quando algo entra ou sai da área e emitem sinais com essas informações para o nó pai (como `Area2D` ou `PhysicsBody2D`). Isso demonstra que, mesmo sendo um dado, ele possui comportamento e integração lógica.
 
-### 🔹 Exemplo de Resource Modular: `AudioConfig` (do plugin AudioManager)
+### 2.2. Exemplo de Resource Modular: `AudioConfig` (do plugin AudioManager)
 
 No plugin AudioManager, o `AudioConfig` é um Resource customizado que armazena as configurações do plugin. Ele emite um sinal toda vez que é modificado, informando que a interface do plugin precisa ser atualizada. Isso permite que o editor reaja automaticamente às mudanças do usuário, sem precisar reiniciar o plugin ou recarregar o editor, sendo um excelente exemplo de Resource reativo e integrado ao editor via `EditorPlugin`.
 
 ---
 
-## 🔧 Sistemas que Podem Ser Construídos com Resource + Custom Type
+## 3. Sistemas que Podem Ser Construídos com Resource + Custom Type
 
 Combinando `Resources` com `Custom Types` (definidos via `class_name` e registrados com `EditorPlugin`), é possível construir sistemas que se comportam como módulos nativos da Godot, totalmente editáveis pelo Inspector e reutilizáveis em qualquer projeto.
 
-Abaixo estão alguns exemplos:
+Abaixo estão alguns exemplos de sistemas poderosos que podem ser implementados com a filosofia ROP:
 
-### ⚙ 1. DataBehavior
+### 3.1. DataBehavior
 
 Um sistema que gerencia dados comportamentais para entidades e sistemas.
 Contém tipos comuns como:
@@ -48,7 +50,7 @@ Contém tipos comuns como:
 
 O `DataBehavior` centraliza, atualiza e distribui esses dados.
 
-### ⚙ 2. InventorySystem
+### 3.2. InventorySystem
 
 Focado em itens de inventário, gerenciando:
 
@@ -57,12 +59,12 @@ Focado em itens de inventário, gerenciando:
 -   **`ItemEffect`**: Efeitos aplicados quando o item é usado.
 -   **`ItemStack`**: Quantidade e controle de empilhamento.
 
-### ⚙ 3. ObjectPool
+### 3.3. ObjectPool
 
 Gerencia objetos reutilizáveis para otimização de performance.
 Tipos definidos em `Resources` como `ObjectData` ou `ObjectType`. Ao invés de instanciar/destruir constantemente, o sistema cria pools de objetos prontos, economizando memória e CPU.
 
-### ⚙ 4. StateMachine
+### 3.4. StateMachine
 
 Implementação modular de uma máquina de estados. Pode conter:
 
@@ -72,7 +74,7 @@ Implementação modular de uma máquina de estados. Pode conter:
 
 Permite criar IA, animações e controles complexos baseados em dados.
 
-### ⚙ 5. CameraControl
+### 3.5. CameraControl
 
 Controla a câmera com base em Resources, permitindo:
 
@@ -82,9 +84,7 @@ Controla a câmera com base em Resources, permitindo:
 
 Exemplos de Resources: `CameraProfile`, `CameraTransition`, `CameraEffect`.
 
-### 💡 Outros Exemplos Poderosos
-
-### ⚙ 6. AnimationDatabase
+### 3.6. AnimationDatabase
 
 Armazena e gerencia dados de animação:
 
@@ -94,7 +94,7 @@ Armazena e gerencia dados de animação:
 
 Usado em conjunto com `DataCharacter` e `StateMachine`.
 
-### ⚙ 7. DialogueSystem
+### 3.7. DialogueSystem
 
 Sistema de diálogo modular:
 
@@ -104,7 +104,7 @@ Sistema de diálogo modular:
 
 Os diálogos podem ser criados e editados como Resources no editor, sem precisar de código adicional.
 
-### ⚙ 8. QuestSystem
+### 3.8. QuestSystem
 
 Gerencia missões usando:
 
@@ -114,7 +114,7 @@ Gerencia missões usando:
 
 Cada missão é um Resource com progresso, objetivos e recompensas, facilitando o salvamento e a edição de conteúdo no editor.
 
-### ⚙ 9. AudioSystem
+### 3.9. AudioSystem
 
 Gerencia sons e efeitos musicais com:
 
@@ -124,7 +124,7 @@ Gerencia sons e efeitos musicais com:
 
 Pode trabalhar junto com `AudioConfig`, emitindo sinais e atualizando conforme o estado do jogo.
 
-### ⚙ 10. EffectSystem
+### 3.10. EffectSystem
 
 Sistema que controla efeitos visuais ou status temporários:
 
@@ -134,7 +134,7 @@ Sistema que controla efeitos visuais ou status temporários:
 
 Perfeito para buffs, debuffs, partículas, shaders, etc.
 
-### ⚙ 11. SaveSystem
+### 3.11. SaveSystem
 
 Armazena e restaura dados com:
 
@@ -143,7 +143,7 @@ Armazena e restaura dados com:
 
 Tudo exportável e gerenciável pelo editor.
 
-### ⚙ 12. AIBehaviorSystem
+### 3.12. AIBehaviorSystem
 
 Gerencia comportamentos de IA usando:
 
@@ -153,7 +153,7 @@ Gerencia comportamentos de IA usando:
 
 Funciona como uma extensão natural da `StateMachine`.
 
-### ⚙ 13. InputMappingSystem
+### 3.13. InputMappingSystem
 
 Armazena mapeamentos de controle e perfis de input:
 
@@ -162,7 +162,7 @@ Armazena mapeamentos de controle e perfis de input:
 
 Permite trocar esquemas de controle (keyboard/gamepad/touch) dinamicamente, via Resources.
 
-### ⚙ 14. UISkinSystem
+### 3.14. UISkinSystem
 
 Gerencia estilos e temas de UI:
 
@@ -171,7 +171,7 @@ Gerencia estilos e temas de UI:
 
 Ideal para alternar entre temas claros/escuros ou estilos de jogo diferentes.
 
-### ⚙ 15. WorldGenerator
+### 3.15. WorldGenerator
 
 Sistema de geração procedural baseado em Resources:
 
@@ -183,7 +183,7 @@ Cada Resource define regras de geração, permitindo modularidade total no desig
 
 ---
 
-## 🎯 Conclusão
+## 4. Conclusão
 
 A combinação de `Resources` com `Custom Types` na Godot Engine transforma qualquer sistema em algo:
 

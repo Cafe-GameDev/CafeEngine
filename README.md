@@ -11,24 +11,32 @@ O principal objetivo da CafeEngine não é adicionar funcionalidades impossívei
 
 ## Pilares da CafeEngine
 
+A CafeEngine é construída sobre os seguintes pilares fundamentais, que guiam o desenvolvimento de todos os seus plugins:
+
 ### 1. Programação Orientada a Resources (ROP)
 Tratamos `Resources` não apenas como contêineres de dados, mas como **objetos de comportamento ativos e inteligentes**. A lógica de um comportamento (IA, padrões de ataque, perfis de áudio, etc.) é encapsulada diretamente no `Resource`, tornando-o reutilizável e configurável pelo Inspector.
 
 > Leia mais sobre a filosofia ROP em nosso [manifesto](ROP.md).
 
-### 2. Visual Code (Blueprints)
+### 2. Código Visual (Blueprints)
 Inspirado em sistemas como o **Blueprint da Unreal Engine**, a CafeEngine oferece um fluxo de trabalho visual baseado em grafos. No `StateMachine`, por exemplo, cada `StateBehavior` é representado como um nó em um editor de grafos, permitindo criar máquinas de estado complexas de forma intuitiva.
 
-### 3. Autoloads e Custom Types (Nodes)
-- **Autoloads (Managers):** Orquestradores globais que coordenam sistemas. Ex.: `StateMachine` gerencia o fluxo do jogo, `AudioManager` controla o áudio.  
-- **Custom Types (Components):** Executores adicionados às cenas que aplicam a lógica definida nos Blueprints. Ex.: `StateComponent` conecta a cena à lógica de `StateBehavior`.
+> Saiba mais sobre a filosofia de Código Visual em [Blueprint.md](Blueprint.md).
 
-### 4. Panels e Editors
+### 3. Autoloads e Tipos Customizados (Nodes)
+A CafeEngine utiliza `Autoloads` para gerenciamento global e `Custom Types` para integração nativa com o editor.
+
+-   **Autoloads (Managers):** Orquestradores globais que coordenam sistemas. Ex.: `StateMachine` gerencia o fluxo do jogo, `AudioManager` controla o áudio.  
+-   **Custom Types (Components):** Executores adicionados às cenas que aplicam a lógica definida nos Blueprints. Ex.: `StateComponent` conecta a cena à lógica de `StateBehavior`.
+
+### 4. Painéis e Editores
 Painéis e ferramentas visuais integrados ao editor do Godot permitem gerenciar sistemas complexos sem escrever código manual. O `CafePanel` unifica gerenciamento de áudio, máquinas de estado e visualização de dados.
 
 ---
 
 ## Plugins da Suíte
+
+A suíte CafeEngine é composta por diversos plugins, cada um focado em um domínio específico do desenvolvimento de jogos:
 
 ### CoreEngine
 [![CoreEngine](https://img.shields.io/badge/CoreEngine-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
@@ -66,10 +74,14 @@ Gerencia e estrutura dados de jogo de forma modular e reutilizável através de 
 
 ## Contribuição
 
-Este projeto é open-source e contribuições são bem-vindas. Consulte nosso [guia de contribuição](CONTRIBUTING.md) para saber como ajudar. Para visualizar o futuro da suíte, veja nosso [Roadmap](roadmap.md).
+Este projeto é open-source e contribuições são bem-vindas.
+
+Consulte nosso [guia de contribuição](CONTRIBUTING.md) para saber como ajudar. Para visualizar o futuro da suíte, veja nosso [Roadmap](roadmap.md).
 
 ---
 
 ## Licença
 
-Distribuído sob a Licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
+A CafeEngine é distribuída sob a Licença MIT.
+
+Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.

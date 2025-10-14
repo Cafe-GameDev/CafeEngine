@@ -18,16 +18,16 @@ A pedra angular da CafeEngine é a **Programação Orientada a Resources (ROP)**
 
 #### Princípios Fundamentais
 
-* **Lógica Encapsulada:** Cada `Resource` pode conter comportamento e dados, tornando-se autocontido e reusável.
-* **Design Orientado a Dados:** Separa-se o *o quê* (dados e regras) do *como* (Nodes que executam o comportamento).
-* **Reatividade:** Resources emitem sinais e reagem a eventos, criando sistemas dinâmicos e desacoplados.
-* **Fluxo Godot-Native:** Toda a edição ocorre via Inspector e FileSystem, maximizando a integração com o editor.
+*   **Lógica Encapsulada:** Cada `Resource` pode conter comportamento e dados, tornando-se autocontido e reusável.
+*   **Design Orientado a Dados:** Separa-se o *o quê* (dados e regras) do *como* (Nodes que executam o comportamento).
+*   **Reatividade:** Resources emitem sinais e reagem a eventos, criando sistemas dinâmicos e desacoplados.
+*   **Fluxo Godot-Native:** Toda a edição ocorre via Inspector e FileSystem, maximizando a integração com o editor.
 
 ### 1.3. Política de Versão e Compatibilidade
 
-* **Versão Alvo:** Godot 4.5+
-* **Compatibilidade:** Mantida com versões futuras da série 4.x.
-* **Retrocompatibilidade:** Nenhum suporte a versões anteriores a 4.5, garantindo código moderno e limpo.
+*   **Versão Alvo:** Godot 4.5+
+*   **Compatibilidade:** Mantida com versões futuras da série 4.x.
+*   **Retrocompatibilidade:** Nenhum suporte a versões anteriores a 4.5, garantindo código moderno e limpo.
 
 ---
 
@@ -37,25 +37,29 @@ A CafeEngine adota uma arquitetura modular e extensível. Cada plugin segue o me
 
 ### 2.1. Componentes Comuns
 
-* **`[PluginName]Manager` (Autoload Singleton):** Nodo global que gerencia recursos e operações em runtime.
-* **`[PluginName]Config` (Resource):** Armazena preferências e configurações persistentes do plugin. Emite `config_changed`.
-* **`[Domain]Data` (Resource Base):** Classe base abstrata para dados e comportamentos do domínio.
-* **`EditorPlugin` (`editor_plugin.gd`):** Integra o plugin ao editor, registra tipos customizados e adiciona o painel.
-* **`[PluginName]Panel` (UI):** Interface gráfica do plugin dentro do editor.
+Cada plugin da CafeEngine é construído com um conjunto de componentes comuns para garantir consistência e interoperabilidade.
+
+*   **`[PluginName]Manager` (Autoload Singleton):** Nodo global que gerencia recursos e operações em runtime.
+*   **`[PluginName]Config` (Resource):** Armazena preferências e configurações persistentes do plugin. Emite `config_changed`.
+*   **`[Domain]Data` (Resource Base):** Classe base abstrata para dados e comportamentos do domínio.
+*   **`EditorPlugin` (`editor_plugin.gd`):** Integra o plugin ao editor, registra tipos customizados e adiciona o painel.
+*   **`[PluginName]Panel` (UI):** Interface gráfica do plugin dentro do editor.
 
 ### 2.2. O `CafePanel` (Host Unificado da UI)
 
-Todos os painéis dos plugins são hospedados em um dock lateral unificado chamado **`CafePanel`**.
+Todos os painéis dos plugins são hospedados em um dock lateral unificado chamado **`CafePanel`**, proporcionando uma experiência de usuário coesa.
 
 **Benefícios:**
 
-* Organização e consistência visual.
-* Adição e remoção dinâmica de painéis.
-* Integração simplificada via API interna da CafeEngine.
+*   Organização e consistência visual.
+*   Adição e remoção dinâmica de painéis.
+*   Integração simplificada via API interna da CafeEngine.
 
 ---
 
 ## 3. Estrutura de Arquivos Padrão
+
+Para manter a consistência e facilitar a navegação, todos os plugins da CafeEngine seguem uma estrutura de arquivos padrão.
 
 ```
 addons/[plugin_name]/
@@ -84,22 +88,26 @@ addons/[plugin_name]/
 
 ## 4. CoreEngine (Núcleo da Suíte)
 
+O CoreEngine é o módulo central que fornece a infraestrutura básica para todos os outros plugins da CafeEngine.
+
 ### 4.1. Objetivo
 
 O **CoreEngine** é o módulo central compartilhado por todos os plugins da CafeEngine. Ele fornece classes e funções de suporte para registro, comunicação e gerenciamento.
 
 ### 4.2. Componentes Principais
 
-* **`CoreEngine` (Singleton):** Gerencia plugins ativos e dependências.
-* **`CafeResource` (Base Class):** Resource padrão com integração automática de sinais e callbacks.
-* **`CafePanelHost`:** Controla a adição/remoção dinâmica de painéis no editor.
+*   **`CoreEngine` (Singleton):** Gerencia plugins ativos e dependências.
+*   **`CafeResource` (Base Class):** Resource padrão com integração automática de sinais e callbacks.
+*   **`CafePanelHost`:** Controla a adição/remoção dinâmica de painéis no editor.
 
 ---
 
 ## 5. Convenção de Nomenclatura
 
+Aderir a uma convenção de nomenclatura consistente é crucial para a legibilidade e manutenibilidade do código em toda a suíte.
+
 | Tipo            | Sufixos Recomendados                  | Exemplo                                              |
-| --------------- | ------------------------------------- | ---------------------------------------------------- |
+| :-------------- | :------------------------------------ | :--------------------------------------------------- |
 | Resource        | Data, Config, Behavior, Profile, Rule | `StateBehavior`, `AudioProfile`                      |
 | Node            | Manager, Controller, Component        | `AudioManager`, `StateComponent`                     |
 | Arquivo `.tres` | NomeEspecífico                        | `StateBehaviorIdle.tres`, `AudioProfile_Battle.tres` |
@@ -108,32 +116,40 @@ O **CoreEngine** é o módulo central compartilhado por todos os plugins da Cafe
 
 ## 6. Dependências e Integração
 
-* Plugins devem declarar dependências opcionais em `plugin.cfg`.
-* O `CoreEngine` verifica compatibilidade de versão em runtime.
-* Nenhum plugin deve depender rigidamente de outro para funcionar.
+As diretrizes de dependência e integração garantem que os plugins funcionem de forma harmoniosa e robusta.
+
+*   Plugins devem declarar dependências opcionais em `plugin.cfg`.
+*   O `CoreEngine` verifica compatibilidade de versão em runtime.
+*   Nenhum plugin deve depender rigidamente de outro para funcionar.
 
 ---
 
 ## 7. Ciclo de Execução (Runtime Flow)
 
+Este diagrama ilustra um exemplo genérico do fluxo de execução de um comportamento dentro da CafeEngine.
+
 ```text
-[Node Player]
+[Node Principal (e.g., Player)]
    ↓
-uses -> [StateBehaviorMove] (Resource)
+   Utiliza -> [Componente (e.g., StateComponent)]
    ↓
-emits -> signal state_changed
+   Gerencia -> [Comportamento (e.g., StateBehaviorMove - Resource)]
    ↓
-captured by -> [StateMachineManager] (Autoload)
+   Emite -> sinal (e.g., "transition_requested")
    ↓
-updates -> Editor UI / Debug Panel
+   Capturado por -> [Gerenciador (e.g., StateMachineManager - Autoload)]
+   ↓
+   Atualiza -> Interface do Editor / Painel de Debug
 ```
 
 ---
 
 ## 8. Fases de Desenvolvimento
 
+O desenvolvimento de cada plugin da CafeEngine segue um processo faseado para garantir a entrega de funcionalidades estáveis e bem testadas.
+
 | Fase              | Objetivo                                              | Resultado                               |
-| ----------------- | ----------------------------------------------------- | --------------------------------------- |
+| :---------------- | :---------------------------------------------------- | :-------------------------------------- |
 | 1. Fundação (MVP) | Criar classes base e lógica essencial                 | Sistema funcional com demo inicial      |
 | 2. Integração     | Registrar Custom Types, integrar ao editor            | Plugin funcional e visível no Inspector |
 | 3. Expansão       | Adicionar biblioteca de Resources e Inspector plugins | Sistema rico e visualmente aprimorado   |
@@ -144,27 +160,34 @@ updates -> Editor UI / Debug Panel
 
 ## 9. Padrões de Qualidade de Código
 
-* Todos os scripts de Resource e Editor devem usar `@tool`.
-* Classes documentadas com docstring.
-* Sinais seguem convenção: `changed`, `updated`, `requested`, `completed`.
-* Nenhum Resource deve depender diretamente de Nodes.
+A qualidade do código é uma prioridade, e todos os contribuidores devem aderir aos seguintes padrões.
+
+*   Todos os scripts de Resource e Editor devem usar `@tool`.
+*   Classes documentadas com docstring.
+*   Sinais seguem convenção: `changed`, `updated`, `requested`, `completed`.
+*   Nenhum Resource deve depender diretamente de Nodes.
 
 ---
 
 ## 10. Considerações Futuras
 
-* Integração cruzada entre plugins (ex: StateMachine <-> DataBehavior).
-* Editor visual unificado (gráfico de estados, eventos e diálogos).
-* Geração automática de Resources e código base.
-* Pooling, carregamento assíncrono e otimizações de performance.
+A CafeEngine está em constante evolução, e as seguintes considerações guiam o desenvolvimento futuro.
+
+*   Integração cruzada entre plugins (ex: StateMachine <-> DataBehavior).
+*   Editor visual unificado (gráfico de estados, eventos e diálogos).
+*   Geração automática de Resources e código base.
+*   Pooling, carregamento assíncrono e otimizações de performance.
 
 ---
 
 ## 11. Estrutura de Documentação Sugerida
 
-* `pdd_core.md` -> Filosofia e arquitetura da suíte.
-* `pdd_[plugin].md` -> Documento de design individual de cada plugin.
-* `pdd_suite_overview.md` -> Roadmap geral, versões e integrações planejadas.
+Para manter a documentação organizada e acessível, sugerimos a seguinte estrutura.
+
+*   `Blueprint.md` -> Filosofia e abordagem de programação visual.
+*   `pdd_core.md` -> Filosofia e arquitetura da suíte.
+*   `pdd_[plugin].md` -> Documento de design individual de cada plugin.
+*   `pdd_suite_overview.md` -> Roadmap geral, versões e integrações planejadas.
 
 ---
 
