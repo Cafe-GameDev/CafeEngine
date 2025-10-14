@@ -1,85 +1,81 @@
-# ☕ CafeEngine Suite
+# CafeEngine Suite
 
 [![CafeEngine](https://img.shields.io/badge/CafeEngine-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-**CafeEngine** é uma suíte de plugins para Godot 4, construída com uma filosofia de **Programação Orientada a Resources** para criar ferramentas modulares, reutilizáveis e profundamente integradas ao editor.
+**CafeEngine** é uma suíte de plugins para Godot 4 que transforma `Resources` em ferramentas inteligentes, melhora workflows e permite criação visual de lógica complexa. A suíte é projetada para tornar o desenvolvimento de jogos mais rápido, organizado e intuitivo.
 
 ---
-## WorkFlow
 
-O principal objetivo da CafeEngine não é adicionar funcionalidades impossíveis de se criar no Godot, mas sim **otimizar radicalmente o fluxo de trabalho (workflow)** do desenvolvedor. Tudo o que nossos plugins oferecem poderia ser feito manualmente, mas exigiria tempo, código repetitivo e organização manual.
+## Visão Geral
 
-Nossa filosofia é fornecer uma **camada de qualidade de vida** sobre a engine, oferecendo um caminho estruturado, visual e produtivo para tarefas comuns. A CafeEngine se baseia na sinergia de cinco pilares que, juntos, permitem que você se concentre no design do seu jogo, e não na configuração.
+O principal objetivo da CafeEngine não é adicionar funcionalidades impossíveis de criar na Godot, mas sim **otimizar radicalmente o fluxo de trabalho** do desenvolvedor. Tudo que nossos plugins oferecem poderia ser feito manualmente, mas exigiria tempo, código repetitivo e organização manual.
+
+A CafeEngine fornece uma **camada de qualidade de vida** sobre a engine, permitindo que você se concentre no design do seu jogo, e não na configuração. A suíte é baseada em cinco pilares que se complementam para criar um fluxo de trabalho integrado e modular.
+
+---
+
+## Pilares da CafeEngine
 
 ### 1. Programação Orientada a Resources (ROP)
+Tratamos `Resources` não apenas como contêineres de dados, mas como **objetos de comportamento ativos e inteligentes**. A lógica de um comportamento (IA, padrões de ataque, perfis de áudio, etc.) é encapsulada diretamente no `Resource`, tornando-o reutilizável e configurável pelo Inspector.
 
-Este é o coração da nossa filosofia. Tratamos `Resources` não como meros contêineres de dados, mas como **objetos de comportamento ativos e inteligentes**. A lógica de um comportamento (um estado de IA, um padrão de ataque, um perfil de áudio) é encapsulada diretamente no `Resource`, tornando-o reutilizável e configurável pelo Inspector.
+> Leia mais sobre a filosofia ROP em nosso [manifesto](ROP.md).
 
-> Para uma imersão profunda, leia nosso manifesto sobre [Programação Orientada a Resources (ROP)](ROP.md).
+### 2. Visual Code (Blueprints)
+Inspirado em sistemas como o **Blueprint da Unreal Engine**, a CafeEngine oferece um fluxo de trabalho visual baseado em grafos. No `StateMachine`, por exemplo, cada `StateBehavior` é representado como um nó em um editor de grafos, permitindo criar máquinas de estado complexas de forma intuitiva.
 
-### 2. Blueprints
+### 3. Autoloads e Custom Types (Nodes)
+- **Autoloads (Managers):** Orquestradores globais que coordenam sistemas. Ex.: `StateMachine` gerencia o fluxo do jogo, `AudioManager` controla o áudio.  
+- **Custom Types (Components):** Executores adicionados às cenas que aplicam a lógica definida nos Blueprints. Ex.: `StateComponent` conecta a cena à lógica de `StateBehavior`.
 
-No ecossistema CafeEngine, os `Resources` atuam como **Blueprints**. Um `StateBehavior`, por exemplo, não é apenas um estado, mas um modelo de comportamento que pode ser instanciado e configurado de inúmeras maneiras. Um `WeaponData` é um blueprint para uma arma, contendo todos os seus atributos. Isso permite que desenvolvedores e designers criem variações complexas sem escrever uma linha de código.
-
-### 3. Autoloads / Custom Types (Nodes)
-
-Se os `Resources` (Blueprints) definem **"o quê"** fazer, os `Nodes` definem **"como"** e **"onde"** fazer.
--   **Autoloads (Managers):** São os orquestradores globais. O `StateMachine` gerencia o fluxo do jogo, enquanto o `AudioManager` controla o áudio. Eles são o cérebro central que coordena os sistemas.
--   **Custom Types (Components):** São os executores na cena. Um `StateComponent` é um `Node` que você adiciona a um personagem para rodar a lógica definida nos `StateBehavior`s. Eles são a ponte entre a cena e os Blueprints.
-
-### 4. Panels / Editors
-
-São as **ferramentas visuais** que unem tudo. Em vez de configurar sistemas complexos via código, você usa painéis integrados ao editor do Godot. O `CafePanel` é o nosso dock unificado, onde você pode gerenciar áudio, criar máquinas de estado, e visualizar dados de forma intuitiva. Eles são a interface que torna o poder dos outros pilares acessível e fácil de usar.
+### 4. Panels e Editors
+Painéis e ferramentas visuais integrados ao editor do Godot permitem gerenciar sistemas complexos sem escrever código manual. O `CafePanel` unifica gerenciamento de áudio, máquinas de estado e visualização de dados.
 
 ---
 
 ## Plugins da Suíte
 
-### ⚙️ CoreEngine
-
+### CoreEngine
 [![CoreEngine](https://img.shields.io/badge/CoreEngine-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Nucleo do CafeEngine
+Núcleo da CafeEngine, fornecendo as bases para todos os outros plugins.  
 
-> [Saiba mais sobre o CoreEngine...](addons/core_engine/README.md)
+> [Mais sobre o CoreEngine](addons/core_engine/README.md)
 
-### 🎵 AudioManager
-
+### AudioManager
 [![AudioManager](https://img.shields.io/badge/AudioManager-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Um sistema de gerenciamento de áudio robusto que transforma pastas de arquivos de som em `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resource`s de áudio dinâmicos, prontos para uso e exportação.
+Gerencia áudio de forma robusta, transformando pastas de arquivos em `AudioStreamPlaylist`s, `AudioStreamRandomizer`s e outros `Resources` prontos para uso.  
 
-> [Saiba mais sobre o AudioManager...](addons/audio_manager/README.md)
+> [Mais sobre o AudioManager](addons/audio_manager/README.md)
 
-### 🧠 StateMachine
-
+### StateMachine
 [![StateMachine](https://img.shields.io/badge/StateMachine-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Um framework de Máquina de Estados Paralela e em Camadas que permite construir lógicas complexas de IA, personagens e fluxo de jogo de forma modular e visual, utilizando `StateBehavior` resources.
+Framework de Máquina de Estados paralela e em camadas para IA, personagens e fluxo de jogo, utilizando `StateBehavior` resources.  
 
-> [Saiba mais sobre o StateMachine...](addons/state_machine/README.md)
+> [Mais sobre o StateMachine](addons/state_machine/README.md)
 
-### 📊 DataBehavior
-
+### DataBehavior
 [![DataBehavior](https://img.shields.io/badge/DataBehavior-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Um plugin para Godot 4.x, parte da suíte CafeEngine, focado em gerenciar e estruturar dados de jogo de forma modular e reutilizável através de Resources.
+Gerencia e estrutura dados de jogo de forma modular e reutilizável através de Resources.  
 
-> [Saiba mais sobre o DataBehavior...](addons/data_behavior/README.md)
+> [Mais sobre o DataBehavior](addons/data_behavior/README.md)
 
 ---
 
 ## Contribuição
 
-Este é um projeto open-source e contribuições são muito bem-vindas. Para saber como ajudar, por favor, leia nosso [guia de contribuição](CONTRIBUTING.md).
+Este projeto é open-source e contribuições são bem-vindas. Consulte nosso [guia de contribuição](CONTRIBUTING.md) para saber como ajudar. Para visualizar o futuro da suíte, veja nosso [Roadmap](roadmap.md).
 
-Para ter uma visão geral do futuro da suíte e dos planos de desenvolvimento, consulte nosso [Roadmap](roadmap.md).
+---
 
 ## Licença
 
-Distribuído sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Distribuído sob a Licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
