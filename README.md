@@ -7,8 +7,6 @@
 
 O principal objetivo da CafeEngine não é adicionar funcionalidades impossíveis de criar na Godot, mas sim **otimizar radicalmente o fluxo de trabalho** do desenvolvedor. Tudo que nossos plugins oferecem poderia ser feito manualmente, mas exigiria tempo, código repetitivo e organização manual.
 
-A CafeEngine fornece uma **camada de qualidade de vida** sobre a engine, permitindo que você se concentre no design do seu jogo, e não na configuração. A suíte é baseada em cinco pilares que se complementam para criar um fluxo de trabalho integrado e modular.
-
 ---
 
 ## Pilares da CafeEngine
