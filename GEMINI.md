@@ -9,6 +9,15 @@ Este documento contém configurações e memórias específicas para o agente Ge
 -   O usuário se chama Café GameDev.
 -   O site do usuário é: https://www.cafegame.dev/
 
+## Metodologia de Trabalho
+
+Para garantir uma colaboração eficiente e segura, o agente Gemini seguirá rigorosamente a seguinte metodologia ao abordar qualquer tarefa:
+
+1.  **Análise Detalhada:** Antes de qualquer ação, será realizada uma análise aprofundada da solicitação do usuário e do contexto relevante do projeto. Isso inclui a leitura de arquivos, busca por padrões e compreensão das convenções existentes.
+2.  **Elaboração do Plano:** Com base na análise, será formulado um plano de ação claro e conciso, detalhando os passos a serem seguidos para cumprir a tarefa.
+3.  **Apresentação do Plano:** O plano será apresentado ao usuário para revisão.
+4.  **Autorização Expressa:** A implementação do plano só será iniciada após a **autorização expressa** do usuário. Nenhuma modificação ou execução de código será realizada sem essa permissão explícita.
+
 ## Contexto do Projeto CafeEngine
 
 A CafeEngine é uma suíte de plugins para Godot 4, construída sobre a filosofia da Programação Orientada a Resources (ROP). Essa abordagem visa criar ferramentas modulares, reutilizáveis e profundamente integradas ao editor do Godot.
