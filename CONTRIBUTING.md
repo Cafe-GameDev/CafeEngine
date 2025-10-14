@@ -1,18 +1,18 @@
-# ☕ Contribuindo para a CafeEngine
+# Contribuindo para a CafeEngine
 
-Primeiramente, obrigado pelo seu interesse em contribuir para a **CafeEngine**!  
+Primeiramente, obrigado pelo seu interesse em contribuir para a **CafeEngine**!
 Cada ajuda torna a suíte de plugins mais poderosa e útil para a comunidade Godot.
 
 ---
 
-## 📖 Nossa Filosofia de Design
+## Nossa Filosofia de Design
 
-A CafeEngine segue a filosofia de **Programação Orientada a Resources (ROP)**.  
+A CafeEngine segue a filosofia de **Programação Orientada a Resources (ROP)**.
 Antes de contribuir, recomendamos a leitura do nosso documento conceitual: [ROP.md](ROP.md).
 
 ---
 
-## 🐛 Reportando Bugs
+## Reportando Bugs
 
 Antes de reportar um bug, **verifique se ele já não foi reportado** na seção de Issues do repositório.
 
@@ -23,7 +23,7 @@ Ao reportar, inclua:
 - Resultado esperado
 - Resultado atual (incluindo mensagens de erro, screenshots, GIFs)
 
-**Checklist para Bug Report:**
+**Checklist para Relatório de Bug:**
 
 - [ ] Versão do Godot:
 - [ ] Versão do plugin:
