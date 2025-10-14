@@ -52,9 +52,9 @@ Para manter o código consistente e legível:
 - **Tipagem Estática:** Sempre que possível (`var speed: float = 100.0`)
 - **Comentários:** Documente funções complexas e propriedades (`##` para docstrings visíveis no Inspector)
 - **Nomenclatura:**
-  - Classes/Nodes: PascalCase → `AudioManager`, `StateComponent`
-  - Variáveis/Funções: snake_case → `current_state`, `update_audio()`
-  - Resources nativos da CafeEngine (opcional): prefixo `CE_` → `CE_StateBehavior`
+  - Classes/Nodes: PascalCase -> `AudioManager`, `StateComponent`
+  - Variáveis/Funções: snake_case -> `current_state`, `update_audio()`
+  - Resources nativos da CafeEngine (opcional): prefixo `CE_` -> `CE_StateBehavior`
 - **Signals:** siga convenção `changed`, `updated`, `requested`, `completed`
 - **Editor Scripts:** use `@tool` quando necessário
 - **Properties Exportadas:** use `@export` para que apareçam no Inspector
