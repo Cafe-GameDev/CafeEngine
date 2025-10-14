@@ -1,8 +1,8 @@
-# Gemini Configuration and Memories
+# Configuration and Memories
 
-Este documento contém configurações e memórias específicas para o agente Gemini, garantindo uma comunicação e operação eficientes com o usuário Café GameDev.
+Este documento contém configurações e memórias específicas para o agente, garantindo uma comunicação e operação eficientes com o usuário Café GameDev.
 
-## Memórias Adicionadas por Gemini
+## Memórias Adicionadas
 
 -   A comunicação com o usuário deve ser sempre em português.
 -   O usuario odeia Emojis.
@@ -12,7 +12,7 @@ Este documento contém configurações e memórias específicas para o agente Ge
 
 ## Metodologia de Trabalho
 
-Para garantir uma colaboração eficiente e segura, o agente Gemini seguirá rigorosamente a seguinte metodologia ao abordar qualquer tarefa:
+Para garantir uma colaboração eficiente e segura, o agente seguirá rigorosamente a seguinte metodologia ao abordar qualquer tarefa:
 
 1.  **Análise Detalhada:** Antes de qualquer ação, será realizada uma análise aprofundada da solicitação do usuário e do contexto relevante do projeto. Isso inclui a leitura de arquivos, busca por padrões e compreensão das convenções existentes.
 2.  **Elaboração do Plano:** Com base na análise, será formulado um plano de ação claro e conciso, detalhando os passos a serem seguidos para cumprir a tarefa.
