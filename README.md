@@ -5,10 +5,6 @@
 
 **CafeEngine** é uma suíte de plugins para Godot 4 que transforma `Resources` em ferramentas inteligentes, melhora workflows e permite criação visual de lógica complexa. A suíte é projetada para tornar o desenvolvimento de jogos mais rápido, organizado e intuitivo.
 
----
-
-## Visão Geral
-
 O principal objetivo da CafeEngine não é adicionar funcionalidades impossíveis de criar na Godot, mas sim **otimizar radicalmente o fluxo de trabalho** do desenvolvedor. Tudo que nossos plugins oferecem poderia ser feito manualmente, mas exigiria tempo, código repetitivo e organização manual.
 
 A CafeEngine fornece uma **camada de qualidade de vida** sobre a engine, permitindo que você se concentre no design do seu jogo, e não na configuração. A suíte é baseada em cinco pilares que se complementam para criar um fluxo de trabalho integrado e modular.
