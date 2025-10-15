@@ -39,9 +39,9 @@ Este documento lista e descreve os plugins que compõem a suíte CafeEngine, det
 *   **Dependências Opcionais:** BlueprintEditor (para visualização de grafos), DataBehavior (para `DataResource`s em `StateBehavior`s).
 
 ### 4.2. EventPulse
-*   **Funcionalidades:** Fornece um sistema de eventos visual, reativo e dinâmico para gerenciar triggers e lógica de reação no jogo.
+*   **Funcionalidades:** Permite a criação e gerenciamento de **eventos de jogo configuráveis** (ex: "inimigo derrotado", "item coletado", "área descoberta") e suas **reações encadeadas**. Oferece uma interface visual para definir **triggers** (condições que disparam eventos) e **ações** (lógica executada em resposta a eventos), facilitando a construção de sequências de eventos e reações complexas no jogo. Não atua como um barramento de eventos genérico para comunicação entre plugins, mas sim como um orquestrador de lógicas de jogo baseadas em eventos específicos.
 *   **Dependências Essenciais:** CoreEngine.
-*   **Dependências Opcionais:** BlueprintEditor (para editor visual de eventos), StateMachine (para eventos baseados em estado).
+*   **Dependências Opcionais:** BlueprintEditor (para editor visual de triggers e ações), StateMachine (para triggers ou ações baseadas em estados).
 
 ### 4.3. AIMind
 *   **Funcionalidades:** Gerencia comportamentos de Inteligência Artificial, incluindo tomada de decisão, padrões de ataque, patrulha, perseguição e outras lógicas de IA, configuráveis via `Resources`.
