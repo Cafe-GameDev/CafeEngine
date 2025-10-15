@@ -74,7 +74,7 @@ Gerencia áudio de forma robusta, transformando pastas de arquivos em `AudioStre
 [![StateMachine](https://img.shields.io/badge/StateMachine-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Framework de Máquina de Estados paralela e em camadas para IA, personagens e fluxo de jogo, utilizando `StateBehavior` resources. O **StateBottomPanel** permite a criação e edição de `StateBehavior`s e scripts, e o **StateModalPanel** facilita a edição detalhada de recursos de estado, oferecendo um espaço amplo para o trabalho.
+Framework de Máquina de Estados paralela e em camadas para IA, personagens e fluxo de jogo, utilizando `StateBehavior` resources. Ele se integra com o **BlueprintEditor** através do conceito de **StateBlue**, permitindo a manipulação visual de `StateComponent`s, `Machines` e `Behaviors`. O **StateBottomPanel** permite a criação e edição de `StateBehavior`s e scripts, e o **StateModalPanel** facilita a edição detalhada de recursos de estado, oferecendo um espaço amplo para o trabalho.
 
 > [Mais sobre o StateMachine](addons/state_machine/README.md)
 
