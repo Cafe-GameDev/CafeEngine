@@ -6,45 +6,6 @@ A CafeEngine emerge como uma suíte de plugins revolucionária para a Godot Engi
 
 A suíte é um testemunho da crença de que o Godot possui o potencial para ser a espinha dorsal de projetos ambiciosos, desde que seja complementado por um ecossistema de ferramentas que simplifiquem a complexidade inerente ao desenvolvimento de jogos. A CafeEngine atua como essa camada de abstração e otimização, permitindo que desenvolvedores e designers se concentrem na criatividade e na inovação, em vez de se perderem em tarefas repetitivas ou na gestão manual de sistemas complexos. Cada plugin, embora especializado em um domínio específico, é intrinsecamente interconectado, formando um tecido coeso que amplifica as capacidades da engine e acelera o ciclo de desenvolvimento.
 
-```mermaid
-graph TD
-    subgraph CafeEngine Suite
-        A[CoreEngine] --> B(AudioManager)
-        A --> C(StateMachine)
-        A --> D(DataBehavior)
-        A --> E(BlueprintEditor)
-
-        B -- SidePanel --> F(CorePanel)
-        C -- SidePanel --> F
-        D -- SidePanel --> F
-
-        E -- TopPanel --> G(Editor de Grafos)
-        A -- TopPanel --> H(Editor de Resources)
-
-        C -- BottomPanel --> I(Gerenciamento de Estados)
-        D -- BottomPanel --> J(Gerenciamento de Dados)
-
-        C -- ModalPanel --> K(Edição de StateBehavior)
-        D -- ModalPanel --> L(Edição de DataResource)
-
-        ROP[Programação Orientada a Resources (ROP)] --> A
-        ROP --> B
-        ROP --> C
-        ROP --> D
-        ROP --> E
-    end
-
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style ROP fill:#ccf,stroke:#333,stroke-width:2px
-    style F fill:#bbf,stroke:#333,stroke-width:2px
-    style G fill:#bbf,stroke:#333,stroke-width:2px
-    style H fill:#bbf,stroke:#333,stroke-width:2px
-    style I fill:#bbf,stroke:#333,stroke-width:2px
-    style J fill:#bbf,stroke:#333,stroke-width:2px
-    style K fill:#bbf,stroke:#333,stroke-width:2px
-    style L fill:#bbf,stroke:#333,stroke-width:2px
-```
-
 ## 2. Filosofia Central: A Programação Orientada a Resources (ROP) como Paradigma
 
 No cerne da CafeEngine pulsa a **Programação Orientada a Resources (ROP)**, uma filosofia de design que transcende a interpretação convencional dos `Resources` do Godot. Tradicionalmente vistos como simples contêineres de dados serializáveis, na ROP, os `Resources` são elevados ao status de entidades ativas e inteligentes, capazes de encapsular não apenas dados, mas também comportamento e lógica. Este paradigma é a pedra angular que permite a construção de sistemas altamente modulares, reutilizáveis e profundamente integrados ao editor Godot.

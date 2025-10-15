@@ -16,40 +16,6 @@ O Blueprint da CafeEngine não é a ROP em si, mas a **ferramenta visual** que p
     *   **Behaviors (Lógicas Específicas):** São os `StateBehavior`s ou outros Resources que definem a lógica específica dentro de uma Machine (ex: dentro de `MoveMachine`, teríamos `IdleBehavior`, `WalkBehavior`, `RunBehavior`, `JumpBehavior`).
 *   **Conexões e Fluxo:** As linhas entre os nós (`GraphNode`s) representarão as transições, o fluxo de dados ou a orquestração de eventos entre os Resources, de forma similar a um diagrama Mermaid.
 
-## 2. Filosofia: Orquestrando Resources com Fluxos Visuais
-
-O Blueprint da CafeEngine não é a ROP em si, mas a **ferramenta visual** que permite interagir e organizar os Resources criados sob a filosofia ROP. Ele traduz a modularidade e a inteligência dos Resources em um diagrama de fluxo claro e editável.
-
-*   **Resources como Blocos Lógicos:** Os `Resources` (como `StateBehavior`, `DataResource`, `AudioProfile`) são os blocos de construção fundamentais. No Blueprint, eles se tornam os "nós" visuais que representam unidades de lógica ou dados.
-*   **Machines e Behaviors:** O editor visual permitirá agrupar e organizar esses Resources em estruturas lógicas maiores:
-    *   **Machines (Domínios):** Representam domínios funcionais amplos (ex: `MoveMachine`, `AttackMachine`, `AIMachine`, `GameStateMachine`). Cada Machine pode conter múltiplos Behaviors.
-    *   **Behaviors (Lógicas Específicas):** São os `StateBehavior`s ou outros Resources que definem a lógica específica dentro de uma Machine (ex: dentro de `MoveMachine`, teríamos `IdleBehavior`, `WalkBehavior`, `RunBehavior`, `JumpBehavior`).
-*   **Conexões e Fluxo:** As linhas entre os nós (`GraphNode`s) representarão as transições, o fluxo de dados ou a orquestração de eventos entre os Resources, de forma similar a um diagrama Mermaid.
-
-```mermaid
-graph TD
-    subgraph BlueprintEditor (TopPanel)
-        A[GraphEdit] --> B(GraphNode: StateBehaviorIdle)
-        A --> C(GraphNode: StateBehaviorWalk)
-        A --> D(GraphNode: DataResource)
-
-        B -- Transição --> C
-        C -- Usa Dados --> D
-
-        E[Toolbox/Paleta de Resources] --> A
-        F[Inspector] --> B
-        F --> C
-        F --> D
-    end
-
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#ccf,stroke:#333,stroke-width:2px
-    style C fill:#ccf,stroke:#333,stroke-width:2px
-    style D fill:#ccf,stroke:#333,stroke-width:2px
-    style E fill:#afa,stroke:#333,stroke-width:2px
-    style F fill:#afa,stroke:#333,stroke-width:2px
-```
-
 ## 3. Componentes Visuais e Estrutura do TopPanel
 
 O Blueprint será implementado como um `TopPanel` dedicado, utilizando os seguintes componentes do Godot:

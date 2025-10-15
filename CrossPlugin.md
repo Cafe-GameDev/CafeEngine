@@ -11,40 +11,6 @@ A integração entre plugins na CafeEngine é guiada pelos seguintes princípios
 *   **Orientação a Resources (ROP):** Resources atuam como o "contrato" de dados e comportamento entre plugins. Um Resource criado por um plugin pode ser consumido ou modificado por outro.
 *   **Autoloads como Orquestradores:** Singletons Autoload fornecem pontos de acesso globais e centralizam a lógica de coordenação de alto nível.
 
-## 1. Filosofia de Integração
-
-A integração entre plugins na CafeEngine é guiada pelos seguintes princípios:
-
-*   **Desacoplamento:** Plugins devem ser capazes de funcionar de forma independente, mas se beneficiar da presença de outros. A comunicação deve ser via interfaces bem definidas (sinais, Resources) e não por dependências rígidas de código.
-*   **Reatividade:** A comunicação é predominantemente baseada em eventos (sinais), permitindo que os plugins reajam a mudanças de estado ou ações de outros sem um conhecimento profundo de sua implementação interna.
-*   **Orientação a Resources (ROP):** Resources atuam como o "contrato" de dados e comportamento entre plugins. Um Resource criado por um plugin pode ser consumido ou modificado por outro.
-*   **Autoloads como Orquestradores:** Singletons Autoload fornecem pontos de acesso globais e centralizam a lógica de coordenação de alto nível.
-
-```mermaid
-graph TD
-    subgraph Plugins da CafeEngine
-        SM[StateMachine] -- Sinais (attack_performed) --> AM(AudioManager)
-        SM -- Sinais (attack_performed) --> DB(DataBehavior)
-        SM -- Autoload (play_sfx) --> AM
-        SM -- Resources Compartilhados (MoveData) --> DB
-
-        AM -- Autoload --> CE(CoreEngine)
-        DB -- Autoload --> CE
-        SM -- Autoload --> CE
-
-        CE -- Gerencia CorePanel --> UI[Interface do Editor]
-        AM -- SidePanel --> UI
-        DB -- BottomPanel --> UI
-        SM -- SidePanel/BottomPanel --> UI
-    end
-
-    style SM fill:#f9f,stroke:#333,stroke-width:2px
-    style AM fill:#ccf,stroke:#333,stroke-width:2px
-    style DB fill:#afa,stroke:#333,stroke-width:2px
-    style CE fill:#ffc,stroke:#333,stroke-width:2px
-    style UI fill:#eee,stroke:#333,stroke-width:2px
-```
-
 ## 2. Mecanismos de Comunicação Cross-Plugin
 
 ### 2.1. Sinais (Signals)
