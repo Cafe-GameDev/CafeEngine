@@ -32,8 +32,8 @@ A CafeEngine utiliza `Autoloads` para gerenciamento global e `Custom Types` para
 ### 4. Painéis e Editores
 A CafeEngine organiza suas ferramentas visuais em diferentes tipos de painéis, cada um com um propósito e nível de intrusividade específicos, garantindo um fluxo de trabalho otimizado no editor Godot. Para mais detalhes sobre cada tipo, consulte [Panels.md](Panels.md).
 
-*   **TopPanel:** Painéis de alto nível que ocupam uma aba principal do editor, como o `CoreTopPanel` (Editor de Resources) e o `BlueprintEditor` (Editor Visual de Lógica).
-*   **SidePanel:** Painéis laterais não intrusivos, ideais para configurações rápidas e acionamento de funções. O `CorePanel` é o host unificado para todos os SidePanels dos plugins da CafeEngine, como o `AudioPanel` do AudioManager e o `DataPanel` do DataBehavior.
+*   **TopPanel:** Painéis de alto nível que ocupam uma aba principal do editor, como o `ResourceTopPanel` (Editor de Resources) e o `BlueprintEditor` (Editor Visual de Lógica).
+*   **SidePanel:** Painéis laterais não intrusivos, ideais para configurações rápidas e acionamento de funções. O `ResourcePanel` é o host unificado para todos os SidePanels dos plugins da CafeEngine, como o `AudioPanel` do AudioManager e o `DataPanel` do DataBehavior.
 *   **BottomPanel:** Painéis ancorados na parte inferior, usados para gerenciamento contextual e listas, como o `DataBottomPanel` e o `StateBottomPanel`.
 
 ### 5. Integração Cross-Plugin
@@ -49,9 +49,9 @@ A suíte CafeEngine é composta por diversos plugins, cada um focado em um domí
 [![ResourceEditor](https://img.shields.io/badge/ResourceEditor-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Núcleo da CafeEngine, fornecendo as bases para todos os outros plugins. Inclui o **CoreTopPanel**, um editor de texto universal para `Resources`, permitindo a visualização e edição direta de arquivos `.tres`.
+Núcleo da CafeEngine, fornecendo as bases para todos os outros plugins. Inclui o **ResourceTopPanel**, um editor de texto universal para `Resources`, permitindo a visualização e edição direta de arquivos `.tres`.
 
-> [Mais sobre o ResourceEditor](addons/core_engine/README.md)
+> [Mais sobre o ResourceEditor](addons/resource_editor/README.md)
 
 ### BlueprintEditor
 [![BlueprintEditor](https://img.shields.io/badge/BlueprintEditor-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)

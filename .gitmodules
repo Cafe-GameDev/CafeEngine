@@ -1,6 +1,6 @@
-[submodule "addons/core_engine"]
-	path = addons/core_engine
-	url = https://github.com/Cafe-GameDev/CoreEngine.git
+[submodule "addons/resource_editor"]
+	path = addons/resource_editor
+	url = https://github.com/Cafe-GameDev/ResourceEditor.git
 [submodule "addons/audio_manager"]
 	path = addons/audio_manager
 	url = https://github.com/Cafe-GameDev/AudioManager.git

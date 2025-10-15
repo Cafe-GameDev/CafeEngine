@@ -45,9 +45,9 @@ Cada plugin da CafeEngine é construído com um conjunto de componentes comuns p
 *   **`EditorPlugin` (`editor_plugin.gd`):** Integra o plugin ao editor, registra tipos customizados e adiciona o painel.
 *   **`[PluginName]Panel` (UI):** Interface gráfica do plugin dentro do editor.
 
-### 2.2. O `CorePanel` (Host de SidePanels)
+### 2.2. O `ResourcePanel` (Host de SidePanels)
 
-Todos os **SidePanels** dos plugins são hospedados em um dock lateral unificado chamado **`CorePanel`**, proporcionando uma experiência de usuário coesa para esses painéis.
+Todos os **SidePanels** dos plugins são hospedados em um dock lateral unificado chamado **`ResourcePanel`**, proporcionando uma experiência de usuário coesa para esses painéis.
 
 **Benefícios:**
 

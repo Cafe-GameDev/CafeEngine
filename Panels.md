@@ -4,7 +4,7 @@ Na CafeEngine, a interação com o editor Godot é aprimorada através de difere
 
 ## 1. SidePanel
 
-*   **Propósito:** Painéis não intrusivos, compactos e laterais, projetados para configurações rápidas, exibição de status concisos ou acionamento de funções auxiliares. O `CorePanel` é o host unificado para todos os SidePanels dos plugins da CafeEngine.
+*   **Propósito:** Painéis não intrusivos, compactos e laterais, projetados para configurações rápidas, exibição de status concisos ou acionamento de funções auxiliares. O `ResourcePanel` é o host unificado para todos os SidePanels dos plugins da CafeEngine.
 *   **Intrusividade:** Baixa. Ocupa pouco espaço e não interfere significativamente na área de trabalho principal.
 *   **Funcionalidade:** Focada em ações pontuais ou ajustes de parâmetros de plugins. Não é ideal para edições complexas ou visualizações extensas.
 *   **Exemplos:** O `AudioPanel` do AudioManager (para configurações e geração de áudio), o `DataPanel` do DataBehavior e o `StateSidePanel` do StateMachine (ambos principalmente para acesso rápido à documentação e configurações gerais).
@@ -14,7 +14,7 @@ Na CafeEngine, a interação com o editor Godot é aprimorada através de difere
 *   **Propósito:** Painéis de alto nível que ocupam uma aba principal do editor (similar a "2D", "3D", "Script"). Destinados a funcionalidades que exigem uma área de trabalho dedicada e ampla.
 *   **Intrusividade:** Média a Alta. Redireciona o foco do usuário para uma nova "tela" dentro do editor.
 *   **Funcionalidade:** Ideal para editores visuais complexos, gerenciamento de grandes coleções de recursos ou ferramentas que se beneficiam de um espaço de tela generoso.
-*   **Exemplos:** O `CoreTopPanel` (Editor de Resources) da ResourceEditor, que oferece um editor de texto universal para Resources, e o `BlueprintTopPanel` (Editor Visual de Lógica) do BlueprintEditor, que permite a construção de lógica baseada em grafos.
+*   **Exemplos:** O `ResourceTopPanel` (Editor de Resources) da ResourceEditor, que oferece um editor de texto universal para Resources, e o `BlueprintTopPanel` (Editor Visual de Lógica) do BlueprintEditor, que permite a construção de lógica baseada em grafos.
 
 ## 3. BottomPanel
 

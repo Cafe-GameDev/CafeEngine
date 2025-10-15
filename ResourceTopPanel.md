@@ -1,4 +1,4 @@
-# Planejamento do `CoreTopPanel` (Editor de Resources)
+# Planejamento do `ResourceTopPanel` (Editor de Resources)
 
 ## Objetivo
 Criar um painel de editor de alto nível no Godot, acessível como uma aba principal (similar a "2D", "3D", "Script"), dedicado à visualização e edição de arquivos `.tres` como texto/código. Este painel será agnóstico a plugins específicos, servindo como um editor de Resources universal.
@@ -6,12 +6,12 @@ Criar um painel de editor de alto nível no Godot, acessível como uma aba princ
 **Nome do Painel:** "Resources" (ou "Resource Editor")
 **Plugin Responsável:** `ResourceEditor`
 
-## 1. Estrutura da Cena (`addons/core_engine/panel/resource_top_panel.tscn`)
+## 1. Estrutura da Cena (`addons/resource_editor/panel/resource_top_panel.tscn`)
 
-O `CoreTopPanel` será um `Control` que conterá a seguinte hierarquia de nós:
+O `ResourceTopPanel` será um `Control` que conterá a seguinte hierarquia de nós:
 
 ```
-CoreTopPanel (Control)
+ResourceTopPanel (Control)
 └── HSplitContainer (main_split)
     ├── VSplitContainer (left_panel_split)
     │   ├── VBoxContainer (resource_list_container)
@@ -34,7 +34,7 @@ CoreTopPanel (Control)
             └── Button (save_button) - Ícone: save.svg
 ```
 
-## 2. Funcionalidades do Script (`addons/core_engine/panel/resource_top_panel.gd`)
+## 2. Funcionalidades do Script (`addons/resource_editor/panel/resource_top_panel.gd`)
 
 *   **Inicialização (`_ready`):**
     *   Conectar sinais dos botões (`refresh_button`, `save_button`).
@@ -64,12 +64,12 @@ CoreTopPanel (Control)
     *   Duplo clique em um item na `resource_item_list` abrirá o resource no editor.
     *   (Futuro) Duplo clique em um item na `methods_item_list` poderá navegar para a linha correspondente no `TextEdit`.
 
-## 3. Integração com `addons/core_engine/scripts/editor_plugin.gd`
+## 3. Integração com `addons/resource_editor/scripts/editor_plugin.gd`
 
 *   No método `_enter_tree()` do `editor_plugin.gd` do ResourceEditor, será adicionada uma nova função `_create_top_panel()`.
 *   Esta função instanciará `resource_top_panel.tscn` e o adicionará ao editor Godot como uma nova aba principal, usando `add_control_to_container(MAIN_SCREEN_CONTAINER, top_panel_instance)`.
 *   O texto do botão da aba será definido como "Resources" usando `set_main_screen_button_text(top_panel_instance, "Resources")`.
-*   No método `_exit_tree()`, o `CoreTopPanel` será removido e liberado.
+*   No método `_exit_tree()`, o `ResourceTopPanel` será removido e liberado.
 
 ## 4. Ícones
 
