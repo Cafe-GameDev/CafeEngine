@@ -4,22 +4,22 @@ Este documento lista e descreve os plugins que compõem a suíte CafeEngine, det
 
 ```mermaid
 graph TD
-    CoreEngine --> BlueprintEditor
-    CoreEngine --> StateMachine
-    CoreEngine --> DataBehavior
-    CoreEngine --> EventPulse
-    CoreEngine --> AudioBlend
-    CoreEngine --> VFXEcho
-    CoreEngine --> EnvironmentBlend
-    CoreEngine --> CameraRig
-    CoreEngine --> UIFrame
-    CoreEngine --> ProgressionSystem
-    CoreEngine --> AIMind
-    CoreEngine --> CombatSystem
-    CoreEngine --> InteractionThread
-    CoreEngine --> ItemPool
-    CoreEngine --> AssetInstance
-    CoreEngine --> WorldAtlas
+    ResourceEditor --> BlueprintEditor
+    ResourceEditor --> StateMachine
+    ResourceEditor --> DataBehavior
+    ResourceEditor --> EventPulse
+    ResourceEditor --> AudioBlend
+    ResourceEditor --> VFXEcho
+    ResourceEditor --> EnvironmentBlend
+    ResourceEditor --> CameraRig
+    ResourceEditor --> UIFrame
+    ResourceEditor --> ProgressionSystem
+    ResourceEditor --> AIMind
+    ResourceEditor --> CombatSystem
+    ResourceEditor --> InteractionThread
+    ResourceEditor --> ItemPool
+    ResourceEditor --> AssetInstance
+    ResourceEditor --> WorldAtlas
 
     StateMachine --> AIMind
     StateMachine --> CombatSystem
@@ -50,7 +50,7 @@ graph TD
 
 ## 1. Categoria: Infraestrutura e Ferramentas de Editor
 
-### 1.1. CoreEngine
+### 1.1. ResourceEditor
 *   **Funcionalidades:** Atua como a infraestrutura fundamental da CafeEngine, fornecendo classes base, utilitários essenciais e estabelecendo padrões de integração, comunicação e gerenciamento. Inclui o `CorePanel` (host unificado para SidePanels) e o `CoreTopPanel` (editor universal de Resources).
 *   **Dependências Essenciais:** Nenhuma (é a base da suíte).
 *   **Dependências Opcionais:** Nenhuma.
