@@ -86,6 +86,36 @@ addons/[plugin_name]/
 
 ---
 
+## 3. Estrutura de Arquivos Padrão
+
+Para manter a consistência e facilitar a navegação, todos os plugins da CafeEngine seguem uma estrutura de arquivos padrão.
+
+```mermaid
+graph TD
+    A[addons/] --> B[[plugin_name/]]
+    B --> C[plugin.cfg]
+    B --> D[components/]
+    D --> D1[[plugin_name]_manager.gd]
+    B --> E[resources/]
+    E --> E1[base/]
+    E --> E2[data/]
+    E --> E3[config/]
+    E --> E4[presets/]
+    B --> F[panel/]
+    F --> F1[[plugin_name]_panel.gd]
+    F --> F2[[plugin_name]_panel.tscn]
+    B --> G[scripts/]
+    G --> G1[editor_plugin.gd]
+    B --> H[icons/]
+    H --> H1[[plugin_name]_icon.svg]
+    B --> I[docs/]
+    I --> I1[README.md]
+    I --> I2[plugin_design_document.md]
+    B --> J[README.md]
+```
+
+---
+
 ## 4. CoreEngine (Núcleo da Suíte)
 
 O CoreEngine é o módulo central que fornece a infraestrutura básica para todos os outros plugins da CafeEngine.

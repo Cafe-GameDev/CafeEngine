@@ -13,6 +13,44 @@ O principal objetivo da CafeEngine não é adicionar funcionalidades impossívei
 
 A CafeEngine é construída sobre os seguintes pilares fundamentais, que guiam o desenvolvimento de todos os seus plugins:
 
+## Pilares da CafeEngine
+
+A CafeEngine é construída sobre os seguintes pilares fundamentais, que guiam o desenvolvimento de todos os seus plugins:
+
+```mermaid
+graph TD
+    subgraph CafeEngine Pilares
+        ROP[1. Programação Orientada a Resources (ROP)]
+        CV[2. Código Visual (Blueprints)]
+        AT[3. Autoloads e Tipos Customizados (Nodes)]
+        PE[4. Painéis e Editores]
+        IC[5. Integração Cross-Plugin]
+
+        ROP --> CV
+        ROP --> AT
+        ROP --> PE
+        ROP --> IC
+
+        CV --> PE
+        AT --> PE
+        IC --> PE
+
+        subgraph CafeEngine Suite
+            ROP
+            CV
+            AT
+            PE
+            IC
+        end
+    end
+
+    style ROP fill:#ffc,stroke:#333,stroke-width:2px
+    style CV fill:#ccf,stroke:#333,stroke-width:2px
+    style AT fill:#afa,stroke:#333,stroke-width:2px
+    style PE fill:#bbf,stroke:#333,stroke-width:2px
+    style IC fill:#f9f,stroke:#333,stroke-width:2px
+```
+
 ### 1. Programação Orientada a Resources (ROP)
 Tratamos `Resources` não apenas como contêineres de dados, mas como **objetos de comportamento ativos e inteligentes**. A lógica de um comportamento (IA, padrões de ataque, perfis de áudio, etc.) é encapsulada diretamente no `Resource`, tornando-o reutilizável e configurável pelo Inspector.
 

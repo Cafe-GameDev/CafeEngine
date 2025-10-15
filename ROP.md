@@ -14,6 +14,39 @@ Essa combinação transforma o Resource em uma "entidade reativa e modular", que
 
 ---
 
+## 1. A Essência dos Resources
+
+Na Godot, um `Resource` é uma instância de `RefCounted` que pode ser serializada. Isso significa que, além de armazenar dados, ele pode conter:
+
+-   **Variáveis Exportadas (`@export`):** Permitem manipular o conteúdo do Resource diretamente pelo Inspector do Godot, facilitando a configuração por designers e artistas.
+-   **Funções e Métodos (`func`):** Encapsulam a lógica de comportamento, transformando o Resource em um objeto inteligente.
+-   **Sinais (`signal`):** Capacitam o Resource a emitir eventos e comunicar-se com outros sistemas de forma reativa e desacoplada.
+
+Essa combinação transforma o Resource em uma "entidade reativa e modular", que se integra de forma limpa e escalável à engine.
+
+```mermaid
+graph TD
+    subgraph Resource
+        A[Variáveis Exportadas (@export)]
+        B[Funções e Métodos (func)]
+        C[Sinais (signal)]
+    end
+
+    A --> R(Resource)
+    B --> R
+    C --> R
+
+    R -- Combinado com --> CT[Custom Type (class_name + EditorPlugin)]
+
+    CT --> SM[Sistemas Modulares e Reutilizáveis]
+
+    style R fill:#f9f,stroke:#333,stroke-width:2px
+    style CT fill:#ccf,stroke:#333,stroke-width:2px
+    style SM fill:#afa,stroke:#333,stroke-width:2px
+```
+
+---
+
 ## 2. Exemplos de Resources Nativos e Modulares
 
 Para ilustrar o poder da ROP, vejamos alguns exemplos de como os Resources podem ser utilizados.

@@ -32,6 +32,33 @@ Esta seção define claramente o escopo e a ambição da CafeEngine.
 
 Os pilares de MetaDesign são os princípios fundamentais que guiam o desenvolvimento de todos os plugins da CafeEngine.
 
+## 3. Pilares de MetaDesign
+
+Os pilares de MetaDesign são os princípios fundamentais que guiam o desenvolvimento de todos os plugins da CafeEngine.
+
+```mermaid
+graph TD
+    subgraph Pilares de MetaDesign
+        A[Ergonomia de Desenvolvimento] --> ED(Experiência de Desenvolvimento Otimizada)
+        B[Modularidade e Reuso] --> ED
+        C[Visualização e Ferramentas Internas] --> ED
+        D[Programação Orientada a Resources (ROP)] --> ED
+        E[Integração e Sinergia] --> ED
+
+        D -- É o Coração Técnico --> A
+        D -- É o Coração Técnico --> B
+        D -- É o Coração Técnico --> C
+        D -- É o Coração Técnico --> E
+    end
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#ccf,stroke:#333,stroke-width:2px
+    style C fill:#afa,stroke:#333,stroke-width:2px
+    style D fill:#ffc,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:2px
+    style ED fill:#eee,stroke:#333,stroke-width:2px
+```
+
 ### 3.1. Ergonomia de Desenvolvimento
 
 O foco central é eliminar atritos comuns do workflow, permitindo que o desenvolvedor crie sistemas complexos sem precisar escrever código imediatamente.

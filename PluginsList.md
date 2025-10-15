@@ -4,6 +4,56 @@ Este documento lista e descreve os plugins que compõem a suíte CafeEngine, det
 
 ---
 
+# Plugins da Suíte CafeEngine
+
+Este documento lista e descreve os plugins que compõem a suíte CafeEngine, detalhando suas funcionalidades, categorias e dependências. Todos os plugins são construídos sob a filosofia da Programação Orientada a Resources (ROP), onde `Resources` são tratados como entidades ativas e inteligentes.
+
+```mermaid
+graph TD
+    CoreEngine --> BlueprintEditor
+    CoreEngine --> StateMachine
+    CoreEngine --> DataBehavior
+    CoreEngine --> EventPulse
+    CoreEngine --> AudioBlend
+    CoreEngine --> VFXEcho
+    CoreEngine --> EnvironmentBlend
+    CoreEngine --> CameraRig
+    CoreEngine --> UIFrame
+    CoreEngine --> ProgressionSystem
+    CoreEngine --> AIMind
+    CoreEngine --> CombatSystem
+    CoreEngine --> InteractionThread
+    CoreEngine --> ItemPool
+    CoreEngine --> AssetInstance
+    CoreEngine --> WorldAtlas
+
+    StateMachine --> AIMind
+    StateMachine --> CombatSystem
+    StateMachine --> InteractionThread
+    StateMachine --> CameraRig
+
+    DataBehavior --> AIMind
+    DataBehavior --> CombatSystem
+    DataBehavior --> InteractionThread
+    DataBehavior --> ItemPool
+    DataBehavior --> AssetInstance
+    DataBehavior --> WorldAtlas
+    DataBehavior --> UIFrame
+    DataBehavior --> ProgressionSystem
+
+    EventPulse --> AudioBlend
+    EventPulse --> VFXEcho
+    EventPulse --> EnvironmentBlend
+    EventPulse --> CameraRig
+    EventPulse --> InteractionThread
+    EventPulse --> CombatSystem
+    EventPulse --> UIFrame
+    EventPulse --> ProgressionSystem
+    EventPulse --> AIMind
+```
+
+---
+
 ## 1. Categoria: Core
 
 ### 1.1. CoreEngine
