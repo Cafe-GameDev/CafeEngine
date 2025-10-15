@@ -26,7 +26,7 @@ StateMachine="*res://addons/state_machine/components/state_machine.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/audio_manager/plugin.cfg", "res://addons/core_engine/plugin.cfg", "res://addons/data_behavior/plugin.cfg", "res://addons/state_machine/plugin.cfg")
+enabled=PackedStringArray("res://addons/audio_manager/plugin.cfg", "res://addons/blueprint_editor/plugin.cfg", "res://addons/core_engine/plugin.cfg", "res://addons/data_behavior/plugin.cfg", "res://addons/state_machine/plugin.cfg")
 
 [rendering]
 
