@@ -12,13 +12,13 @@ No cerne da CafeEngine pulsa a **Programação Orientada a Resources (ROP)**, um
 
 A ROP se manifesta através de princípios fundamentais que redefinem a interação com os `Resources`:
 
-*   **Lógica Encapsulada:** Cada `Resource` é projetado para ser autocontido, abrigando sua própria lógica de comportamento. Isso significa que um `Resource` pode definir como ele reage a eventos, como ele se atualiza ao longo do tempo e como ele interage com outros `Resources` ou `Nodes`. Essa encapsulação promove um design limpo e desacoplado, onde a complexidade é gerenciada em unidades menores e mais focadas.
+*   **Lógica Encapsulada:** Cada `Resource` é projetado para ser autocontido, abrigando sua própria lógica de comportamento. Isso significa que um `Resource` pode definir como ele reage a eventos, como ele se atualiza ao longo do tempo e como ele interage com outros `Resources` ou `Nodes`. Essa encapsulação promove um design limpo e desacoplado, onde a complexidade é gerenciada em unidades menores e mais focadas. Por exemplo, um `StateBehavior` no plugin StateMachine não apenas armazena dados de um estado, mas também contém os métodos `enter()`, `exit()`, `process()` e `physics_process()` que definem o comportamento do estado, além de emitir sinais como `transition_requested()`.
 
-*   **Design Orientado a Dados:** A ROP enfatiza a separação clara entre o "o quê" (os dados e as regras de comportamento contidas no `Resource`) e o "como" (o `Node` na cena que executa ou interpreta esse comportamento). Essa distinção permite que os designers ajustem e experimentem com a lógica do jogo diretamente no Inspector, sem a necessidade de modificar o código-fonte. Isso acelera a iteração e facilita a colaboração entre diferentes membros da equipe de desenvolvimento.
+*   **Design Orientado a Dados:** A ROP enfatiza a separação clara entre o "o quê" (os dados e as regras de comportamento contidas no `Resource`) e o "como" (o `Node` na cena que executa ou interpreta esse comportamento). Essa distinção permite que os designers ajustem e experimentem com a lógica do jogo diretamente no Inspector, sem a necessidade de modificar o código-fonte. Isso acelera a iteração e facilita a colaboração entre diferentes membros da equipe de desenvolvimento. Um `MoveData` do DataBehavior, por exemplo, pode definir a velocidade e aceleração de um personagem, e essa `Resource` pode ser referenciada por um `StateBehaviorMove` do StateMachine, permitindo que o designer ajuste o movimento sem tocar no código do comportamento.
 
-*   **Reatividade:** Os `Resources` na CafeEngine não são passivos; eles são reativos. Eles podem emitir sinais quando seu estado interno muda ou quando um evento significativo ocorre, e outros `Resources` ou `Nodes` podem se conectar a esses sinais para reagir de forma dinâmica. Essa reatividade é crucial para a construção de sistemas de jogo complexos e interativos, onde a comunicação entre componentes é fluida e eficiente.
+*   **Reatividade:** Os `Resources` na CafeEngine não são passivos; eles são reativos. Eles podem emitir sinais quando seu estado interno muda ou quando um evento significativo ocorre, e outros `Resources` ou `Nodes` podem se conectar a esses sinais para reagir de forma dinâmica. Essa reatividade é crucial para a construção de sistemas de jogo complexos e interativos, onde a comunicação entre componentes é fluida e eficiente. O `AudioConfig` do AudioManager, por exemplo, emite um sinal `config_changed` sempre que suas propriedades são alteradas, permitindo que a interface do plugin se atualize automaticamente.
 
-*   **Fluxo de Trabalho Godot-Native:** A ROP se integra perfeitamente ao fluxo de trabalho existente do Godot. A edição e o gerenciamento dos `Resources` são realizados diretamente através do FileSystem e do Inspector da engine, tornando o uso dos plugins da CafeEngine intuitivo para qualquer desenvolvedor Godot. Isso minimiza a curva de aprendizado e maximiza a produtividade, pois os desenvolvedores podem alavancar seu conhecimento existente da interface do Godot.
+*   **Fluxo de Trabalho Godot-Native:** A ROP se integra perfeitamente ao fluxo de trabalho existente do Godot. A edição e o gerenciamento dos `Resources` são realizados diretamente através do FileSystem e do Inspector da engine, tornando o uso dos plugins da CafeEngine intuitivo para qualquer desenvolvedor Godot. Isso minimiza a curva de aprendizado e maximiza a produtividade, pois os desenvolvedores podem alavancar seu conhecimento existente da interface do Godot. A criação de `Custom Types` e a utilização de `EditorPlugins` garantem que os `Resources` da CafeEngine se comportem como elementos nativos do Godot.
 
 Para ilustrar o poder da ROP, considere um `Resource` como o `AudioConfig` do plugin AudioManager. Ele não apenas armazena as configurações do plugin, mas também emite um sinal `config_changed` sempre que uma de suas propriedades é modificada. Esse sinal é então capturado pela interface do plugin, que se atualiza automaticamente para refletir as novas configurações. Isso demonstra como um `Resource` pode ser um objeto ativo, com comportamento e capacidade de comunicação, indo muito além de um simples arquivo de configuração estático.
 
@@ -30,41 +30,43 @@ A arquitetura e o desenvolvimento de cada componente da CafeEngine são solidame
 
 O pilar da Ergonomia de Desenvolvimento é a força motriz por trás de cada decisão de design na CafeEngine. O objetivo é eliminar qualquer atrito no fluxo de trabalho do desenvolvedor, transformando tarefas tediosas e repetitivas em processos fluidos e intuitivos. Isso se traduz em:
 
-*   **Ferramentas Visuais:** A CafeEngine investe pesadamente em interfaces gráficas que permitem a criação e manipulação de lógica complexa sem a necessidade de escrever código. Exemplos incluem a criação de IAs conectando estados visuais no `StateMachine` ou a configuração de eventos dinâmicos no `EventCafe` (plugin futuro).
+*   **Ferramentas Visuais:** A CafeEngine investe pesadamente em interfaces gráficas que permitem a criação e manipulação de lógica complexa sem a necessidade de escrever código. Exemplos incluem a criação de IAs conectando estados visuais no `StateMachine` através do `BlueprintEditor` ou a configuração de eventos dinâmicos no `EventCafe` (plugin futuro). Essas ferramentas visuais reduzem a barreira de entrada e aceleram a prototipagem.
 
-*   **Inspectors Inteligentes:** O Inspector do Godot é aprimorado para oferecer uma experiência de edição contextual e rica. Propriedades são organizadas em categorias lógicas, e controles customizados (como botões de atalho ou previews visuais) são adicionados para simplificar a configuração de `Resources`.
+*   **Inspectors Inteligentes:** O Inspector do Godot é aprimorado para oferecer uma experiência de edição contextual e rica. Propriedades são organizadas em categorias lógicas, e controles customizados (como botões de atalho ou previews visuais) são adicionados para simplificar a configuração de `Resources`. Por exemplo, um `EditorInspectorPlugin` pode ser usado para adicionar um botão "Criar Novo Estado" diretamente ao lado de uma propriedade de transição em um `StateBehavior`, automatizando a criação de `Resources` e scripts.
 
-*   **Edição Contextual:** A capacidade de editar propriedades e comportamentos de `Resources` diretamente no contexto em que são usados, seja em um editor de grafo ou em um painel lateral, minimiza a necessidade de alternar entre diferentes janelas ou arquivos, mantendo o desenvolvedor focado na tarefa em questão.
+*   **Edição Contextual:** A capacidade de editar propriedades e comportamentos de `Resources` diretamente no contexto em que são usados, seja em um editor de grafo ou em um painel lateral, minimiza a necessidade de alternar entre diferentes janelas ou arquivos, mantendo o desenvolvedor focado na tarefa em questão. O `CoreTopPanel` permite a edição de qualquer `Resource` como texto, oferecendo flexibilidade para desenvolvedores que preferem essa abordagem.
 
 ### 3.2. Modularidade e Reuso: Construindo com Blocos Inteligentes
 
 A CafeEngine abraça a modularidade como um princípio fundamental, garantindo que cada componente seja uma peça independente, mas interoperável. Isso promove a reutilização máxima e a manutenibilidade do código:
 
-*   **Resources de Comportamento, Dados e Configuração:** A ROP permite que a lógica, os dados e as configurações sejam encapsulados em `Resources` dedicados. Um `StateBehavior` (comportamento de estado), um `DataResource` (dados de jogo) ou um `AudioConfig` (configuração de áudio) são exemplos de como a modularidade é alcançada.
+*   **Resources de Comportamento, Dados e Configuração:** A ROP permite que a lógica, os dados e as configurações sejam encapsulados em `Resources` dedicados. Um `StateBehavior` (comportamento de estado), um `DataResource` (dados de jogo) ou um `AudioConfig` (configuração de áudio) são exemplos de como a modularidade é alcançada. Esses `Resources` podem ser facilmente compartilhados entre diferentes cenas e projetos.
 
-*   **Custom Nodes:** A suíte utiliza `Custom Nodes` que atuam como pontes entre a cena e a lógica encapsulada nos `Resources`. Um `StateComponent`, por exemplo, é um `Node` que gerencia a execução de `StateBehavior`s.
+*   **Custom Nodes:** A suíte utiliza `Custom Nodes` que atuam como pontes entre a cena e a lógica encapsulada nos `Resources`. Um `StateComponent`, por exemplo, é um `Node` que gerencia a execução de `StateBehavior`s, permitindo que a lógica de estado seja definida em um `Resource` e aplicada a qualquer `Node` na cena.
 
-*   **Autoload Managers:** `Autoloads` (Singletons globais) como o `AudioManager` ou o `StateMachine` atuam como orquestradores, fornecendo pontos de acesso globais e centralizando a lógica de coordenação de alto nível. Isso permite que diferentes partes do jogo acessem funcionalidades comuns de forma consistente.
+*   **Autoload Managers:** `Autoloads` (Singletons globais) como o `AudioManager` ou o `StateMachine` atuam como orquestradores, fornecendo pontos de acesso globais e centralizando a lógica de coordenação de alto nível. Isso permite que diferentes partes do jogo acessem funcionalidades comuns de forma consistente, como tocar um efeito sonoro ou mudar o estado global do jogo.
+
+Um mesmo `Resource` pode ser usado em múltiplas cenas, personagens ou sistemas — **sem duplicação de código**, o que simplifica a manutenção e a escalabilidade do projeto.
 
 ### 3.3. Visualização e Ferramentas Internas: O Godot como Estúdio Visual
 
 A CafeEngine transforma o Godot em um estúdio visual de alta produtividade, onde a lógica complexa é apresentada de forma clara e interativa:
 
-*   **Editores Visuais:** Plugins como o `StateMachine` e o `BlueprintEditor` oferecem editores de grafo que permitem a criação e manipulação visual de máquinas de estado e lógicas de jogo. Isso torna a arquitetura do jogo mais compreensível e editável.
+*   **Editores Visuais:** Plugins como o `StateMachine` e o `BlueprintEditor` oferecem editores de grafo que permitem a criação e manipulação visual de máquinas de estado e lógicas de jogo. Isso torna a arquitetura do jogo mais compreensível e editável, facilitando a colaboração entre designers e programadores.
 
-*   **Painéis Integrados:** Todas as ferramentas visuais são cuidadosamente integradas ao editor Godot através de diferentes tipos de painéis (`SidePanel`, `TopPanel`, `BottomPanel`, `ModalPanel`), garantindo uma experiência de usuário coesa e familiar. O `CorePanel` atua como um hub unificado para os `SidePanels` de todos os plugins.
+*   **Painéis Integrados:** Todas as ferramentas visuais são cuidadosamente integradas ao editor Godot através de diferentes tipos de painéis (`SidePanel`, `TopPanel`, `BottomPanel`, `ModalPanel`), garantindo uma experiência de usuário coesa e familiar. O `CorePanel` atua como um hub unificado para os `SidePanels` de todos os plugins, centralizando as interfaces auxiliares.
 
 ### 3.4. Programação Orientada a Resources (ROP): O Coração Técnico
 
-Este pilar, já detalhado, é a base técnica que sustenta todos os outros. Ele garante que a CafeEngine seja *data-driven* e reativa, permitindo que os `Resources` sejam os verdadeiros protagonistas da lógica do jogo.
+Este pilar, já detalhado, é a base técnica que sustenta todos os outros. Ele garante que a CafeEngine seja *data-driven* e reativa, permitindo que os `Resources` sejam os verdadeiros protagonistas da lógica do jogo. A ROP promove um design onde a lógica é configurável e extensível, sem a necessidade de recompilar o código-fonte.
 
 ### 3.5. Integração e Sinergia: Um Ecossistema Coeso
 
 A força da CafeEngine não reside apenas em seus plugins individuais, mas na forma como eles se integram e colaboram. A suíte é projetada para que os plugins "conversem" entre si, formando um ecossistema coeso e expansível:
 
-*   **Comunicação Via Sinais:** Sinais são o principal mecanismo para comunicação reativa entre plugins. Um `StateBehavior` pode emitir um sinal `attack_performed`, e o `AudioManager` pode se conectar a ele para tocar um som de impacto.
+*   **Comunicação Via Sinais:** Sinais são o principal mecanismo para comunicação reativa entre plugins. Um `StateBehavior` pode emitir um sinal `attack_performed`, e o `AudioManager` pode se conectar a ele para tocar um som de impacto. Essa comunicação assíncrona reduz o acoplamento entre os módulos.
 
-*   **Autoloads como Mediadores:** `Autoloads` fornecem pontos de acesso globais e podem atuar como mediadores para interações de alto nível entre plugins.
+*   **Autoloads como Mediadores:** `Autoloads` fornecem pontos de acesso globais e podem atuar como mediadores para interações de alto nível entre plugins. O `CoreEngine` é um exemplo primordial, atuando como um hub central para a orquestração de toda a suíte.
 
 *   **Resources Compartilhados:** `Resources` definidos por um plugin podem ser referenciados e utilizados por outro, atuando como "contratos" de dados e comportamento. Por exemplo, um `StateBehavior` pode usar um `MoveData` (um `DataResource`) para configurar sua velocidade e aceleração.
 
@@ -121,7 +123,7 @@ A CafeEngine é um ecossistema vibrante, composto por plugins especializados que
     *   **`CoreEngine` (Autoload Singleton):** Um singleton global que gerencia plugins ativos, dependências e fornece acesso a funcionalidades compartilhadas. É o hub central para a orquestração de toda a CafeEngine.
     *   **`CorePanel` (Host de SidePanels):** Um `ScrollContainer` que serve como o host unificado para todos os `SidePanels` dos plugins da CafeEngine. Ele centraliza as interfaces de configuração rápida em um único dock lateral, proporcionando uma experiência de usuário organizada.
     *   **`CoreTopPanel` (Editor de Resources):** Um `TopPanel` dedicado à visualização e edição de arquivos `.tres` como texto/código. Este editor universal de `Resources` é agnóstico a plugins específicos, mas fundamental para a filosofia ROP, permitindo a inspeção e modificação direta do conteúdo dos `Resources`.
-*   **Importância:** O `CoreEngine` é indispensável para a interoperabilidade e extensibilidade da suíte, garantindo que todos os plugins falem a mesma língua e se integrem de forma harmoniosa.
+*   **Importância:** O `CoreEngine` é indispensável para a interoperabilidade e extensibilidade da suíte, garantindo que todos os plugins falem a mesma língua e se integrem de forma harmoniosa. Ele é o ponto de partida para qualquer novo plugin da CafeEngine, fornecendo a base para a integração no editor e a comunicação entre módulos.
 
 ### 5.2. BlueprintEditor: A Lógica Visual em Ação
 
@@ -129,8 +131,8 @@ A CafeEngine é um ecossistema vibrante, composto por plugins especializados que
 *   **Componentes Chave:**
     *   **`BlueprintTopPanel` (Control com `GraphEdit`):** A cena principal do editor visual, instanciada como um `TopPanel`, fornecendo a tela interativa para criar, conectar e organizar nós.
     *   **`GraphNode`:** Representa visualmente as "Machines" e "Behaviors" (ou outros `Resources` de plugins integrados), com portas para conexões e exibição de informações contextuais.
-*   **Integração:** O `BlueprintEditor` atua como um host genérico para `Módulos CrossPlugin`. O `BlueprintStateModule` (apelidado de **StateBlue**) é o primeiro exemplo, projetado para integrar o `StateMachine`, permitindo a manipulação visual de `StateComponent`s, `Machines` e `Behaviors`.
-*   **Benefícios:** Traduz a modularidade dos `Resources` em um diagrama de fluxo claro, capacitando desenvolvedores e designers a criar lógica complexa sem escrever código diretamente, focando na arquitetura e no fluxo.
+*   **Integração:** O `BlueprintEditor` atua como um host genérico para `Módulos CrossPlugin`. O `BlueprintStateModule` (apelidado de **StateBlue**) é o primeiro exemplo, projetado para integrar o `StateMachine`, permitindo a manipulação visual de `StateComponent`s, `Machines` e `Behaviors`. Isso significa que a lógica de estado complexa pode ser construída e visualizada sem escrever uma única linha de código, tornando-a acessível a designers e outros membros da equipe não-programadores.
+*   **Benefícios:** Traduz a modularidade dos `Resources` em um diagrama de fluxo claro, capacitando desenvolvedores e designers a criar lógica complexa sem escrever código diretamente, focando na arquitetura e no fluxo. A depuração visual de estados ativos em tempo de execução é uma das funcionalidades mais poderosas que o BlueprintEditor pode oferecer.
 
 ### 5.3. AudioManager: Orquestrando a Paisagem Sonora
 
@@ -141,26 +143,30 @@ A CafeEngine é um ecossistema vibrante, composto por plugins especializados que
     *   **`AudioManifest` (Resource):** Atua como um catálogo centralizado para todos os recursos de áudio gerados e coletados, mapeando chaves de áudio para seus `AudioStream`s correspondentes.
     *   **`AudioPanel` (SidePanel):** A interface gráfica principal do plugin no editor, permitindo configurar caminhos, disparar a geração de recursos e visualizar o `AudioManifest`.
     *   **`GenerateAlbuns` (EditorScript):** Responsável pela lógica central de escanear arquivos de áudio e gerar os `AudioStream`s.
-*   **Benefícios:** Reduz tarefas repetitivas na configuração de áudio, centraliza o acesso a recursos de áudio e garante a otimização para exportação, tudo isso com uma integração nativa ao editor.
+    *   **`AudioPosition2D` / `AudioPosition3D`:** Nodes que estendem `AudioStreamPlayer2D` e `AudioStreamPlayer3D`, respectivamente, para facilitar a reprodução de áudio posicional com recursos de áudio gerenciados.
+*   **Benefícios:** Reduz tarefas repetitivas na configuração de áudio, centraliza o acesso a recursos de áudio e garante a otimização para exportação, tudo isso com uma integração nativa ao editor. A automação da criação de playlists e randomizadores economiza um tempo considerável, permitindo que os desenvolvedores se concentrem na experiência sonora.
 
 ### 5.4. StateMachine: O Coração Comportamental do Jogo
 
 *   **Função:** O `StateMachine` é um framework avançado para simplificar e potencializar a criação de lógicas de comportamento complexas. Ele implementa uma arquitetura de Máquina de Estados Paralela e em Camadas (Layered/Parallel State Machine), onde comportamentos são encapsulados em `StateBehavior`s (Resources) reutilizáveis.
 *   **Componentes Chave:**
-    *   **`StateComponent` (Node):** O motor de execução que vive em uma cena, gerenciando um conjunto de `StateBehavior`s ativos simultaneamente em diferentes domínios (camadas).
-    *   **`StateBehavior` (Resource):** A classe base para todos os estados, encapsulando a lógica completa de um domínio funcional. `StateBehavior`s são objetos inteligentes que gerenciam seus próprios micro-estados e emitem sinais `transition_requested` para solicitar a troca de estado.
+    *   **`StateComponent` (Node):** O motor de execução que vive em uma cena, gerenciando um conjunto de `StateBehavior`s ativos simultaneamente em diferentes domínios (camadas). Ele atua como um "broker" de eventos, propagando sinais externos para todos os `StateBehavior`s ativos e executando transições de estado de forma segura.
+    *   **`StateBehavior` (Resource):** A classe base para todos os estados, encapsulando a lógica completa de um domínio funcional. `StateBehavior`s são objetos inteligentes que gerenciam seus próprios micro-estados e emitem sinais `transition_requested` para solicitar a troca de estado. Exemplos incluem `StateBehaviorGroundMove`, `StateBehaviorMeleeAttack`, `StateBehaviorAIPatrol`, entre outros.
     *   **`StateMachine` (Autoload Singleton):** Um orquestrador de alto nível que mantém um registro de todos os `StateComponent`s ativos para depuração e gerencia estados globais do jogo (ex: `GameStateScene` para transições de cena).
-*   **Filosofia:** Promove modularidade, reutilização e um design visual e reativo, onde o próprio estado é inteligente e decide quando transicionar, sem ser constantemente verificado por um gerente externo.
+    *   **`StateBottomPanel`:** Um painel inferior para gerenciamento de `StateBehavior`s e scripts.
+    *   **`StateModalPanel`:** Uma janela modal para edição detalhada e criação de `StateBehavior`s a partir de templates.
+*   **Filosofia:** Promove modularidade, reutilização e um design visual e reativo, onde o próprio estado é inteligente e decide quando transicionar, sem ser constantemente verificado por um gerente externo. A integração com o `BlueprintEditor` através do `BlueprintStateModule` (StateBlue) permite a manipulação visual completa das máquinas de estado.
 
 ### 5.5. DataBehavior: Estruturando os Dados do Jogo
 
 *   **Função:** O `DataBehavior` é projetado para gerenciar e estruturar dados de jogo de forma modular e reutilizável através de `Resources`. Ele estende a filosofia ROP para todos os dados do jogo, desde estatísticas de armas e configurações de movimento de personagens até dados de estados de jogo.
 *   **Componentes Chave:**
     *   **`DataManager` (Autoload Singleton):** Um `Node` que atua como um ponto de acesso global para todos os dados do jogo, carregando, armazenando e fornecendo acesso a `DataResource`s.
-    *   **`DataResource` (Base Class):** A classe base abstrata para todos os recursos de dados específicos do jogo, contendo propriedades exportadas para configuração no Inspector.
+    *   **`DataResource` (Base Class):** A classe base abstrata para todos os recursos de dados específicos do jogo, contendo propriedades exportadas para configuração no Inspector. Exemplos incluem `MoveData`, `WeaponData`, `GameStateData`.
     *   **`DataBottomPanel`:** Um painel inferior no editor, utilizado para listar, gerenciar e criar `DataResource`s e seus scripts associados, facilitando a organização e o acesso aos dados do jogo.
     *   **`DataPanel` (SidePanel):** Um painel lateral compacto para acesso rápido à documentação e configurações gerais do plugin.
-*   **Benefícios:** Trata todos os dados de jogo como `Resources`, aproveitando a serialização e a integração nativa do Godot. Isso promove a edição no Inspector, reuso e manutenção, com planos de integração visual com o `BlueprintEditor` (futuro).
+    *   **`DataModalPanel`:** Uma janela modal para edição detalhada e visual de `DataResource`s, ideal para configurações complexas que demandam mais espaço.
+*   **Benefícios:** Trata todos os dados de jogo como `Resources`, aproveitando a serialização e a integração nativa do Godot. Isso promove a edição no Inspector, reuso e manutenção, com planos de integração visual com o `BlueprintEditor` (futuro). A centralização dos dados em `Resources` facilita a gestão de conteúdo e a colaboração entre equipes.
 
 ## 6. Integração e Features Cross-Plugin: A Sinergia que Impulsiona a CafeEngine
 
