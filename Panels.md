@@ -14,7 +14,7 @@ Na CafeEngine, a interação com o editor Godot é aprimorada através de difere
 *   **Propósito:** Painéis de alto nível que ocupam uma aba principal do editor (similar a "2D", "3D", "Script"). Destinados a funcionalidades que exigem uma área de trabalho dedicada e ampla.
 *   **Intrusividade:** Média a Alta. Redireciona o foco do usuário para uma nova "tela" dentro do editor.
 *   **Funcionalidade:** Ideal para editores visuais complexos, gerenciamento de grandes coleções de recursos ou ferramentas que se beneficiam de um espaço de tela generoso.
-*   **Exemplos:** O `CoreTopPanel` (Editor de Resources) da CoreEngine, que oferece um editor de texto universal para Resources, e o `BlueprintTopPanel` (Editor Visual de Lógica) do BlueprintEditor, que permite a construção de lógica baseada em grafos.
+*   **Exemplos:** O `CoreTopPanel` (Editor de Resources) da ResourceEditor, que oferece um editor de texto universal para Resources, e o `BlueprintTopPanel` (Editor Visual de Lógica) do BlueprintEditor, que permite a construção de lógica baseada em grafos.
 
 ## 3. BottomPanel
 

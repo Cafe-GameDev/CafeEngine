@@ -4,7 +4,7 @@
 Criar um painel de editor de alto nível no Godot, acessível como uma aba principal (similar a "2D", "3D", "Script"), dedicado à visualização e edição de arquivos `.tres` como texto/código. Este painel será agnóstico a plugins específicos, servindo como um editor de Resources universal.
 
 **Nome do Painel:** "Resources" (ou "Resource Editor")
-**Plugin Responsável:** `CoreEngine`
+**Plugin Responsável:** `ResourceEditor`
 
 ## 1. Estrutura da Cena (`addons/core_engine/panel/resource_top_panel.tscn`)
 
@@ -66,7 +66,7 @@ CoreTopPanel (Control)
 
 ## 3. Integração com `addons/core_engine/scripts/editor_plugin.gd`
 
-*   No método `_enter_tree()` do `editor_plugin.gd` do CoreEngine, será adicionada uma nova função `_create_top_panel()`.
+*   No método `_enter_tree()` do `editor_plugin.gd` do ResourceEditor, será adicionada uma nova função `_create_top_panel()`.
 *   Esta função instanciará `resource_top_panel.tscn` e o adicionará ao editor Godot como uma nova aba principal, usando `add_control_to_container(MAIN_SCREEN_CONTAINER, top_panel_instance)`.
 *   O texto do botão da aba será definido como "Resources" usando `set_main_screen_button_text(top_panel_instance, "Resources")`.
 *   No método `_exit_tree()`, o `CoreTopPanel` será removido e liberado.

@@ -86,17 +86,17 @@ addons/[plugin_name]/
 
 ---
 
-## 4. CoreEngine (Núcleo da Suíte)
+## 4. ResourceEditor (Núcleo da Suíte)
 
-O CoreEngine é o módulo central que fornece a infraestrutura básica para todos os outros plugins da CafeEngine.
+O ResourceEditor é o módulo central que fornece a infraestrutura básica para todos os outros plugins da CafeEngine.
 
 ### 4.1. Objetivo
 
-O **CoreEngine** é o módulo central compartilhado por todos os plugins da CafeEngine. Ele fornece classes e funções de suporte para registro, comunicação e gerenciamento.
+O **ResourceEditor** é o módulo central compartilhado por todos os plugins da CafeEngine. Ele fornece classes e funções de suporte para registro, comunicação e gerenciamento.
 
 ### 4.2. Componentes Principais
 
-*   **`CoreEngine` (Singleton):** Gerencia plugins ativos e dependências.
+*   **`ResourceEditor` (Singleton):** Gerencia plugins ativos e dependências.
 *   **`CafeResource` (Base Class):** Resource padrão com integração automática de sinais e callbacks.
 *   **`CafePanelHost`:** Controla a adição/remoção dinâmica de painéis no editor.
 
@@ -119,7 +119,7 @@ Aderir a uma convenção de nomenclatura consistente é crucial para a legibilid
 As diretrizes de dependência e integração garantem que os plugins funcionem de forma harmoniosa e robusta.
 
 *   Plugins devem declarar dependências opcionais em `plugin.cfg`.
-*   O `CoreEngine` verifica compatibilidade de versão em runtime.
+*   O `ResourceEditor` verifica compatibilidade de versão em runtime.
 *   Nenhum plugin deve depender rigidamente de outro para funcionar.
 
 ---

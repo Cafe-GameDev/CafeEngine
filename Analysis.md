@@ -66,7 +66,7 @@ A força da CafeEngine não reside apenas em seus plugins individuais, mas na fo
 
 *   **Comunicação Via Sinais:** Sinais são o principal mecanismo para comunicação reativa entre plugins. Um `StateBehavior` pode emitir um sinal `attack_performed`, e o `AudioManager` pode se conectar a ele para tocar um som de impacto. Essa comunicação assíncrona reduz o acoplamento entre os módulos.
 
-*   **Autoloads como Mediadores:** `Autoloads` fornecem pontos de acesso globais e podem atuar como mediadores para interações de alto nível entre plugins. O `CoreEngine` é um exemplo primordial, atuando como um hub central para a orquestração de toda a suíte.
+*   **Autoloads como Mediadores:** `Autoloads` fornecem pontos de acesso globais e podem atuar como mediadores para interações de alto nível entre plugins. O `ResourceEditor` é um exemplo primordial, atuando como um hub central para a orquestração de toda a suíte.
 
 *   **Resources Compartilhados:** `Resources` definidos por um plugin podem ser referenciados e utilizados por outro, atuando como "contratos" de dados e comportamento. Por exemplo, um `StateBehavior` pode usar um `MoveData` (um `DataResource`) para configurar sua velocidade e aceleração.
 
@@ -84,14 +84,14 @@ A CafeEngine adota uma abordagem estratégica para a integração de suas ferram
     *   **`AudioPanel` (AudioManager):** Permite configurar caminhos de assets de áudio, gerar manifestos e acessar a documentação do plugin de forma compacta.
     *   **`DataPanel` (DataBehavior):** Oferece acesso rápido à documentação e configurações gerais do plugin DataBehavior.
     *   **`StateSidePanel` (StateMachine):** Embora com funcionalidades futuras de visualização de grafo, em sua forma inicial, serve para acesso rápido a configurações e documentação.
-*   **Integração:** Todos os `SidePanels` dos plugins da CafeEngine são hospedados em um dock lateral unificado chamado `CorePanel`, gerenciado pelo `CoreEngine`. Isso proporciona uma experiência de usuário coesa e organizada, onde todos os painéis auxiliares estão centralizados em um único local.
+*   **Integração:** Todos os `SidePanels` dos plugins da CafeEngine são hospedados em um dock lateral unificado chamado `CorePanel`, gerenciado pelo `ResourceEditor`. Isso proporciona uma experiência de usuário coesa e organizada, onde todos os painéis auxiliares estão centralizados em um único local.
 
 ### 4.2. TopPanel: Espaço Dedicado para Ferramentas Complexas
 
 *   **Propósito:** Os `TopPanels` são painéis de alto nível que ocupam uma aba principal do editor Godot (similar às abas "2D", "3D" ou "Script"). Eles são reservados para funcionalidades que exigem uma área de trabalho dedicada e ampla, como editores visuais complexos ou ferramentas de gerenciamento de grandes coleções de recursos.
 *   **Características:** Média a alta intrusividade (redireciona o foco do usuário), ideal para editores visuais e ferramentas que se beneficiam de um espaço de tela generoso.
 *   **Exemplos na CafeEngine:**
-    *   **`CoreTopPanel` (CoreEngine):** Um editor de texto universal para `Resources`, permitindo a visualização e edição direta de arquivos `.tres` como código. Isso é fundamental para a filosofia ROP, pois permite inspecionar e modificar o conteúdo bruto dos `Resources`.
+    *   **`CoreTopPanel` (ResourceEditor):** Um editor de texto universal para `Resources`, permitindo a visualização e edição direta de arquivos `.tres` como código. Isso é fundamental para a filosofia ROP, pois permite inspecionar e modificar o conteúdo bruto dos `Resources`.
     *   **`BlueprintTopPanel` (BlueprintEditor):** O editor visual de lógica baseado em grafos, onde os `Resources` de outros plugins (como `StateBehavior`s) são representados como nós e conectados visualmente. Este painel é o coração da experiência NoCode/LowCode da CafeEngine.
 
 ### 4.3. BottomPanel: Gerenciamento Contextual e Listas Detalhadas
@@ -116,14 +116,14 @@ A escolha cuidadosa do tipo de painel para cada funcionalidade é um reflexo do 
 
 A CafeEngine é um ecossistema vibrante, composto por plugins especializados que, juntos, formam uma plataforma de desenvolvimento coesa e poderosa. Cada plugin é projetado com a filosofia ROP em mente e contribui para a visão geral de otimização do fluxo de trabalho no Godot:
 
-### 5.1. CoreEngine: A Fundação Inabalável da Suíte
+### 5.1. ResourceEditor: A Fundação Inabalável da Suíte
 
-*   **Função:** O `CoreEngine` é o coração e a alma da CafeEngine, atuando como a infraestrutura fundamental sobre a qual todos os outros plugins são construídos. Ele não apenas fornece classes base e utilitários essenciais, mas também estabelece os padrões de integração, comunicação e gerenciamento que garantem a coesão de toda a suíte.
+*   **Função:** O `ResourceEditor` é o coração e a alma da CafeEngine, atuando como a infraestrutura fundamental sobre a qual todos os outros plugins são construídos. Ele não apenas fornece classes base e utilitários essenciais, mas também estabelece os padrões de integração, comunicação e gerenciamento que garantem a coesão de toda a suíte.
 *   **Componentes Chave:**
-    *   **`CoreEngine` (Autoload Singleton):** Um singleton global que gerencia plugins ativos, dependências e fornece acesso a funcionalidades compartilhadas. É o hub central para a orquestração de toda a CafeEngine.
+    *   **`ResourceEditor` (Autoload Singleton):** Um singleton global que gerencia plugins ativos, dependências e fornece acesso a funcionalidades compartilhadas. É o hub central para a orquestração de toda a CafeEngine.
     *   **`CorePanel` (Host de SidePanels):** Um `ScrollContainer` que serve como o host unificado para todos os `SidePanels` dos plugins da CafeEngine. Ele centraliza as interfaces de configuração rápida em um único dock lateral, proporcionando uma experiência de usuário organizada.
     *   **`CoreTopPanel` (Editor de Resources):** Um `TopPanel` dedicado à visualização e edição de arquivos `.tres` como texto/código. Este editor universal de `Resources` é agnóstico a plugins específicos, mas fundamental para a filosofia ROP, permitindo a inspeção e modificação direta do conteúdo dos `Resources`.
-*   **Importância:** O `CoreEngine` é indispensável para a interoperabilidade e extensibilidade da suíte, garantindo que todos os plugins falem a mesma língua e se integrem de forma harmoniosa. Ele é o ponto de partida para qualquer novo plugin da CafeEngine, fornecendo a base para a integração no editor e a comunicação entre módulos.
+*   **Importância:** O `ResourceEditor` é indispensável para a interoperabilidade e extensibilidade da suíte, garantindo que todos os plugins falem a mesma língua e se integrem de forma harmoniosa. Ele é o ponto de partida para qualquer novo plugin da CafeEngine, fornecendo a base para a integração no editor e a comunicação entre módulos.
 
 ### 5.2. BlueprintEditor: A Lógica Visual em Ação
 
@@ -182,7 +182,7 @@ Os sinais são o principal mecanismo para a comunicação reativa e assíncrona 
 
 Plugins como `StateMachine` e `AudioManager` são configurados como `Autoloads` (Singletons globais) no Godot. Isso os torna acessíveis de qualquer parte do código do jogo, fornecendo pontos de acesso centralizados para funcionalidades de alto nível. Quando a interação é bem definida e de natureza global, um plugin pode chamar métodos ou acessar propriedades de outro `Autoload` diretamente.
 
-*   **Exemplo Prático:** Um `StateBehaviorMove` do `StateMachine` pode precisar tocar um som de "passos" quando o personagem se move. Em vez de gerenciar a reprodução de áudio internamente, ele pode simplesmente chamar `AudioManager.play_sfx("player_footstep")`. Da mesma forma, o `CoreEngine` atua como um hub central, fornecendo acesso a painéis e funcionalidades compartilhadas para todos os plugins da suíte.
+*   **Exemplo Prático:** Um `StateBehaviorMove` do `StateMachine` pode precisar tocar um som de "passos" quando o personagem se move. Em vez de gerenciar a reprodução de áudio internamente, ele pode simplesmente chamar `AudioManager.play_sfx("player_footstep")`. Da mesma forma, o `ResourceEditor` atua como um hub central, fornecendo acesso a painéis e funcionalidades compartilhadas para todos os plugins da suíte.
 
 ### 6.3. Resources Compartilhados: Contratos de Dados e Comportamento
 
@@ -200,7 +200,7 @@ Para garantir uma integração robusta e manutenível, a CafeEngine segue diretr
 
 *   **Evitar Acoplamento Forte:** Um plugin não deve *exigir* a presença de outro para funcionar. Se houver uma dependência, ela deve ser opcional e tratada com segurança (por exemplo, verificando se o `Autoload` existe antes de tentar acessá-lo). Isso garante a modularidade e a capacidade de usar plugins individualmente, se desejado.
 
-*   **Uso do CoreEngine como Mediador:** O `CoreEngine` pode atuar como um mediador ou um ponto de registro para funcionalidades cross-plugin, garantindo uma integração mais limpa e centralizada.
+*   **Uso do ResourceEditor como Mediador:** O `ResourceEditor` pode atuar como um mediador ou um ponto de registro para funcionalidades cross-plugin, garantindo uma integração mais limpa e centralizada.
 
 ## 7. Metodologia de Plugin Design Document (PDD): A Estrutura por Trás da Coerência
 

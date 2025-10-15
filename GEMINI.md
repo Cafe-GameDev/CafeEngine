@@ -59,12 +59,12 @@ A força da CafeEngine reside na sua capacidade de orquestrar múltiplos plugins
     -   **Sinais (Signals):** Principal mecanismo para comunicação reativa, onde um plugin emite um sinal e outros podem se conectar para reagir.
     -   **Autoloads (Singletons Globais):** Plugins como `StateMachine` e `AudioManager` são Autoloads, tornando-os acessíveis globalmente para interações de alto nível.
     -   **Resources Compartilhados:** Resources definidos por um plugin podem ser referenciados e utilizados por outro, atuando como "contratos" de dados e comportamento.
--   **Diretrizes:** Definir contratos claros, documentar a integração, evitar acoplamento forte e usar o `CoreEngine` como mediador.
+-   **Diretrizes:** Definir contratos claros, documentar a integração, evitar acoplamento forte e usar o `ResourceEditor` como mediador.
 
 ### Plugins da Suíte CafeEngine:
 
 -   **AudioManager:** Um sistema robusto de gerenciamento de áudio.
 -   **StateMachine:** Um framework de Máquina de Estados Paralela e em Camadas.
 -   **DataBehavior:** Gerencia e estrutura dados de jogo de forma modular.
--   **CoreEngine:** Núcleo da CafeEngine, fornecendo as bases para todos os outros plugins.
+-   **ResourceEditor:** Núcleo da CafeEngine, fornecendo as bases para todos os outros plugins.
 

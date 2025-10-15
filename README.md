@@ -45,13 +45,13 @@ A CafeEngine é projetada para que seus plugins trabalhem em conjunto, permitind
 
 A suíte CafeEngine é composta por diversos plugins, cada um focado em um domínio específico do desenvolvimento de jogos:
 
-### CoreEngine
-[![CoreEngine](https://img.shields.io/badge/CoreEngine-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
+### ResourceEditor
+[![ResourceEditor](https://img.shields.io/badge/ResourceEditor-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 Núcleo da CafeEngine, fornecendo as bases para todos os outros plugins. Inclui o **CoreTopPanel**, um editor de texto universal para `Resources`, permitindo a visualização e edição direta de arquivos `.tres`.
 
-> [Mais sobre o CoreEngine](addons/core_engine/README.md)
+> [Mais sobre o ResourceEditor](addons/core_engine/README.md)
 
 ### BlueprintEditor
 [![BlueprintEditor](https://img.shields.io/badge/BlueprintEditor-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)

@@ -101,7 +101,7 @@ Se você deseja criar **novos plugins para a suíte CafeEngine**, siga a estrutu
     └── docs/
     ```
 
-2.  Registre custom types e painéis via **CoreEngine**.
+2.  Registre custom types e painéis via **ResourceEditor**.
 3.  Use Resources para dados, comportamento e configuração.
 4.  Forneça documentação e exemplos de uso.
 5.  Teste integração com outros plugins da suíte.

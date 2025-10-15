@@ -28,7 +28,7 @@ Plugins como `StateMachine` e `AudioManager` são Autoloads, tornando-os acessí
 
 **Exemplo:**
 *   Um `StateBehavior` do **StateMachine** pode chamar `AudioManager.play_sfx("player_jump")` para tocar um som de pulo.
-*   O **CoreEngine** atua como um hub central, fornecendo acesso a painéis e funcionalidades compartilhadas.
+*   O **ResourceEditor** atua como um hub central, fornecendo acesso a painéis e funcionalidades compartilhadas.
 
 ### 2.3. Resources Compartilhados
 
@@ -45,7 +45,7 @@ Ao desenvolver funcionalidades que envolvem múltiplos plugins, considere o segu
 *   **Defina Contratos Claros:** Quais sinais serão emitidos? Quais Resources serão compartilhados e qual sua estrutura? Quais métodos dos Autoloads serão públicos para interação?
 *   **Documente a Integração:** Cada plugin deve documentar explicitamente como ele pode interagir com outros plugins da suíte, incluindo exemplos de uso.
 *   **Evite Acoplamento Forte:** Um plugin não deve *exigir* a presença de outro para funcionar. Se houver uma dependência, ela deve ser opcional e tratada com segurança (ex: verificar se o Autoload existe antes de tentar acessá-lo).
-*   **Use o CoreEngine:** O `CoreEngine` pode atuar como um mediador ou um ponto de registro para funcionalidades cross-plugin, garantindo uma integração mais limpa.
+*   **Use o ResourceEditor:** O `ResourceEditor` pode atuar como um mediador ou um ponto de registro para funcionalidades cross-plugin, garantindo uma integração mais limpa.
 
 ## 4. Exemplos de Interação Cross-Plugin
 
@@ -55,8 +55,8 @@ Ao desenvolver funcionalidades que envolvem múltiplos plugins, considere o segu
 *   **StateMachine + DataBehavior:**
     *   `StateBehaviorMove` usa um `MoveData` (do DataBehavior) para configurar sua velocidade e aceleração.
     *   `StateBehaviorAttack` usa um `WeaponData` (do DataBehavior) para determinar o dano e tipo de ataque.
-*   **CoreEngine + Todos os Plugins:**
-    *   O `CoreEngine` gerencia o `CorePanel`, onde os **SidePanels** de editor dos plugins são adicionados, criando uma interface unificada para esses painéis.
-    *   O `CoreEngine` pode fornecer utilitários globais que todos os plugins podem usar.
+*   **ResourceEditor + Todos os Plugins:**
+    *   O `ResourceEditor` gerencia o `CorePanel`, onde os **SidePanels** de editor dos plugins são adicionados, criando uma interface unificada para esses painéis.
+    *   O `ResourceEditor` pode fornecer utilitários globais que todos os plugins podem usar.
 
 A colaboração entre os plugins da CafeEngine é o que a torna uma suíte poderosa e flexível, permitindo a construção de jogos modulares e escaláveis.
