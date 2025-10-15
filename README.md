@@ -54,6 +54,14 @@ Núcleo da CafeEngine, fornecendo as bases para todos os outros plugins. Inclui 
 
 > [Mais sobre o CoreEngine](addons/core_engine/README.md)
 
+### BlueprintEditor
+[![BlueprintEditor](https://img.shields.io/badge/BlueprintEditor-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
+[![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
+Um editor visual/NoCode de alto nível para construir e gerenciar a lógica de jogo de forma intuitiva e baseada em grafos, utilizando os princípios da Programação Orientada a Resources (ROP). Ele atua como uma ferramenta de manipulação e visualização para outros plugins da CafeEngine, como o StateMachine.
+
+> [Mais sobre o BlueprintEditor](addons/blueprint_editor/README.md)
+
 ### AudioManager
 [![AudioManager](https://img.shields.io/badge/AudioManager-v1.0.0-478cbf?style=for-the-badge)](https://www.cafegame.dev/pt-BR/cafeengine)
 [![License](https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge)](https://opensource.org/licenses/MIT)
