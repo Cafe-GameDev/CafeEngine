@@ -32,10 +32,9 @@ A CafeEngine utiliza `Autoloads` para gerenciamento global e `Custom Types` para
 ### 4. Painéis e Editores
 A CafeEngine organiza suas ferramentas visuais em diferentes tipos de painéis, cada um com um propósito e nível de intrusividade específicos, garantindo um fluxo de trabalho otimizado no editor Godot. Para mais detalhes sobre cada tipo, consulte [Panels.md](Panels.md).
 
-*   **TopPanel:** Painéis de alto nível que ocupam uma aba principal do editor, como o `CoreTopPanel`, que oferece um editor de texto universal para Resources.
-*   **SidePanel:** Painéis laterais não intrusivos, ideais para configurações rápidas e acionamento de funções. O `CorePanel` é o host unificado para todos os SidePanels dos plugins da CafeEngine, como o `AudioPanel` do AudioManager.
+*   **TopPanel:** Painéis de alto nível que ocupam uma aba principal do editor, como o `CoreTopPanel` (Editor de Resources) e o `BlueprintEditor` (Editor Visual de Lógica).
+*   **SidePanel:** Painéis laterais não intrusivos, ideais para configurações rápidas e acionamento de funções. O `CorePanel` é o host unificado para todos os SidePanels dos plugins da CafeEngine, como o `AudioPanel` do AudioManager e o `DataPanel` do DataBehavior.
 *   **BottomPanel:** Painéis ancorados na parte inferior, usados para gerenciamento contextual e listas, como o `DataBottomPanel` e o `StateBottomPanel`.
-*   **ModalPanel:** Janelas pop-up que facilitam a edição detalhada e a criação de novos Resources em um ambiente focado, como o `DataModalPanel` e o `StateModalPanel`.
 
 ### 5. Integração Cross-Plugin
 A CafeEngine é projetada para que seus plugins trabalhem em conjunto, permitindo a criação de sistemas complexos através da comunicação e colaboração. Para entender como os plugins se relacionam e como desenvolver features que abrangem múltiplos módulos, consulte [CrossPlugin.md](CrossPlugin.md).
