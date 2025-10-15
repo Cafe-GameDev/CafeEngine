@@ -51,7 +51,7 @@ graph TD
 ## 1. Categoria: Infraestrutura e Ferramentas de Editor
 
 ### 1.1. ResourceEditor
-*   **Funcionalidades:** Atua como a infraestrutura fundamental da CafeEngine, fornecendo classes base, utilitários essenciais e estabelecendo padrões de integração, comunicação e gerenciamento. Inclui o `ResourcePanel` (host unificado para SidePanels) e o `ResourceTopPanel` (editor universal de Resources).
+*   **Funcionalidades:** Atua como a infraestrutura fundamental da CafeEngine, fornecendo classes base, utilitários essenciais e estabelecendo padrões de integração, comunicação e gerenciamento. Inclui o `CafeSidePanel` (host unificado para SidePanels) e o `ResourceTopPanel` (editor universal de Resources).
 *   **Dependências Essenciais:** Nenhuma (é a base da suíte).
 *   **Dependências Opcionais:** Nenhuma.
 *   **Dependentes:** BlueprintEditor, StateMachine, DataBehavior, EventPulse, AudioBlend, VFXEcho, EnvironmentBlend, CameraRig, UIFrame, ProgressionSystem, AIMind, CombatSystem, InteractionThread, ItemPool, AssetInstance, WorldAtlas (Todos os plugins da Suite).

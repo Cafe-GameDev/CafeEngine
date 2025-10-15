@@ -46,7 +46,7 @@ A CafeEngine adota uma metodologia de Plugin Design Document (PDD) para garantir
 
 A interação com o editor Godot na CafeEngine é aprimorada através de diferentes tipos de painéis, cada um com um propósito e nível de intrusividade específicos:
 
--   **SidePanel:** Painéis não intrusivos, compactos e laterais, ideais para configurações rápidas, exibição de status concisos ou acionamento de funções auxiliares. O `ResourcePanel` é o host unificado para todos os SidePanels dos plugins da CafeEngine.
+-   **SidePanel:** Painéis não intrusivos, compactos e laterais, ideais para configurações rápidas, exibição de status concisos ou acionamento de funções auxiliares. O `CafeSidePanel` é o host unificado para todos os SidePanels dos plugins da CafeEngine.
 -   **TopPanel:** Painéis de alto nível que ocupam uma aba principal do editor (similar a "2D", "3D", "Script"), destinados a funcionalidades que exigem uma área de trabalho dedicada e ampla. Ex: `ResourceTopPanel` (Editor de Resources).
 -   **BottomPanel:** Painéis que se ancoram na parte inferior do editor, geralmente usados para exibir logs, listas de itens ou ferramentas de gerenciamento que podem ser expandidas/colapsadas. Ex: `DataBottomPanel`, `StateBottomPanel`.
 -   **ModalPanel:** Janelas pop-up que bloqueiam a interação com o restante do editor até serem fechadas, usadas para tarefas que exigem atenção total do usuário ou para coletar informações específicas. Ex: `DataModalPanel`, `StateModalPanel`.

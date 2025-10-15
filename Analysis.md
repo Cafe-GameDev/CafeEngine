@@ -54,7 +54,7 @@ A CafeEngine transforma o Godot em um estúdio visual de alta produtividade, ond
 
 *   **Editores Visuais:** Plugins como o `StateMachine` e o `BlueprintEditor` oferecem editores de grafo que permitem a criação e manipulação visual de máquinas de estado e lógicas de jogo. Isso torna a arquitetura do jogo mais compreensível e editável, facilitando a colaboração entre designers e programadores.
 
-*   **Painéis Integrados:** Todas as ferramentas visuais são cuidadosamente integradas ao editor Godot através de diferentes tipos de painéis (`SidePanel`, `TopPanel`, `BottomPanel`, `ModalPanel`), garantindo uma experiência de usuário coesa e familiar. O `ResourcePanel` atua como um hub unificado para os `SidePanels` de todos os plugins, centralizando as interfaces auxiliares.
+*   **Painéis Integrados:** Todas as ferramentas visuais são cuidadosamente integradas ao editor Godot através de diferentes tipos de painéis (`SidePanel`, `TopPanel`, `BottomPanel`, `ModalPanel`), garantindo uma experiência de usuário coesa e familiar. O `CafeSidePanel` atua como um hub unificado para os `SidePanels` de todos os plugins, centralizando as interfaces auxiliares.
 
 ### 3.4. Programação Orientada a Resources (ROP): O Coração Técnico
 
@@ -84,7 +84,7 @@ A CafeEngine adota uma abordagem estratégica para a integração de suas ferram
     *   **`AudioPanel` (AudioManager):** Permite configurar caminhos de assets de áudio, gerar manifestos e acessar a documentação do plugin de forma compacta.
     *   **`DataPanel` (DataBehavior):** Oferece acesso rápido à documentação e configurações gerais do plugin DataBehavior.
     *   **`StateSidePanel` (StateMachine):** Embora com funcionalidades futuras de visualização de grafo, em sua forma inicial, serve para acesso rápido a configurações e documentação.
-*   **Integração:** Todos os `SidePanels` dos plugins da CafeEngine são hospedados em um dock lateral unificado chamado `ResourcePanel`, gerenciado pelo `ResourceEditor`. Isso proporciona uma experiência de usuário coesa e organizada, onde todos os painéis auxiliares estão centralizados em um único local.
+*   **Integração:** Todos os `SidePanels` dos plugins da CafeEngine são hospedados em um dock lateral unificado chamado `CafeSidePanel`, gerenciado pelo `ResourceEditor`. Isso proporciona uma experiência de usuário coesa e organizada, onde todos os painéis auxiliares estão centralizados em um único local.
 
 ### 4.2. TopPanel: Espaço Dedicado para Ferramentas Complexas
 
@@ -121,7 +121,7 @@ A CafeEngine é um ecossistema vibrante, composto por plugins especializados que
 *   **Função:** O `ResourceEditor` é o coração e a alma da CafeEngine, atuando como a infraestrutura fundamental sobre a qual todos os outros plugins são construídos. Ele não apenas fornece classes base e utilitários essenciais, mas também estabelece os padrões de integração, comunicação e gerenciamento que garantem a coesão de toda a suíte.
 *   **Componentes Chave:**
     *   **`ResourceEditor` (Autoload Singleton):** Um singleton global que gerencia plugins ativos, dependências e fornece acesso a funcionalidades compartilhadas. É o hub central para a orquestração de toda a CafeEngine.
-    *   **`ResourcePanel` (Host de SidePanels):** Um `ScrollContainer` que serve como o host unificado para todos os `SidePanels` dos plugins da CafeEngine. Ele centraliza as interfaces de configuração rápida em um único dock lateral, proporcionando uma experiência de usuário organizada.
+    *   **`CafeSidePanel` (Host de SidePanels):** Um `ScrollContainer` que serve como o host unificado para todos os `SidePanels` dos plugins da CafeEngine. Ele centraliza as interfaces de configuração rápida em um único dock lateral, proporcionando uma experiência de usuário organizada.
     *   **`ResourceTopPanel` (Editor de Resources):** Um `TopPanel` dedicado à visualização e edição de arquivos `.tres` como texto/código. Este editor universal de `Resources` é agnóstico a plugins específicos, mas fundamental para a filosofia ROP, permitindo a inspeção e modificação direta do conteúdo dos `Resources`.
 *   **Importância:** O `ResourceEditor` é indispensável para a interoperabilidade e extensibilidade da suíte, garantindo que todos os plugins falem a mesma língua e se integrem de forma harmoniosa. Ele é o ponto de partida para qualquer novo plugin da CafeEngine, fornecendo a base para a integração no editor e a comunicação entre módulos.
 
@@ -276,7 +276,7 @@ A CafeEngine não é apenas um conjunto de ferramentas; é uma redefinição da 
 | **Dados e Configs** | Variáveis locais em `Nodes`, JSONs externos | `Resources` reativos e serializáveis (DataBehavior), edição via Inspector |
 | **Áudio e Mixagem** | Configuração manual de `AudioStreamPlayer`s | `AudioConfig` visual (AudioManager), geração automática de `AudioStreamPlaylist`/`Randomizer` |
 | **Diálogos e Quests** | Implementação customizada, JSONs/CSV externos | Editores dedicados (DialogCafe, QuestCafe - futuros), `Resources` de diálogo/quest |
-| **Painéis do Editor** | Painéis separados por plugin, docks desorganizadas | Unificados no `ResourcePanel` (SidePanels), `TopPanels` dedicados, `BottomPanels` contextuais |
+| **Painéis do Editor** | Painéis separados por plugin, docks desorganizadas | Unificados no `CafeSidePanel` (SidePanels), `TopPanels` dedicados, `BottomPanels` contextuais |
 | **Reuso de Lógica** | Copiar/colar código, herança de `Nodes` | `Resources` de comportamento reutilizáveis, configuráveis via Inspector |
 | **Colaboração** | Dependência de programadores para lógica | Designers e artistas podem configurar lógica via Inspector/Editores Visuais |
 | **Depuração** | `print()` e depurador de script | Depuração visual de estados, logs contextuais nos `BottomPanels` |
