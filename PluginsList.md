@@ -60,8 +60,7 @@ graph TD
 *   **Funcionalidades:** Oferece um editor visual/NoCode de alto nível, baseado em grafos, para construir e gerenciar a lógica de jogo. Orquestra `Resources` da ROP e serve como um host genérico para Módulos CrossPlugin de outros plugins.
 *   **Dependências Essenciais:** `ResourceEditor`.
 *   **Dependências Opcionais:** Nenhuma.
-*   **Módulos de Integração Opcionais:** `StateMachine` (para o `BlueprintStateModule`), `DataBehavior`, `EventPulse`, `AIMind` (plugins que podem se integrar ao BlueprintEditor para visualização).
-*   **Dependentes:** Nenhuma.
+*   **Módulos de Integração Opcionais:** `StateMachine` (para o `BlueprintStateModule`), `DataBehavior` (para o `BlueprintDataModule`), `EventPulse` (para o `BlueprintEventModule`), `AIMind` (para o `BlueprintAIMindModule`) (plugins que podem se integrar ao BlueprintEditor para visualização).
 
 ---
 
