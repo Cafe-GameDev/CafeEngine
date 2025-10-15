@@ -95,7 +95,7 @@ A CafeEngine adota uma abordagem estratégica para a integração de suas ferram
 ### 4.3. BottomPanel: Gerenciamento Contextual e Listas Detalhadas
 
 *   **Propósito:** Os `BottomPanels` se ancoram na parte inferior do editor e são geralmente usados para exibir logs, listas de itens ou ferramentas de gerenciamento que podem ser expandidas e recolhidas. Eles são adequados para informações detalhadas que não precisam estar constantemente visíveis, mas que se beneficiam de um espaço vertical maior quando acessadas.
-*   **Características:** Média intrusividade (ocupa uma parte considerável da área vertical, mas pode ser minimizado), ideal para gerenciamento de listas e exibição de informações contextuais.
+*   **Características:** Média intrusividade (ocupa uma parte considerável da área vertical da tela, mas pode ser minimizado), ideal para gerenciamento de listas e exibição de informações contextuais.
 *   **Exemplos na CafeEngine:**
     *   **`DataBottomPanel` (DataBehavior):** Utilizado para listar, gerenciar e criar `DataResource`s e seus scripts associados, facilitando a organização e o acesso aos dados do jogo.
     *   **`StateBottomPanel` (StateMachine):** Cumpre um papel similar, permitindo o gerenciamento de `StateBehavior`s e seus scripts, facilitando a organização e o acesso aos componentes da máquina de estados.
@@ -158,9 +158,9 @@ A CafeEngine é um ecossistema vibrante, composto por plugins especializados que
 *   **Componentes Chave:**
     *   **`DataManager` (Autoload Singleton):** Um `Node` que atua como um ponto de acesso global para todos os dados do jogo, carregando, armazenando e fornecendo acesso a `DataResource`s.
     *   **`DataResource` (Base Class):** A classe base abstrata para todos os recursos de dados específicos do jogo, contendo propriedades exportadas para configuração no Inspector.
-    *   **`DataBottomPanel`:** Um painel inferior no editor, utilizado para listar, gerenciar e criar `DataResource`s e seus scripts associados.
+    *   **`DataBottomPanel`:** Um painel inferior no editor, utilizado para listar, gerenciar e criar `DataResource`s e seus scripts associados, facilitando a organização e o acesso aos dados do jogo.
     *   **`DataPanel` (SidePanel):** Um painel lateral compacto para acesso rápido à documentação e configurações gerais do plugin.
-*   **Benefícios:** Trata todos os dados de jogo como `Resources`, aproveitando a serialização e a integração nativa do Godot. Isso promove a edição no Inspector, reuso e manutenção, com planos de integração visual com o `BlueprintEditor`.
+*   **Benefícios:** Trata todos os dados de jogo como `Resources`, aproveitando a serialização e a integração nativa do Godot. Isso promove a edição no Inspector, reuso e manutenção, com planos de integração visual com o `BlueprintEditor` (futuro).
 
 ## 6. Integração e Features Cross-Plugin: A Sinergia que Impulsiona a CafeEngine
 
